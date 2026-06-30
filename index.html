@@ -161,9 +161,39 @@ box.appendChild(b);
 }
 
 function matchRule(r,q){
-const t=[r.title,r.category,r.decision,r.restart,r.discipline,r.note,r.law].join(" ").toLowerCase();
-return t.includes(q.toLowerCase());
+q=q.trim().toLowerCase();
+
+const category=r.category.toLowerCase();
+
+// カテゴリ名で検索した場合はカテゴリ完全一致
+if(
+q==="懲戒" ||
+q==="ファウル" ||
+q==="オフサイド" ||
+q==="再開方法" ||
+q==="交代" ||
+q==="gk" ||
+q==="安全管理" ||
+q==="運営" ||
+q==="主審"
+){
+return category===q;
 }
+
+// 通常検索
+const t=[
+r.title,
+r.category,
+r.decision,
+r.restart,
+r.discipline,
+r.note,
+r.law
+].join(" ").toLowerCase();
+
+return t.includes(q);
+}
+
 
 function renderCards(){
 const q=document.getElementById("q").value.trim();
