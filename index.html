@@ -453,7 +453,7 @@
   </div>
 
   <script>
-    const ruleCards = [
+    const cards = [
       { category: '試合運営', title: 'キックオフ前の確認事項', conclusion: '試合前に用具、人数、フィールド、審判団を確認する。', judgment: '不備がある場合は試合開始前に修正する。', restart: '問題解消後にキックオフ。', discipline: '通常なし。', note: 'ゴールネット、ボール、選手用具、キャプテン確認を忘れない。', reference: '第1条、第2条、第4条、第5条' },
       { category: '試合運営', title: '試合開始人数不足', conclusion: '最低競技人数を満たさない場合は試合を開始できない。', judgment: '競技会規定を優先する。', restart: '人数が揃ってから開始。', discipline: '通常なし。', note: '大会要項を必ず確認する。', reference: '第3条' },
       { category: '試合運営', title: '用具不備への対応', conclusion: '危険な用具は着用できない。', judgment: '修正後に復帰可能。', restart: 'プレー停止中に対応する。', discipline: '通常なし。', note: 'アクセサリー、すね当てを確認する。', reference: '第4条' },
@@ -476,6 +476,8 @@
       { category: '審判実務', title: '試合終了後の報告', conclusion: '警告、退場、問題事象を記録する。', judgment: '事実を客観的に記載する。', restart: 'なし。', discipline: 'なし。', note: '感想ではなく事実を書く。', reference: '第5条' }
     ];
 
+    const ruleCards = cards;
+
     const ageRules = {
       '一般': ['基本競技規則を土台にし、大会要項に特別規定があれば優先する。'],
       'U-12': ['大会要項で人数、交代、試合時間、退場後の補充可否を必ず確認する。', '安全面と教育的配慮を重視し、説明は短く明確にする。'],
@@ -494,7 +496,7 @@
       '警告・退場・報告書の扱いを審判団で共有した'
     ];
 
-    const state = { selectedIndex: 0, filteredCards: [...ruleCards] };
+    const state = { selectedIndex: 0, filteredCards: [...cards] };
     const $ = (selector) => document.querySelector(selector);
 
     function escapeHtml(value) {
@@ -502,7 +504,7 @@
     }
 
     function setupCategories() {
-      const categories = ['すべて', ...new Set(ruleCards.map(card => card.category))];
+      const categories = ['すべて', ...new Set(cards.map(card => card.category))];
       const filter = $('#categoryFilter');
       filter.innerHTML = categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
       filter.value = 'すべて';
@@ -517,8 +519,8 @@
 
     function renderCards() {
       const query = $('#searchInput').value.trim();
-      const category = $('#categoryFilter').value;
-      state.filteredCards = ruleCards.filter(card => cardMatches(card, query, category));
+      const category = $('#categoryFilter').value || 'すべて';
+      state.filteredCards = cards.filter(card => cardMatches(card, query, category));
       $('#resultCount').textContent = state.filteredCards.length;
 
       if (!state.filteredCards.length) {
@@ -577,6 +579,4 @@
         sub: $('#substitutionRule').value.trim() || '大会要項を確認',
         players: $('#playersRule').value.trim() || '大会要項を確認',
         discipline: $('#disciplineRule').value.trim() || '大会要項を確認',
-        safety: $('#safetyRule').value.trim() || '大会本部の判断を優先'
-      };
-      const 
+        safety: $('#safetyRule').value.trim() || '大会本部の判断を優先
