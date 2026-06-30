@@ -453,30 +453,29 @@
   </div>
 
   <script>
-    const cards = [
-      { category: '試合運営', title: 'キックオフ前の確認事項', conclusion: '試合前に用具、人数、フィールド、審判団を確認する。', judgment: '不備がある場合は試合開始前に修正する。', restart: '問題解消後にキックオフ。', discipline: '通常なし。', note: 'ゴールネット、ボール、選手用具、キャプテン確認を忘れない。', reference: '第1条、第2条、第4条、第5条' },
-      { category: '試合運営', title: '試合開始人数不足', conclusion: '最低競技人数を満たさない場合は試合を開始できない。', judgment: '競技会規定を優先する。', restart: '人数が揃ってから開始。', discipline: '通常なし。', note: '大会要項を必ず確認する。', reference: '第3条' },
-      { category: '試合運営', title: '用具不備への対応', conclusion: '危険な用具は着用できない。', judgment: '修正後に復帰可能。', restart: 'プレー停止中に対応する。', discipline: '通常なし。', note: 'アクセサリー、すね当てを確認する。', reference: '第4条' },
-      { category: '再開方法', title: '直接フリーキック', conclusion: '重大な反則は直接FKとなる。', judgment: '蹴ったボールが直接得点可能。', restart: '反則地点から再開。', discipline: '反則内容による。', note: '壁の距離を確保する。', reference: '第13条' },
-      { category: '再開方法', title: '間接フリーキック', conclusion: 'ボールが他競技者に触れないと得点にならない。', judgment: '審判は腕を上げて合図する。', restart: '反則地点から再開。', discipline: '内容による。', note: 'シグナルを継続する。', reference: '第13条' },
-      { category: '再開方法', title: 'ドロップボール', conclusion: '競技規則に基づき公平に再開する。', judgment: '最後にボールを保持していたチームを基準とする。', restart: '指定場所でドロップ。', discipline: 'なし。', note: '競技規則改正内容を確認する。', reference: '第8条' },
-      { category: '再開方法', title: 'ペナルティキック', conclusion: 'PA内の直接FK反則で与えられる。', judgment: 'GK位置を確認する。', restart: 'PK実施。', discipline: '反則内容による。', note: '他競技者の位置を確認する。', reference: '第14条' },
-      { category: '判定・反則', title: 'ハンドの判定', conclusion: '故意、または規則上反則となる手の使用を判定する。', judgment: '不自然な位置かを確認する。', restart: 'DFKまたはPK。', discipline: '状況による。', note: '偶発的接触との区別が重要。', reference: '第12条' },
-      { category: '判定・反則', title: 'オフサイド', conclusion: 'ポジションだけでは反則にならない。', judgment: 'プレーへの関与を確認する。', restart: 'IFK。', discipline: 'なし。', note: '意図的プレーとの区別を意識する。', reference: '第11条' },
-      { category: '判定・反則', title: '危険な方法でのプレー', conclusion: '相手との接触なく危険を生じさせる行為。', judgment: 'IFKとなる。', restart: '間接FK。', discipline: '必要に応じて警告。', note: 'オーバーヘッドキックなどを慎重に判断する。', reference: '第12条' },
-      { category: '判定・反則', title: 'DOGSO', conclusion: '決定的得点機会阻止を判定する。', judgment: '距離、方向、守備者数などを確認する。', restart: '反則に応じる。', discipline: '退場または警告。', note: 'PA内の競技的プレー例外に注意する。', reference: '第12条' },
-      { category: '懲戒', title: '警告（イエローカード）', conclusion: '反スポーツ行為などに対して警告する。', judgment: '競技規則の基準を適用する。', restart: '反則内容による。', discipline: '警告。', note: '累積警告ルールを確認する。', reference: '第12条' },
-      { category: '懲戒', title: '退場（レッドカード）', conclusion: '重大な反則行為などで退場となる。', judgment: '即時退場。', restart: '反則内容による。', discipline: '退場。', note: '大会規定による処分も確認する。', reference: '第12条' },
-      { category: '懲戒', title: '異議', conclusion: '判定への不適切な抗議は警告対象。', judgment: '言動を総合的に判断する。', restart: '元の再開方法による。', discipline: '警告。', note: '感情的にならず冷静に対応する。', reference: '第12条' },
-      { category: '安全管理', title: '脳振とう疑い', conclusion: '安全を最優先し、直ちに対応する。', judgment: 'プレーを停止する。', restart: '状況に応じてドロップボール。', discipline: 'なし。', note: '復帰判断は医療スタッフを優先する。', reference: '第5条' },
-      { category: '安全管理', title: '重傷者対応', conclusion: '速やかに救護を優先する。', judgment: '即時停止。', restart: 'ドロップボール等。', discipline: '状況による。', note: '安全確保を最優先する。', reference: '第5条' },
-      { category: '安全管理', title: '雷対応', conclusion: '雷鳴が聞こえたら中断を検討する。', judgment: '大会本部の判断を優先する。', restart: '安全確認後に再開。', discipline: 'なし。', note: '避難を最優先する。', reference: '大会要項優先' },
-      { category: '審判実務', title: '交代手続き', conclusion: '競技会規定を優先する。', judgment: '交代完了後に再開する。', restart: '元の再開方法による。', discipline: '違反時は警告。', note: '2025/26の10秒ルールに注意する。', reference: '第3条' },
-      { category: '審判実務', title: 'アドバンテージ', conclusion: '利益がある場合はプレーを継続できる。', judgment: '数秒以内に効果を確認する。', restart: '不成立なら元の反則へ戻る。', discipline: '必要なら次の停止時に実施。', note: '安全を最優先する。', reference: '第5条' },
-      { category: '審判実務', title: '試合終了後の報告', conclusion: '警告、退場、問題事象を記録する。', judgment: '事実を客観的に記載する。', restart: 'なし。', discipline: 'なし。', note: '感想ではなく事実を書く。', reference: '第5条' }
+    const rules = [
+      { category: '試合運営', title: 'キックオフ前の確認事項', conclusion: '開始前に用具、人数、フィールド、審判団を確認する。', judgment: '不備があれば開始前に修正し、競技会規定を優先する。', restart: '問題解消後にキックオフ。', discipline: '通常なし。', note: 'ゴールネット、ボール、用具、キャプテン、試合時間を確認する。', reference: '第1条、第2条、第3条、第4条、第5条、第8条' },
+      { category: '再開方法', title: 'キックオフ', conclusion: '前後半開始、得点後、延長開始時の再開方法。', judgment: 'ボールがけられて明らかに動いたらインプレー。', restart: 'センターマークからキックオフ。相手は規定距離を確保。', discipline: '違反があればやり直しや注意、反復時は警告を検討。', note: 'キッカーは他の競技者が触れるまで再び触れない。', reference: '第8条' },
+      { category: '再開方法', title: '直接フリーキック', conclusion: '不用意・無謀・過剰な接触などの反則で与える。', judgment: '直接得点できる。PA内で守備側が行えばPK。', restart: '反則地点から直接FK。壁は規定距離を確保。', discipline: '無謀なら警告、過剰な力なら退場。', note: 'クイックリスタートを認める場合も管理が必要な場面は止める。', reference: '第12条、第13条' },
+      { category: '再開方法', title: '間接フリーキック', conclusion: '危険な方法でのプレーやオフサイドなどで与える。', judgment: '他の競技者に触れるまで得点にならない。', restart: '反則地点から間接FK。審判は腕を上げて示す。', discipline: '反則内容により警告・退場を判断。', note: 'ボールが他者に触れるかアウトになるまでシグナルを続ける。', reference: '第11条、第12条、第13条' },
+      { category: '再開方法', title: 'ペナルティキック（PK）', conclusion: '守備側が自陣PA内で直接FK対象の反則をした場合に与える。', judgment: 'キッカー、GK、他競技者の位置を確認する。', restart: 'ペナルティーマークからPK。ボールが前方に動いたらインプレー。', discipline: '反則内容、DOGSO、SPAの条件で判断。', note: '侵入、GKの位置、フェイント違反を落ち着いて確認する。', reference: '第12条、第14条' },
+      { category: '再開方法', title: 'ドロップボール', conclusion: '主審が停止し、通常の反則再開に該当しない場合に行う。', judgment: '最後に保持していたチームやボール位置を基準にする。', restart: '規則に定められた場所で1人にドロップ。', discipline: '通常なし。停止理由に反則があれば別途対応。', note: 'PA内や審判に当たった後の扱いを確認する。', reference: '第8条、第9条' },
+      { category: '判定・反則', title: 'ハンドの判定', conclusion: '故意、または体を不自然に大きくした手・腕の接触を判定する。', judgment: '手や腕の位置、動き、距離、偶発性を総合的に見る。', restart: '直接FK。守備側PA内ならPK。', discipline: 'SPAなら警告、得点阻止などは退場を検討。', note: '自然な動きや近距離の偶発的接触と区別する。', reference: '第12条' },
+      { category: '判定・反則', title: 'オフサイド', conclusion: '位置だけでは反則ではなく、プレーへの関与が必要。', judgment: '味方が触れた瞬間の位置と、その後の関与を確認する。', restart: 'オフサイドの反則地点から間接FK。', discipline: '通常なし。遅延や異議があれば別途判断。', note: '意図的プレーとディフレクションの違いに注意する。', reference: '第11条' },
+      { category: '判定・反則', title: 'DOGSO', conclusion: '決定的な得点機会を反則で阻止したかを判断する。', judgment: 'ゴールまでの距離、プレー方向、ボール支配、守備者数を確認。', restart: '反則に応じて直接FK、PK、または間接FK。', discipline: '原則退場。PA内でボールに挑んだ競技的反則は警告となる場合がある。', note: 'ハンドや押さえる反則など、例外がない場面に注意する。', reference: '第12条' },
+      { category: '判定・反則', title: 'SPA', conclusion: '大きなチャンスとなる攻撃を反則で阻止・妨害したかを判断する。', judgment: '攻撃の有望性、人数、方向、スピード、次のプレー可能性を見る。', restart: '反則に応じて直接FK、PK、または間接FK。', discipline: '原則警告。PKでボールに挑んだ反則は警告が不要となる場合がある。', note: 'DOGSOより一段低い攻撃機会かを整理する。', reference: '第12条' },
+      { category: '懲戒', title: '警告（イエローカード）', conclusion: '反スポーツ行為、異議、遅延、繰り返しの反則などで警告する。', judgment: '行為の内容、影響、反復性、ゲームコントロールを考慮する。', restart: '元の反則または停止理由に応じて再開。', discipline: '警告。', note: '累積や大会独自の処分規定を確認する。', reference: '第12条' },
+      { category: '懲戒', title: '退場（レッドカード）', conclusion: '著しく不正なプレー、乱暴な行為、DOGSOなどで退場とする。', judgment: '安全性、過剰な力、得点機会、暴力性を確認する。', restart: '反則内容に応じて直接FK、PK、間接FKなど。', discipline: '退場。', note: '退場後の補充可否や報告方法は大会要項を確認する。', reference: '第12条' },
+      { category: '安全管理', title: '脳振とう疑い', conclusion: '疑いがあれば安全を最優先し、直ちに対応する。', judgment: 'ふらつき、意識、頭部衝撃などを確認し、必要なら停止。', restart: '反則がなければ状況に応じてドロップボール。', discipline: '通常なし。危険な接触があれば反則内容で判断。', note: '復帰可否は医療スタッフや大会手順を優先する。', reference: '第5条' },
+      { category: '安全管理', title: '負傷者対応', conclusion: '重傷や危険がある場合はプレーを速やかに止める。', judgment: '頭部、出血、骨折疑い、GK負傷などは優先して確認する。', restart: '反則がなければドロップボール等。反則があればその再開。', discipline: '接触の程度により警告・退場を判断。', note: '救護導線と安全確保を優先し、再開前に人数を確認する。', reference: '第5条' },
+      { category: '安全管理', title: '雷・暑熱対応', conclusion: '雷や暑熱では安全と大会本部の方針を最優先する。', judgment: '雷鳴、警報、WBGT、選手状態を確認し中断や飲水を判断。', restart: '安全確認後、停止理由に応じて再開。', discipline: '通常なし。', note: '大会要項の中断・再開・中止基準を事前に共有する。', reference: '第5条、大会要項優先' },
+      { category: '審判実務', title: '交代手続き（10秒ルール含む）', conclusion: '交代は競技会規定を優先し、手続きを明確に管理する。', judgment: '交代要員の準備、退出位置、主審の承認を確認する。', restart: '交代完了後、元の再開方法で再開。', discipline: '手続き違反や遅延は警告を検討。', note: '2025/26のGKボール保持10秒ルールなど最新運用も確認する。', reference: '第3条、第12条' },
+      { category: '審判実務', title: 'GK8秒ルール', conclusion: 'GKが手でボールを保持しすぎる場合は時間管理する。', judgment: '保持開始から明らかな遅延があるかを確認する。', restart: '違反時は相手の間接FK。', discipline: '通常は注意。遅延が明白・反復なら警告を検討。', note: '大会や年度で秒数運用が異なる場合は大会要項を優先する。', reference: '第12条、第13条、大会要項優先' },
+      { category: '審判実務', title: '試合終了後の報告', conclusion: '警告、退場、負傷、問題事象を客観的に記録する。', judgment: '事実、時刻、対象者、処置を整理する。', restart: 'なし。', discipline: '報告対象の処分は大会規定に従う。', note: '感想ではなく、見た事実と実施した対応を書く。', reference: '第5条、第12条、大会要項' }
     ];
 
-    const ruleCards = cards;
+    const cards = rules;
+    const ruleCards = rules;
 
     const ageRules = {
       '一般': ['基本競技規則を土台にし、大会要項に特別規定があれば優先する。'],
@@ -566,17 +565,4 @@
     }
 
     function renderChecklist() {
-      $('#checklist').innerHTML = checklistItems.map((item, index) => `
-        <li><label><input type="checkbox" id="check-${index}"><span>${escapeHtml(item)}</span></label></li>
-      `).join('');
-    }
-
-    function renderCustomGuide(event) {
-      event.preventDefault();
-      const values = {
-        name: $('#tournamentName').value.trim() || '未設定の大会',
-        time: $('#matchTime').value.trim() || '大会要項を確認',
-        sub: $('#substitutionRule').value.trim() || '大会要項を確認',
-        players: $('#playersRule').value.trim() || '大会要項を確認',
-        discipline: $('#disciplineRule').value.trim() || '大会要項を確認',
-        safety: $('#safetyRule').value.trim() || '大会本部の判断を優先
+      $('#ch
