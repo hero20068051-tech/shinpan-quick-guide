@@ -3,30 +3,579 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Shinpan Quick Guide</title>
+  <title>サッカー審判クイックガイド</title>
   <style>
+    :root {
+      --bg: #eef7f4;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --text: #14213d;
+      --muted: #64748b;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --accent: #f59e0b;
+      --danger: #dc2626;
+      --line: #dbe7e5;
+      --shadow: 0 16px 40px rgb(15 23 42 / 10%);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
+      margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.6;
-      max-width: 720px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgb(20 184 166 / 18%), transparent 34rem),
+        linear-gradient(180deg, #f8fffd 0%, var(--bg) 46%, #f8fafc 100%);
+      line-height: 1.65;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1120px, 100%);
       margin: 0 auto;
-      padding: 2rem;
-      color: #172033;
-      background: #f7fafc;
+      padding: 18px 14px 80px;
     }
-    main {
-      background: #fff;
+
+    .hero {
+      display: grid;
+      gap: 18px;
+      padding: 22px 4px 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid rgb(15 118 110 / 18%);
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: rgb(240 253 250 / 80%);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 9vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .lead {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .priority {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgb(255 255 255 / 72%);
+      box-shadow: 0 10px 24px rgb(15 23 42 / 5%);
+    }
+
+    .priority strong { color: var(--primary-dark); }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      gap: 10px;
+      margin: 8px -14px 18px;
+      padding: 12px 14px;
+      border-block: 1px solid rgb(219 231 229 / 80%);
+      background: rgb(248 255 253 / 88%);
+      backdrop-filter: blur(16px);
+    }
+
+    .search-row, .filter-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .field {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      padding: 13px 14px;
+      outline: none;
+      box-shadow: 0 8px 18px rgb(15 23 42 / 4%);
+    }
+
+    .field:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgb(20 184 166 / 18%);
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      font-weight: 800;
+    }
+
+    .toggle input {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: var(--primary);
+    }
+
+    .layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgb(255 255 255 / 88%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, #ffffff, #f0fdfa);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .panel-body { padding: 16px; }
+
+    .cards {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rule-card {
+      display: grid;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--line);
       border-radius: 16px;
-      box-shadow: 0 12px 30px rgb(15 23 42 / 8%);
-      padding: 2rem;
+      text-align: left;
+      background: var(--surface);
+      box-shadow: 0 8px 18px rgb(15 23 42 / 5%);
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
     }
-    h1 { color: #0f766e; }
+
+    .rule-card:hover, .rule-card.active {
+      transform: translateY(-1px);
+      border-color: rgb(15 118 110 / 45%);
+      box-shadow: 0 14px 24px rgb(15 23 42 / 9%);
+    }
+
+    .category-pill {
+      display: inline-flex;
+      width: fit-content;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--primary-dark);
+      background: rgb(20 184 166 / 12%);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    .conclusion {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .short-mode .hide-in-short { display: none; }
+
+    .detail-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail-item {
+      display: grid;
+      gap: 4px;
+      padding: 12px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid #e8eef3;
+    }
+
+    .detail-label {
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .detail-text { margin: 0; }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    label span {
+      display: block;
+      margin: 0 0 6px;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    textarea.field {
+      min-height: 98px;
+      resize: vertical;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 46px;
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 900;
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 10px 18px rgb(15 118 110 / 18%);
+    }
+
+    .btn.secondary {
+      background: #e2e8f0;
+      color: #0f172a;
+      box-shadow: none;
+    }
+
+    .guide-output {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .guide-note {
+      padding: 12px;
+      border-left: 5px solid var(--accent);
+      border-radius: 12px;
+      background: #fffbeb;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .checklist label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      font-weight: 700;
+    }
+
+    .checklist input {
+      margin-top: 4px;
+      width: 1.15rem;
+      height: 1.15rem;
+      accent-color: var(--primary);
+    }
+
+    .empty {
+      padding: 18px;
+      color: var(--muted);
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      background: var(--surface-2);
+    }
+
+    .footer-note {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      .app { padding-inline: 24px; }
+      .hero { padding-top: 34px; }
+      .toolbar { margin-inline: -24px; padding-inline: 24px; }
+      .search-row { grid-template-columns: 1fr 220px; }
+      .filter-row { grid-template-columns: 1fr 220px; }
+      .button-row { grid-template-columns: 1fr 1fr; }
+      .layout { grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr); align-items: start; }
+      .side { position: sticky; top: 120px; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Shinpan Quick Guide</h1>
-    <p>Soccer referee quick guide app</p>
-  </main>
-</body>
-</html>
+  <div class="app" id="app">
+    <header class="hero">
+      <span class="badge">⚽ 1ファイルMVP / オフライン利用可</span>
+      <h1>サッカー審判<br>クイックガイド</h1>
+      <p class="lead">試合中に迷いやすい判定・再開方法・懲戒・注意点を、スマホで素早く確認するための要約アプリです。競技規則の全文転載ではなく、実務向けの短い表現に整理しています。</p>
+      <p class="priority"><strong>ルールの優先順位：</strong>大会要項 ＞ 年代別ルール ＞ 基本競技規則。迷ったら、まず大会要項を確認してください。</p>
+    </header>
+
+    <section class="toolbar" aria-label="検索と表示設定">
+      <div class="search-row">
+        <input class="field" id="searchInput" type="search" placeholder="キーワード検索（例：ハンド、PK、雷）" autocomplete="off">
+        <select class="field" id="categoryFilter" aria-label="カテゴリフィルター"></select>
+      </div>
+      <div class="filter-row">
+        <label class="toggle" for="shortMode">短文表示モード <input id="shortMode" type="checkbox"></label>
+        <select class="field" id="ageFilter" aria-label="年代別ルール">
+          <option value="一般">年代別ルール：一般</option>
+          <option value="U-12">U-12</option>
+          <option value="U-15">U-15</option>
+          <option value="シニア">シニア</option>
+        </select>
+      </div>
+    </section>
+
+    <main class="layout">
+      <section class="panel" aria-labelledby="rulesTitle">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title" id="rulesTitle">ルールカード一覧</h2>
+            <p class="panel-subtitle"><span id="resultCount">0</span>件表示中。カードを押すと詳細を確認できます。</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="cards" id="cardsList"></div>
+        </div>
+      </section>
+
+      <div class="side">
+        <section class="panel" aria-labelledby="detailTitle">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title" id="detailTitle">カード詳細</h2>
+              <p class="panel-subtitle" id="detailSubtitle">一覧からカードを選択してください。</p>
+            </div>
+          </div>
+          <div class="panel-body" id="detailBody"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="tournamentTitle" style="margin-top:18px;">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title" id="tournamentTitle">大会要項入力フォーム</h2>
+              <p class="panel-subtitle">大会専用クイックガイドを生成します。</p>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form class="form-grid" id="tournamentForm">
+              <label><span>大会名</span><input class="field" id="tournamentName" placeholder="例：市民大会U-12"></label>
+              <label><span>試合時間</span><input class="field" id="matchTime" placeholder="例：20分ハーフ / 延長なし"></label>
+              <label><span>交代ルール</span><input class="field" id="substitutionRule" placeholder="例：自由交代、再出場可"></label>
+              <label><span>人数・最低人数</span><input class="field" id="playersRule" placeholder="例：8人制、最低6人"></label>
+              <label><span>懲戒・累積・退場後の扱い</span><input class="field" id="disciplineRule" placeholder="例：警告累積2回で次試合停止"></label>
+              <label><span>雷・暑熱・飲水など安全運用</span><textarea class="field" id="safetyRule" placeholder="例：雷鳴時は本部判断で即時中断、飲水タイムあり"></textarea></label>
+              <div class="button-row">
+                <button class="btn" type="submit">大会専用ガイドを表示</button>
+                <button class="btn secondary" type="button" id="clearTournament">入力をクリア</button>
+              </div>
+            </form>
+            <div class="guide-output" id="customGuide"></div>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="checkTitle" style="margin-top:18px;">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title" id="checkTitle">試合前チェックリスト</h2>
+              <p class="panel-subtitle">現場での確認漏れを減らします。</p>
+            </div>
+          </div>
+          <div class="panel-body">
+            <ul class="checklist" id="checklist"></ul>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <p class="footer-note">このガイドは補助資料です。最終判断は競技規則、大会要項、審判団・大会本部の指示に従ってください。</p>
+  </div>
+
+  <script>
+    const ruleCards = [
+      { category: '試合運営', title: 'キックオフ前の確認事項', conclusion: '試合前に用具、人数、フィールド、審判団を確認する。', judgment: '不備がある場合は試合開始前に修正する。', restart: '問題解消後にキックオフ。', discipline: '通常なし。', note: 'ゴールネット、ボール、選手用具、キャプテン確認を忘れない。', reference: '第1条、第2条、第4条、第5条' },
+      { category: '試合運営', title: '試合開始人数不足', conclusion: '最低競技人数を満たさない場合は試合を開始できない。', judgment: '競技会規定を優先する。', restart: '人数が揃ってから開始。', discipline: '通常なし。', note: '大会要項を必ず確認する。', reference: '第3条' },
+      { category: '試合運営', title: '用具不備への対応', conclusion: '危険な用具は着用できない。', judgment: '修正後に復帰可能。', restart: 'プレー停止中に対応する。', discipline: '通常なし。', note: 'アクセサリー、すね当てを確認する。', reference: '第4条' },
+      { category: '再開方法', title: '直接フリーキック', conclusion: '重大な反則は直接FKとなる。', judgment: '蹴ったボールが直接得点可能。', restart: '反則地点から再開。', discipline: '反則内容による。', note: '壁の距離を確保する。', reference: '第13条' },
+      { category: '再開方法', title: '間接フリーキック', conclusion: 'ボールが他競技者に触れないと得点にならない。', judgment: '審判は腕を上げて合図する。', restart: '反則地点から再開。', discipline: '内容による。', note: 'シグナルを継続する。', reference: '第13条' },
+      { category: '再開方法', title: 'ドロップボール', conclusion: '競技規則に基づき公平に再開する。', judgment: '最後にボールを保持していたチームを基準とする。', restart: '指定場所でドロップ。', discipline: 'なし。', note: '競技規則改正内容を確認する。', reference: '第8条' },
+      { category: '再開方法', title: 'ペナルティキック', conclusion: 'PA内の直接FK反則で与えられる。', judgment: 'GK位置を確認する。', restart: 'PK実施。', discipline: '反則内容による。', note: '他競技者の位置を確認する。', reference: '第14条' },
+      { category: '判定・反則', title: 'ハンドの判定', conclusion: '故意、または規則上反則となる手の使用を判定する。', judgment: '不自然な位置かを確認する。', restart: 'DFKまたはPK。', discipline: '状況による。', note: '偶発的接触との区別が重要。', reference: '第12条' },
+      { category: '判定・反則', title: 'オフサイド', conclusion: 'ポジションだけでは反則にならない。', judgment: 'プレーへの関与を確認する。', restart: 'IFK。', discipline: 'なし。', note: '意図的プレーとの区別を意識する。', reference: '第11条' },
+      { category: '判定・反則', title: '危険な方法でのプレー', conclusion: '相手との接触なく危険を生じさせる行為。', judgment: 'IFKとなる。', restart: '間接FK。', discipline: '必要に応じて警告。', note: 'オーバーヘッドキックなどを慎重に判断する。', reference: '第12条' },
+      { category: '判定・反則', title: 'DOGSO', conclusion: '決定的得点機会阻止を判定する。', judgment: '距離、方向、守備者数などを確認する。', restart: '反則に応じる。', discipline: '退場または警告。', note: 'PA内の競技的プレー例外に注意する。', reference: '第12条' },
+      { category: '懲戒', title: '警告（イエローカード）', conclusion: '反スポーツ行為などに対して警告する。', judgment: '競技規則の基準を適用する。', restart: '反則内容による。', discipline: '警告。', note: '累積警告ルールを確認する。', reference: '第12条' },
+      { category: '懲戒', title: '退場（レッドカード）', conclusion: '重大な反則行為などで退場となる。', judgment: '即時退場。', restart: '反則内容による。', discipline: '退場。', note: '大会規定による処分も確認する。', reference: '第12条' },
+      { category: '懲戒', title: '異議', conclusion: '判定への不適切な抗議は警告対象。', judgment: '言動を総合的に判断する。', restart: '元の再開方法による。', discipline: '警告。', note: '感情的にならず冷静に対応する。', reference: '第12条' },
+      { category: '安全管理', title: '脳振とう疑い', conclusion: '安全を最優先し、直ちに対応する。', judgment: 'プレーを停止する。', restart: '状況に応じてドロップボール。', discipline: 'なし。', note: '復帰判断は医療スタッフを優先する。', reference: '第5条' },
+      { category: '安全管理', title: '重傷者対応', conclusion: '速やかに救護を優先する。', judgment: '即時停止。', restart: 'ドロップボール等。', discipline: '状況による。', note: '安全確保を最優先する。', reference: '第5条' },
+      { category: '安全管理', title: '雷対応', conclusion: '雷鳴が聞こえたら中断を検討する。', judgment: '大会本部の判断を優先する。', restart: '安全確認後に再開。', discipline: 'なし。', note: '避難を最優先する。', reference: '大会要項優先' },
+      { category: '審判実務', title: '交代手続き', conclusion: '競技会規定を優先する。', judgment: '交代完了後に再開する。', restart: '元の再開方法による。', discipline: '違反時は警告。', note: '2025/26の10秒ルールに注意する。', reference: '第3条' },
+      { category: '審判実務', title: 'アドバンテージ', conclusion: '利益がある場合はプレーを継続できる。', judgment: '数秒以内に効果を確認する。', restart: '不成立なら元の反則へ戻る。', discipline: '必要なら次の停止時に実施。', note: '安全を最優先する。', reference: '第5条' },
+      { category: '審判実務', title: '試合終了後の報告', conclusion: '警告、退場、問題事象を記録する。', judgment: '事実を客観的に記載する。', restart: 'なし。', discipline: 'なし。', note: '感想ではなく事実を書く。', reference: '第5条' }
+    ];
+
+    const ageRules = {
+      '一般': ['基本競技規則を土台にし、大会要項に特別規定があれば優先する。'],
+      'U-12': ['大会要項で人数、交代、試合時間、退場後の補充可否を必ず確認する。', '安全面と教育的配慮を重視し、説明は短く明確にする。'],
+      'U-15': ['基本競技規則を原則としつつ、交代人数や再出場可否は大会要項を優先する。'],
+      'シニア': ['負傷予防、暑熱、飲水、交代運用など大会独自ルールを事前に確認する。']
+    };
+
+    const checklistItems = [
+      'フィールド、ゴール、ネット、ライン、コーナーフラッグを確認した',
+      '試合球、予備球、空気圧を確認した',
+      '選手人数、交代ルール、ベンチ入り人数を確認した',
+      'すね当て、アクセサリー、危険な用具がないか確認した',
+      'キャプテン、ユニフォーム色、GK色を確認した',
+      '試合時間、延長、PK方式、飲水・暑熱対応を確認した',
+      '雷・重傷者対応と大会本部への連絡方法を確認した',
+      '警告・退場・報告書の扱いを審判団で共有した'
+    ];
+
+    const state = { selectedIndex: 0, filteredCards: [...ruleCards] };
+    const $ = (selector) => document.querySelector(selector);
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+    }
+
+    function setupCategories() {
+      const categories = ['すべて', ...new Set(ruleCards.map(card => card.category))];
+      $('#categoryFilter').innerHTML = categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+    }
+
+    function cardMatches(card, query, category) {
+      const target = Object.values(card).join(' ').toLowerCase();
+      const queryMatch = !query || target.includes(query.toLowerCase());
+      const categoryMatch = category === 'すべて' || card.category === category;
+      return queryMatch && categoryMatch;
+    }
+
+    function renderCards() {
+      const query = $('#searchInput').value.trim();
+      const category = $('#categoryFilter').value;
+      state.filteredCards = ruleCards.filter(card => cardMatches(card, query, category));
+      $('#resultCount').textContent = state.filteredCards.length;
+
+      if (!state.filteredCards.length) {
+        $('#cardsList').innerHTML = '<div class="empty">該当するカードがありません。検索語やカテゴリを変更してください。</div>';
+        renderDetail(null);
+        return;
+      }
+
+      if (!state.filteredCards[state.selectedIndex]) state.selectedIndex = 0;
+      $('#cardsList').innerHTML = state.filteredCards.map((card, index) => `
+        <button class="rule-card ${index === state.selectedIndex ? 'active' : ''}" type="button" data-index="${index}">
+          <span class="category-pill">${escapeHtml(card.category)}</span>
+          <h3 class="card-title">${escapeHtml(card.title)}</h3>
+          <p class="conclusion">${escapeHtml(card.conclusion)}</p>
+          <p class="conclusion hide-in-short"><strong>再開：</strong>${escapeHtml(card.restart)} / <strong>懲戒：</strong>${escapeHtml(card.discipline)}</p>
+        </button>
+      `).join('');
+      renderDetail(state.filteredCards[state.selectedIndex]);
+    }
+
+    function renderDetail(card) {
+      if (!card) {
+        $('#detailSubtitle').textContent = 'カードが選択されていません。';
+        $('#detailBody').innerHTML = '<div class="empty">詳細表示できるカードがありません。</div>';
+        return;
+      }
+
+      $('#detailSubtitle').textContent = `${card.category} / ${card.title}`;
+      const rows = [
+        ['まず結論', card.conclusion],
+        ['判定', card.judgment],
+        ['再開方法', card.restart],
+        ['懲戒', card.discipline],
+        ['注意点', card.note],
+        ['参照条文', card.reference]
+      ];
+      $('#detailBody').innerHTML = `<div class="detail-grid">${rows.map(([label, text]) => `
+        <article class="detail-item">
+          <span class="detail-label">${escapeHtml(label)}</span>
+          <p class="detail-text">${escapeHtml(text)}</p>
+        </article>
+      `).join('')}</div>`;
+    }
+
+    function renderChecklist() {
+      $('#checklist').innerHTML = checklistItems.map((item, index) => `
+        <li><label><input type="checkbox" id="check-${index}"><span>${escapeHtml(item)}</span></label></li>
+      `).join('');
+    }
+
+    function renderCustomGuide(event) {
+      event.preventDefault();
+      const values = {
+        name: $('#tournamentName').value.trim() || '未設定の大会',
+        time: $('#matchTime').value.trim() || '大会要項を確認',
+        sub: $('#substitutionRule').value.trim() || '大会要項を確認',
+        players: $('#playersRule').value.trim() || '大会要項を確認',
+        discipline: $('#disciplineRule').value.trim() || '大会要項を確認',
+        safety: $('#safetyRule').value.trim() || '大会本部の判断を優先'
+      };
+      const selectedAge = $('#ageFilter').value;
+      const ageNotes = ageRules[s
