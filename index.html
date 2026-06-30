@@ -503,13 +503,15 @@
 
     function setupCategories() {
       const categories = ['すべて', ...new Set(ruleCards.map(card => card.category))];
-      $('#categoryFilter').innerHTML = categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+      const filter = $('#categoryFilter');
+      filter.innerHTML = categories.map(category => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+      filter.value = 'すべて';
     }
 
     function cardMatches(card, query, category) {
       const target = Object.values(card).join(' ').toLowerCase();
       const queryMatch = !query || target.includes(query.toLowerCase());
-      const categoryMatch = category === 'すべて' || card.category === category;
+      const categoryMatch = !category || category === 'すべて' || card.category === category;
       return queryMatch && categoryMatch;
     }
 
@@ -577,5 +579,4 @@
         discipline: $('#disciplineRule').value.trim() || '大会要項を確認',
         safety: $('#safetyRule').value.trim() || '大会本部の判断を優先'
       };
-      const selectedAge = $('#ageFilter').value;
-      const ageNotes = ageRules[s
+      const 
