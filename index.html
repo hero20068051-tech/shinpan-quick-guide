@@ -139,7 +139,12 @@ const rules=[
 {title:"トリッピング",category:"ファウル",decision:"足をかける、または足で相手をつまずかせた場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"接触の程度、ボールへのチャレンジ、影響を確認する。",law:"第12条"},
 {title:"チャージ",category:"ファウル",decision:"不用意、無謀、または過剰な力で相手にチャージした場合。",restart:"直接FK、PA内はPK。",discipline:"無謀なら警告、過剰な力なら退場。",note:"正当なショルダーチャージは反則ではない。",law:"第12条"},
 {title:"ホールディング",category:"ファウル",decision:"相手の体やユニフォームをつかみ、動きを妨げた場合。",restart:"直接FK、PA内はPK。",discipline:"有望な攻撃阻止は警告、DOGSOなら退場。",note:"軽微でもプレーに影響があれば反則。",law:"第12条"},
-{title:"プッシング",category:"ファウル",decision:"相手を押してプレーに影響を与えた場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"接触の強さ、タイミング、影響を確認する。",law:"第12条"}
+{title:"プッシング",category:"ファウル",decision:"相手を押してプレーに影響を与えた場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"接触の強さ、タイミング、影響を確認する。",law:"第12条"}, {title:"危険な方法でのプレー",category:"ファウル",decision:"相手または自分に危険を及ぼす方法でプレーした場合。",restart:"間接FK。",discipline:"通常は懲戒なし。悪質な場合は警告等を検討。",note:"接触があれば直接FK対象の反則になる場合がある。",law:"第12条"},
+{title:"GKへのバックパス",category:"GK",decision:"味方が足で意図的に蹴ったボールをGKが手や腕で扱った場合。",restart:"間接FK。",discipline:"通常なし。",note:"ヘディング、胸、膝など足以外で戻した場合は通常対象外。",law:"第12条"},
+{title:"二度触り",category:"再開方法",decision:"再開後、他の競技者が触れる前にキッカーが再びボールに触れた場合。",restart:"間接FK。",discipline:"通常なし。",note:"手や腕で扱った場合はハンド等の反則も確認する。",law:"第13〜17条"},
+{title:"フリーキックの距離",category:"再開方法",decision:"相手競技者は原則9.15m以上ボールから離れる。",restart:"本来のFK。",discipline:"再開を遅らせる、距離を守らない場合は警告対象。",note:"クイックリスタートを不当に妨害しない。",law:"第13条"},
+{title:"壁の人数制限",category:"再開方法",decision:"守備側3人以上の壁ができた場合、攻撃側は壁から1m以上離れる。",restart:"違反した場合は相手の間接FK。",discipline:"通常なし。",note:"攻撃側が1m以内に入った場合に適用する。",law:"第13条"}
+ 
 ];
 
 let current="すべて";
