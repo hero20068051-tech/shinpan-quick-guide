@@ -95,6 +95,10 @@
       font-size:14px;
       padding:9px 12px;
     }
+    .tab.active{
+      background:#008b7a;
+      color:white;
+    }
     .count{
       display:inline-block;
       background:#f0f7f5;
@@ -104,10 +108,6 @@
       padding:6px 10px;
       border-radius:999px;
       margin:-4px 0 12px;
-    }
-    .tab.active{
-      background:#008b7a;
-      color:white;
     }
     .cards{
       display:grid;
@@ -831,7 +831,12 @@ function matchRule(r,q){
 
 function renderCards(){
   const q=document.getElementById("q").value.trim();
-  const list=rules.filter(r=>(current==="すべて表示" || !current || r.category===current) && matchRule(r,q));
+
+  const list=rules.filter(r=>{
+    const categoryOk = q ? true : (current==="すべて表示" || !current || r.category===current);
+    return categoryOk && matchRule(r,q);
+  });
+
   const box=document.getElementById("cards");
   const count=document.getElementById("count");
 
@@ -878,6 +883,5 @@ function clearSearch(){
   renderCards();
 }
 
-function toggleShort(){
-  isShort=!isShort;
-  document.getElementById("shortBtn").tex
+function toggleShor
+  
