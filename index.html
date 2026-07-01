@@ -1,184 +1,561 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shinpan Quick Guide</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.6}
-header{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;padding:28px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px}
-h1{margin:0 0 8px;font-size:30px;line-height:1.25}
-header p{margin:0;font-size:14px}
-main{max-width:900px;margin:auto;padding:18px 14px 70px}
-section{background:#fff;border-radius:18px;padding:16px;margin-bottom:16px;box-shadow:0 6px 18px rgba(15,23,42,.06)}
-h2{margin:0 0 12px;font-size:20px}
-.notice{background:#ecfeff;color:#134e4a;border:1px solid #99f6e4;border-radius:14px;padding:12px;margin-top:14px;font-size:14px}
-input,select,textarea,button{font:inherit}
-input,select,textarea{width:100%;border:1px solid #e2e8f0;border-radius:12px;padding:11px;background:#fff}
-textarea{min-height:80px}
-button{border:0;border-radius:999px;padding:10px 14px;background:#0f766e;color:#fff;font-weight:700}
-button.sub{background:#e2e8f0;color:#0f172a}
-button.warn{background:#f59e0b;color:#111827}
-.search{display:flex;gap:8px;margin-bottom:12px}
-.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px;padding-bottom:4px}
-.tab{white-space:nowrap;background:#fff;color:#0f172a;border:1px solid #e2e8f0}
-.tab.active{background:#0f766e;color:#fff;border-color:#0f766e}
-.grid{display:grid;grid-template-columns:1fr;gap:12px}
-.card{border:1px solid #e2e8f0;border-radius:16px;padding:14px;background:#fff}
-.card h3{margin:0;font-size:18px}
-.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}
-.badge{display:inline-block;background:#ccfbf1;color:#115e59;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:700}
-.summary{color:#64748b;font-size:14px;margin:6px 0 10px}
-.detail{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin-top:8px}
-.label{display:block;color:#64748b;font-size:12px;font-weight:800;margin-bottom:3px}
-.form{display:grid;gap:10px}
-.guide{white-space:pre-line;background:#f8fafc;border:1px dashed #94a3b8;border-radius:14px;padding:12px;margin-top:12px}
-.check{display:flex;gap:10px;align-items:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin-bottom:8px}
-.check input{width:auto;transform:scale(1.2)}
-.empty{text-align:center;color:#64748b;padding:20px;border:1px dashed #cbd5e1;border-radius:14px}
-.short .summary,.short .extra{display:none}
-footer{text-align:center;color:#64748b;font-size:12px;padding:20px}
-@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Shinpan Quick Guide</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:#f6f7fb;
+      color:#122;
+      line-height:1.6;
+    }
+    header{
+      background:linear-gradient(135deg,#008b7a,#16b89c);
+      color:white;
+      padding:28px 20px 32px;
+      border-bottom-left-radius:28px;
+      border-bottom-right-radius:28px;
+    }
+    header h1{
+      margin:0 0 8px;
+      font-size:28px;
+    }
+    header p{
+      margin:0 0 16px;
+      opacity:.95;
+    }
+    .notice{
+      background:rgba(255,255,255,.92);
+      color:#123;
+      padding:14px;
+      border-radius:12px;
+      font-size:15px;
+    }
+    main{
+      max-width:900px;
+      margin:18px auto 40px;
+      padding:0 14px;
+    }
+    section{
+      background:white;
+      border-radius:18px;
+      padding:18px;
+      margin:16px 0;
+      box-shadow:0 6px 18px rgba(20,30,50,.06);
+    }
+    h2{
+      margin:0 0 14px;
+      font-size:22px;
+    }
+    .searchRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    input,textarea,select,button{
+      font:inherit;
+    }
+    #q{
+      flex:1;
+      padding:14px;
+      border:1px solid #dde2ee;
+      border-radius:14px;
+      font-size:16px;
+      min-width:0;
+    }
+    button{
+      border:0;
+      border-radius:999px;
+      padding:11px 15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .clear{
+      background:#eef1f8;
+      color:#223;
+    }
+    .toggle{
+      background:#f6a800;
+      color:#111;
+      margin-top:12px;
+    }
+    .tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .tab{
+      background:#eef1f8;
+      color:#223;
+      font-size:14px;
+      padding:9px 12px;
+    }
+    .tab.active{
+      background:#008b7a;
+      color:white;
+    }
+    .cards{
+      display:grid;
+      gap:12px;
+    }
+    .card{
+      border:1px solid #e5e9f2;
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+    }
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom:8px;
+    }
+    .card h3{
+      margin:0;
+      font-size:19px;
+    }
+    .cat{
+      display:inline-block;
+      white-space:nowrap;
+      background:#e9f8f5;
+      color:#007566;
+      border-radius:999px;
+      padding:4px 9px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .summary{
+      color:#445;
+      margin:8px 0 10px;
+    }
+    .detail{
+      margin:7px 0;
+      font-size:15px;
+    }
+    .label{
+      font-weight:800;
+      color:#111;
+      margin-right:4px;
+    }
+    .law{
+      color:#667;
+      font-size:13px;
+      margin-top:8px;
+    }
+    .empty{
+      color:#667;
+      padding:14px;
+      background:#f7f8fc;
+      border-radius:12px;
+    }
+    textarea{
+      width:100%;
+      min-height:72px;
+      padding:12px;
+      border:1px solid #dde2ee;
+      border-radius:12px;
+      margin:6px 0 12px;
+    }
+    .guideBtn{
+      background:#008b7a;
+      color:white;
+      margin-bottom:12px;
+    }
+    .guideBox{
+      background:#f7f8fc;
+      border-radius:12px;
+      padding:12px;
+      white-space:pre-wrap;
+    }
+    ul{
+      padding-left:20px;
+      margin:8px 0 0;
+    }
+  </style>
 </head>
+
 <body>
 <header>
-<h1>Shinpan Quick Guide</h1>
-<p>審判・コーチ・保護者審判のためのサッカールール確認アプリ</p>
-<div class="notice">
-ルールの優先順位：<b>大会要項 ＞ 年代別ルール ＞ 基本競技規則</b><br>
-最終判断は競技規則・大会要項・審判団の確認を優先してください。
-</div>
+  <h1>Shinpan Quick Guide</h1>
+  <p>審判・コーチ・保護者審判のためのサッカールール確認アプリ</p>
+  <div class="notice">
+    ルールの優先順位：<b>大会要項 ＞ 年代別ルール ＞ 基本競技規則</b><br>
+    最終判断は競技規則・大会要項・審判団の確認を優先してください。
+  </div>
 </header>
 
 <main>
-<section>
-<h2>ルール検索</h2>
-<div class="search">
-<input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO">
-<button class="sub" onclick="clearSearch()">クリア</button>
-</div>
-<div id="tabs" class="tabs"></div>
-<button id="shortBtn" class="warn" onclick="toggleShort()">短文表示モード OFF</button>
-<button class="sub" onclick="showAll()">すべて表示</button>
-</section>
+  <section>
+    <h2>ルール検索</h2>
+    <div class="searchRow">
+      <input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO、得点">
+      <button class="clear" onclick="clearSearch()">クリア</button>
+    </div>
+    <button id="shortBtn" class="toggle" onclick="toggleShort()">短文表示モード OFF</button>
+    <div id="tabs" class="tabs"></div>
+  </section>
 
-<section>
-<h2>ルールカード</h2>
-<div id="cards" class="grid"></div>
-</section>
+  <section>
+    <h2>ルールカード</h2>
+    <div id="cards" class="cards"></div>
+  </section>
 
-<section>
-<h2>大会要項入力</h2>
-<p style="color:#64748b;margin-top:-4px">大会ごとの違いを入力すると、専用クイックガイドを作成できます。</p>
-<div class="form">
-<label>大会名<input id="tournamentName" placeholder="例：〇〇カップ U-12"></label>
-<label>年代
-<select id="age">
-<option>一般</option><option>高校生</option><option>中学生</option><option>小学生</option><option>プロ</option>
-</select>
-</label>
-<label>試合形式
-<select id="format">
-<option>11人制</option><option>8人制</option>
-</select>
-</label>
-<label>審判人数
-<select id="refs">
-<option>4審制</option><option>3審制</option><option>2審制</option><option>1審制</option>
-</select>
-</label>
-<label>試合時間<input id="time" placeholder="例：20分-5分-20分"></label>
-<label>交代ルール<input id="subs" placeholder="例：自由交代・再交代可"></label>
-<label>飲水・暑熱対応<input id="water" placeholder="例：飲水あり"></label>
-<label>延長・PK方式<input id="pk" placeholder="例：延長なし・PK3人制"></label>
-<label class="full">大会メモ<textarea id="memo" placeholder="例：雷鳴時は即中断。本部判断を優先。"></textarea></label>
-</div>
-<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-<button onclick="makeGuide()">大会ガイドを作成</button>
-<button class="sub" onclick="saveTournament()">保存</button>
-<button class="sub" onclick="resetTournament()">リセット</button>
-</div>
-<div id="guide" class="guide">大会要項を入力して「大会ガイドを作成」を押してください。</div>
-</section>
+  <section>
+    <h2>大会要項入力</h2>
+    <p>大会ごとの違いを入力すると、専用クイックガイドを作成できます。</p>
 
-<section>
-<h2>試合前チェックリスト</h2>
-<div id="checks"></div>
-<button class="sub" onclick="resetChecks()">チェックをリセット</button>
-</section>
+    <label>大会名</label>
+    <textarea id="tournament" placeholder="例：〇〇市少年サッカー大会"></textarea>
+
+    <label>特別ルール・注意点</label>
+    <textarea id="special" placeholder="例：8人制、交代自由、同点時PK戦、飲水タイムあり"></textarea>
+
+    <button class="guideBtn" onclick="makeGuide()">大会ガイド作成</button>
+    <div id="guide" class="guideBox">ここに大会ガイドが表示されます。</div>
+  </section>
+
+  <section>
+    <h2>試合前チェックリスト</h2>
+    <ul>
+      <li>大会要項を確認したか</li>
+      <li>試合時間・延長・PK戦の有無を確認したか</li>
+      <li>交代人数・再出場の可否を確認したか</li>
+      <li>ユニフォーム・すね当て・アクセサリーを確認したか</li>
+      <li>主審・副審で判定基準を共有したか</li>
+    </ul>
+  </section>
 </main>
-
-<footer>Shinpan Quick Guide｜競技規則の全文転載ではなく、現場確認用の要約表示です。</footer>
 
 <script>
 const rules=[
-{title:"ハンド",category:"ファウル",decision:"故意に手や腕でボールを扱った場合は反則。",restart:"直接FK、ペナルティエリア内ならPK。",discipline:"得点阻止などは警告・退場の対象。",note:"腕の位置や動き、不自然な拡大を考慮する。",law:"第12条"},
-{title:"オフサイド",category:"オフサイド",decision:"味方がボールを蹴った瞬間の位置とプレー関与を確認。",restart:"間接FK。",discipline:"通常は懲戒なし。",note:"ポジションだけでは反則にならない。",law:"第11条"},
-{title:"PK",category:"再開方法",decision:"守備側が自陣PA内で直接FK対象の反則。",restart:"ペナルティキック。",discipline:"反則内容に応じて警告・退場。",note:"GKは少なくとも片足をゴールライン上に置く。",law:"第14条"},
-{title:"DOGSO",category:"懲戒",decision:"決定的得点機会を阻止した場合。",restart:"反則内容に応じる。",discipline:"原則退場。",note:"距離、方向、守備者数などを総合判断。",law:"第12条"},
-{title:"SPA",category:"懲戒",decision:"有望な攻撃を反則で止めた場合。",restart:"反則に応じたFK。",discipline:"警告。",note:"カウンター阻止などが典型例。",law:"第12条"},
-{title:"交代（10秒ルール）",category:"交代",decision:"交代選手は退出後に入場。",restart:"通常どおり。",discipline:"遅延行為は警告対象。",note:"退出選手は最も近い境界線から10秒以内に退場する。",law:"第3条"},
-{title:"GK8秒ルール",category:"GK",decision:"GKが8秒以上ボールを保持した場合。",restart:"相手チームのCK。",discipline:"通常は懲戒なし。",note:"審判は残り5秒を手でカウントする。",law:"第12条"},
 {
-  title:"ドロップボール",
-  category:"再開方法",
-  decision:"競技規則で決められた再開方法がない停止、負傷対応、外部からの影響などでプレーを止めた場合に行う。",
-  restart:"ドロップボール。",
-  discipline:"通常なし。停止前の反則や不正行為があれば別途対応。",
-  note:"最後にボールに触れたチームの競技者1人にドロップするのが基本。PA内で停止した場合などはGKにドロップする場合がある。",
-  law:"第8条"
-}
-
-{title:"雷・暑熱対応",category:"安全管理",decision:"大会要項や本部判断を優先。",restart:"再開時は中断時の方法による。",discipline:"なし。",note:"雷鳴時は即中断、飲水タイム等を適用。",law:"大会要項優先"},
+  title:"ハンド",
+  category:"ファウル",
+  decision:"手や腕でボールを扱った場合。意図、腕の位置、体を不自然に大きくしたかを確認する。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"状況により警告・退場。",
+  note:"得点や決定的な得点機会に関わる場合は懲戒も確認する。",
+  law:"第12条"
+},
 {
-  title:"キックオフ",
+  title:"オフサイド",
   category:"再開方法",
-  decision:"試合開始、後半開始、延長前後半の開始、得点後に行う。",
-  restart:"キックオフ。ボールが蹴られて明らかに動いたらインプレー。",
-  discipline:"通常なし。相手競技者は規定の距離を守る。",
-  note:"キッカーは他の競技者が触れるまで再びボールに触れられない。二度触りは間接FK。",
-  law:"第8条"
-}
-
-{title:"警告（イエローカード）",category:"懲戒",decision:"反スポーツ的行為、異議、遅延行為など。",restart:"反則内容に応じる。",discipline:"警告。",note:"累積警告は大会要項を確認。",law:"第12条"},
-{title:"退場（レッドカード）",category:"懲戒",decision:"著しく不正なプレー、暴力行為、侮辱的発言など。",restart:"反則内容に応じる。",discipline:"退場。",note:"退場後の再出場は不可。",law:"第12条"},
-{title:"負傷者対応",category:"運営",decision:"頭部負傷などは直ちにプレー停止を検討。",restart:"ドロップボール等。",discipline:"なし。",note:"安全確保を最優先する。",law:"第5条"},
-{title:"アドバンテージ",category:"主審",decision:"反則を受けても有利な状況が続く場合は適用。",restart:"適用後はプレー継続。",discipline:"必要に応じ次の停止時に警告・退場。",note:"数秒以内に利益がなければ元の反則に戻す。",law:"第5条"},
-{title:"異議（Dissent）",category:"懲戒",decision:"言葉や行動で審判に抗議した場合。",restart:"元の再開方法。",discipline:"警告。",note:"ベンチスタッフも対象。",law:"第12条"},
-{title:"シミュレーション",category:"懲戒",decision:"反則を受けたように装う行為。",restart:"間接FK。",discipline:"警告。",note:"明らかな欺き行為が対象。",law:"第12条"},
-{title:"スローイン",category:"再開方法",decision:"ボール全体がタッチラインを越えた場合。",restart:"相手チームのスローイン。",discipline:"通常なし。",note:"両足を地面につけ、頭の後ろから投げる。",law:"第15条"},
-{title:"ゴールキック",category:"再開方法",decision:"攻撃側が最後に触れてゴールラインを越えた場合。",restart:"ゴールキック。",discipline:"なし。",note:"ボールが蹴られて動けばインプレー。",law:"第16条"},
-{title:"コーナーキック",category:"再開方法",decision:"守備側が最後に触れてゴールラインを越えた場合。",restart:"コーナーキック。",discipline:"なし。",note:"コーナーアーク内にボールを置く。",law:"第17条"},
-{title:"ベンチスタッフの警告・退場",category:"懲戒",decision:"不適切な言動や抗議行為。",restart:"元の再開方法。",discipline:"警告または退場。",note:"監督・コーチも競技規則の対象。",law:"第12条"},
-{title:"キッキング",category:"ファウル",decision:"相手を蹴る、または蹴ろうとした場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"不用意・無謀・過剰な力の有無を判断する。",law:"第12条"},
-{title:"トリッピング",category:"ファウル",decision:"足をかける、または足で相手をつまずかせた場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"接触の程度、ボールへのチャレンジ、影響を確認する。",law:"第12条"},
-{title:"チャージ",category:"ファウル",decision:"不用意、無謀、または過剰な力で相手にチャージした場合。",restart:"直接FK、PA内はPK。",discipline:"無謀なら警告、過剰な力なら退場。",note:"正当なショルダーチャージは反則ではない。",law:"第12条"},
-{title:"ホールディング",category:"ファウル",decision:"相手の体やユニフォームをつかみ、動きを妨げた場合。",restart:"直接FK、PA内はPK。",discipline:"有望な攻撃阻止は警告、DOGSOなら退場。",note:"軽微でもプレーに影響があれば反則。",law:"第12条"},
-{title:"プッシング",category:"ファウル",decision:"相手を押してプレーに影響を与えた場合。",restart:"直接FK、PA内はPK。",discipline:"状況により警告・退場。",note:"接触の強さ、タイミング、影響を確認する。",law:"第12条"}, {title:"危険な方法でのプレー",category:"ファウル",decision:"相手または自分に危険を及ぼす方法でプレーした場合。",restart:"間接FK。",discipline:"通常は懲戒なし。悪質な場合は警告等を検討。",note:"接触があれば直接FK対象の反則になる場合がある。",law:"第12条"},
-{title:"GKへのバックパス",category:"GK",decision:"味方が足で意図的に蹴ったボールをGKが手や腕で扱った場合。",restart:"間接FK。",discipline:"通常なし。",note:"ヘディング、胸、膝など足以外で戻した場合は通常対象外。",law:"第12条"},
-{title:"二度触り",category:"再開方法",decision:"再開後、他の競技者が触れる前にキッカーが再びボールに触れた場合。",restart:"間接FK。",discipline:"通常なし。",note:"手や腕で扱った場合はハンド等の反則も確認する。",law:"第13〜17条"},
-{title:"フリーキックの距離",category:"再開方法",decision:"相手競技者は原則9.15m以上ボールから離れる。",restart:"本来のFK。",discipline:"再開を遅らせる、距離を守らない場合は警告対象。",note:"クイックリスタートを不当に妨害しない。",law:"第13条"},
-{title:"壁の人数制限",category:"再開方法",decision:"守備側3人以上の壁ができた場合、攻撃側は壁から1m以上離れる。",restart:"違反した場合は相手の間接FK。",discipline:"通常なし。",note:"攻撃側が1m以内に入った場合に適用する。",law:"第13条"},
- {title:"守備側PA内のFK",category:"再開方法",decision:"守備側のPA内FKは、ボールが蹴られて明らかに動いた時点でインプレー。",restart:"直接FKまたは間接FK。",discipline:"なし。",note:"ボールがPA外に出る必要はない。",law:"第13条"},
-{title:"PK戦",category:"試合運営",decision:"両チーム同数の競技者で行い、規定本数後に同点ならサドンデス。",restart:"ペナルティーマークからのキック。",discipline:"警告・退場はPK戦中も適用される。",note:"実施人数、本数、方式は大会要項を優先する。",law:"第10条"},
-{title:"主審の権限",category:"主審",decision:"競技規則を適用し、試合に関する最終判断を行う。",restart:"状況による。",discipline:"必要に応じて警告・退場等を行う。",note:"プレーに関する主審の判断は最終決定。",law:"第5条"},
-{title:"副審の役割",category:"副審",decision:"オフサイド、ボールアウト、反則の補助などを行う。",restart:"主審の判断による。",discipline:"なし。",note:"副審は主審を援助し、最終決定権は主審にある。",law:"第6条"},
-{title:"試合成立人数",category:"試合運営",decision:"11人制では一方のチームが7人未満になると試合続行不可。",restart:"試合終了または大会本部判断。",discipline:"状況による。",note:"小学生・8人制・大会独自規定では大会要項を確認する。",law:"第3条"},
-{title:"直接フリーキック",category:"再開方法",decision:"キッキング、トリッピング、ホールディングなど、第12条で定められた直接FK対象の反則があった場合。",restart:"反則地点から直接フリーキック。ペナルティエリア内ならPK。",discipline:"反則の重大性に応じて警告・退場。",note:"ボールが直接ゴールに入れば得点となる。クイックリスタートを認める場合は守備側の妨害に注意する。",law:"第12・13条"},
-{title:"間接フリーキック",category:"再開方法",decision:"オフサイド、危険な方法でのプレー、バックパス、二度触りなどが対象。",restart:"反則地点から間接フリーキック。",discipline:"通常は懲戒なし。ただし、反則内容によっては警告・退場となる場合がある。",note:"他の競技者に触れる前に直接ゴールへ入っても得点は認められない。主審は腕を上げて間接FKであることを示す。",law:"第11・12・13条"},
- {title:"遅延行為",category:"懲戒",decision:"試合再開を不当に遅らせる行為は警告の対象となる。",restart:"元の再開方法による。",discipline:"警告（イエローカード）。",note:"ボールを蹴り飛ばす、持ち去る、交代を故意に遅らせるなどが代表例。クイックリスタートを妨害した場合も警告となることがある。",law:"第12条"},
-{title:"繰り返しの反則",category:"懲戒",decision:"同じ競技者が複数回反則を繰り返した場合は警告の対象となる。",restart:"最後の反則に応じた再開方法。",discipline:"警告（イエローカード）。",note:"1回ごとの反則が軽微でも、継続的・反復的であれば警告となる。回数だけでなく、反則の性質や影響も考慮する。",law:"第12条"},
-{title:"反スポーツ的行為",category:"懲戒",decision:"フェアプレーの精神に反する行為は警告の対象となる。",restart:"反則内容に応じた再開方法。",discipline:"警告（イエローカード）。",note:"シミュレーション、SPA、意図的なハンドで利益を得る行為、許可なくフィールドへ入退場する行為などが代表例。具体例は競技規則を確認する。",law:"第12条"},
- ,
+  decision:"オフサイドポジションにいる競技者がプレーに関与した場合。",
+  restart:"間接FK。",
+  discipline:"通常なし。",
+  note:"位置にいるだけでは反則ではない。プレーへの関与が必要。",
+  law:"第11条"
+},
+{
+  title:"DOGSO",
+  category:"懲戒",
+  decision:"決定的な得点機会を反則で阻止した場合。",
+  restart:"反則内容に応じる。直接FK、PK、間接FKなど。",
+  discipline:"退場。ただしPA内でボールにチャレンジした反則は警告に軽減される場合あり。",
+  note:"距離、方向、ボール保持、守備者数を確認する。",
+  law:"第12条"
+},
+{
+  title:"SPA",
+  category:"懲戒",
+  decision:"有望な攻撃を反則で妨げた場合。",
+  restart:"反則内容に応じる。",
+  discipline:"警告。ただしPA内でボールにチャレンジした反則は警告なしの場合あり。",
+  note:"攻撃のスピード、人数、方向、スペースを確認する。",
+  law:"第12条"
+},
+{
+  title:"GK8秒ルール",
+  category:"GK",
+  decision:"GKが手や腕でボールを保持したまま8秒を超えた場合。",
+  restart:"相手チームのコーナーキック。",
+  discipline:"通常なし。",
+  note:"2025/26改正により、従来の6秒から8秒へ変更。",
+  law:"第12条"
+},
+{
+  title:"警告",
+  category:"懲戒",
+  decision:"反スポーツ的行為、異議、遅延行為などがあった場合。",
+  restart:"反則内容に応じる。",
+  discipline:"警告。",
+  note:"イエローカードを示す。累積警告は大会要項を確認する。",
+  law:"第12条"
+},
+{
+  title:"退場",
+  category:"懲戒",
+  decision:"重大な反則、乱暴な行為、侮辱的発言、DOGSOなどがあった場合。",
+  restart:"反則内容に応じる。",
+  discipline:"退場。",
+  note:"レッドカードを示す。退場後の再出場は不可。",
+  law:"第12条"
+},
+{
+  title:"負傷者対応",
+  category:"試合運営",
+  decision:"負傷者が出た場合。特に頭部負傷は直ちに停止を検討する。",
+  restart:"停止理由に応じて再開。必要に応じてドロップボール。",
+  discipline:"通常なし。",
+  note:"安全確保を最優先する。",
+  law:"第5条"
+},
+{
+  title:"アドバンテージ",
+  category:"主審",
+  decision:"反則を受けても有利な状況が続く場合に適用する。",
+  restart:"適用後はプレー継続。",
+  discipline:"必要に応じて次の停止時に警告・退場。",
+  note:"数秒以内に利益がなければ元の反則に戻す。",
+  law:"第5条"
+},
+{
+  title:"異議",
+  category:"懲戒",
+  decision:"言葉や行動で審判に抗議した場合。",
+  restart:"元の再開方法。",
+  discipline:"警告。",
+  note:"競技者だけでなく、ベンチスタッフも対象。",
+  law:"第12条"
+},
+{
+  title:"シミュレーション",
+  category:"懲戒",
+  decision:"反則を受けたように装う行為。",
+  restart:"間接FK。",
+  discipline:"警告。",
+  note:"明らかな欺き行為が対象。",
+  law:"第12条"
+},
+{
+  title:"スローイン",
+  category:"再開方法",
+  decision:"ボール全体がタッチラインを越えた場合。",
+  restart:"最後に触れたチームの相手チームのスローイン。",
+  discipline:"通常なし。",
+  note:"両足を地面につけ、頭の後ろから投げる。",
+  law:"第15条"
+},
+{
+  title:"ゴールキック",
+  category:"再開方法",
+  decision:"攻撃側が最後に触れてゴールラインを越え、得点でない場合。",
+  restart:"ゴールキック。",
+  discipline:"通常なし。",
+  note:"ボールが蹴られて明らかに動けばインプレー。",
+  law:"第16条"
+},
+{
+  title:"コーナーキック",
+  category:"再開方法",
+  decision:"守備側が最後に触れてゴールラインを越え、得点でない場合。",
+  restart:"コーナーキック。",
+  discipline:"通常なし。",
+  note:"コーナーアーク内にボールを置く。",
+  law:"第17条"
+},
+{
+  title:"ベンチスタッフの警告・退場",
+  category:"懲戒",
+  decision:"不適切な言動や抗議行為があった場合。",
+  restart:"元の再開方法。",
+  discipline:"警告または退場。",
+  note:"監督・コーチも競技規則の対象。",
+  law:"第12条"
+},
+{
+  title:"キッキング",
+  category:"ファウル",
+  decision:"相手を蹴る、または蹴ろうとした場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"程度により警告・退場。",
+  note:"不用意、無謀、過剰な力を判断する。",
+  law:"第12条"
+},
+{
+  title:"トリッピング",
+  category:"ファウル",
+  decision:"相手をつまずかせる、またはつまずかせようとした場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"程度により警告・退場。",
+  note:"接触の有無、足を出した意図、影響を確認する。",
+  law:"第12条"
+},
+{
+  title:"チャージ",
+  category:"ファウル",
+  decision:"相手に不正なチャージをした場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"程度により警告・退場。",
+  note:"正当なショルダーチャージか、無謀・過剰な力かを判断する。",
+  law:"第12条"
+},
+{
+  title:"ホールディング",
+  category:"ファウル",
+  decision:"相手を押さえる、つかむ、進行を妨げる場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"SPAやDOGSOなら警告・退場を検討。",
+  note:"ユニフォームを引っ張る行為も含む。",
+  law:"第12条"
+},
+{
+  title:"プッシング",
+  category:"ファウル",
+  decision:"相手を押した場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"程度により警告・退場。",
+  note:"手や腕、体を使って不当に押したか確認する。",
+  law:"第12条"
+},
+{
+  title:"危険な方法でのプレー",
+  category:"ファウル",
+  decision:"相手や自分を危険にさらす方法でプレーした場合。",
+  restart:"間接FK。",
+  discipline:"状況により警告対象。",
+  note:"接触があれば直接FK対象の反則になる場合がある。",
+  law:"第12条"
+},
+{
+  title:"GKへのバックパス",
+  category:"GK",
+  decision:"味方が足で意図的にGKへパスし、GKが手や腕で扱った場合。",
+  restart:"間接FK。",
+  discipline:"通常なし。",
+  note:"スローインを味方GKが直接手で扱った場合も対象。",
+  law:"第12条"
+},
+{
+  title:"二度触り",
+  category:"再開方法",
+  decision:"再開を行った競技者が、他の競技者に触れる前に再びボールに触れた場合。",
+  restart:"間接FK。",
+  discipline:"通常なし。",
+  note:"手や腕で二度触りした場合は直接FKやPKとなる場合がある。",
+  law:"第8・13・14・15・16・17条"
+},
+{
+  title:"フリーキックの距離",
+  category:"再開方法",
+  decision:"相手競技者はボールから9.15m以上離れる。",
+  restart:"フリーキック。",
+  discipline:"距離を守らず再開を妨げた場合は警告対象。",
+  note:"クイックリスタート時は状況に応じて判断する。",
+  law:"第13条"
+},
+{
+  title:"壁の人数制限",
+  category:"再開方法",
+  decision:"守備側の壁が3人以上の場合、攻撃側競技者は壁から1m以上離れる。",
+  restart:"違反した場合は間接FK。",
+  discipline:"通常なし。",
+  note:"攻撃側が壁に近すぎて妨げた場合に適用する。",
+  law:"第13条"
+},
+{
+  title:"守備側PA内のFK",
+  category:"再開方法",
+  decision:"守備側チームが自分のPA内でFKを得た場合。",
+  restart:"ボールが蹴られて明らかに動けばインプレー。",
+  discipline:"通常なし。",
+  note:"PA外に出る必要はない。",
+  law:"第13条"
+},
+{
+  title:"PK戦",
+  category:"試合運営",
+  decision:"勝敗を決める必要がある場合に行う。",
+  restart:"ペナルティマークからのキック。",
+  discipline:"試合中の警告・退場の扱いは大会要項も確認。",
+  note:"両チーム同数のキッカーで進める。詳細は大会要項を確認する。",
+  law:"第10条"
+},
+{
+  title:"主審の権限",
+  category:"主審",
+  decision:"競技規則を施行し、試合を管理する。",
+  restart:"状況に応じる。",
+  discipline:"必要に応じて警告・退場を行う。",
+  note:"安全、公平、競技規則を優先して判断する。",
+  law:"第5条"
+},
+{
+  title:"副審の役割",
+  category:"副審",
+  decision:"タッチライン、オフサイド、反則の補助などを行う。",
+  restart:"主審の判定に従う。",
+  discipline:"主審に情報を伝える。",
+  note:"最終決定は主審が行う。",
+  law:"第6条"
+},
+{
+  title:"試合成立人数",
+  category:"試合運営",
+  decision:"一方のチームが7人未満になった場合、試合は開始・続行できない。",
+  restart:"大会要項に従う。",
+  discipline:"原因に応じて対応。",
+  note:"通常の11人制の場合。大会独自ルールがあれば確認する。",
+  law:"第3条"
+},
+{
+  title:"直接フリーキック",
+  category:"再開方法",
+  decision:"直接FK対象の反則があった場合に与える。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"反則の程度により警告・退場。",
+  note:"接触を伴う多くの反則が対象。",
+  law:"第12・13条"
+},
+{
+  title:"間接フリーキック",
+  category:"再開方法",
+  decision:"オフサイド、バックパス、二度触り、危険な方法でのプレーなどで与える。",
+  restart:"間接FK。",
+  discipline:"反則内容により警告対象となる場合あり。",
+  note:"主審は片腕を上げ、他の競技者に触れるかアウトオブプレーまで保持する。",
+  law:"第13条"
+},
+{
+  title:"遅延行為",
+  category:"懲戒",
+  decision:"再開を不当に遅らせた場合。",
+  restart:"本来の再開方法。",
+  discipline:"警告。",
+  note:"ボールを持ち去る、再開を妨げる、交代で時間を使う等に注意。",
+  law:"第12条"
+},
+{
+  title:"繰り返しの反則",
+  category:"懲戒",
+  decision:"同じ競技者が反則を繰り返した場合。",
+  restart:"反則内容に応じる。",
+  discipline:"警告。",
+  note:"回数だけでなく、反則の間隔や内容も考慮する。",
+  law:"第12条"
+},
+{
+  title:"反スポーツ的行為",
+  category:"懲戒",
+  decision:"競技者として不適切な行為をした場合。",
+  restart:"反則内容に応じる。",
+  discipline:"警告。",
+  note:"シミュレーション、SPA、反則で攻撃を妨げる行為などを含む。",
+  law:"第12条"
+},
 {
   title:"重大な反則プレー",
   category:"懲戒",
   decision:"ボールをプレーしようとして、過剰な力や危険な方法で相手の安全を脅かした場合。",
   restart:"直接FK。守備側PA内ならPK。",
   discipline:"退場（レッドカード）。",
-  note:"競技規則上の「著しく不正なプレー」。ボールへのチャレンジが前提。ボールと無関係な暴力的行為は「乱暴な行為」として判断する。",
+  note:"競技規則上の「著しく不正なプレー」。ボールへのチャレンジが前提。ボールと関係ない暴力的な行為とは区別する。",
   law:"第12条"
 },
 {
@@ -190,7 +567,6 @@ const rules=[
   note:"アクセサリーは禁止。すね当ては必須。用具不備がある場合は修正させ、安全確認後に復帰させる。",
   law:"第4条"
 },
-,
 {
   title:"乱暴な行為",
   category:"懲戒",
@@ -218,17 +594,24 @@ const rules=[
   note:"表示された時間は最少の追加時間。必要があればさらに追加できる。",
   law:"第7条"
 },
- ,
 {
-  title:"乱暴な行為",
-  category:"懲戒",
-  decision:"ボールへのチャレンジではなく、相手や他の人に過剰な力や暴力的な行為をした場合。",
-  restart:"状況に応じる。競技者が相手競技者に行った場合は直接FK、PA内ならPK。",
-  discipline:"退場（レッドカード）。",
-  note:"ボールと関係ない場所での暴力行為も対象。味方、審判、チーム役員、観客などへの行為も含む。",
-  law:"第12条"
+  title:"キックオフ",
+  category:"再開方法",
+  decision:"試合開始、後半開始、延長前後半の開始、得点後に行う。",
+  restart:"キックオフ。ボールが蹴られて明らかに動いたらインプレー。",
+  discipline:"通常なし。相手競技者は規定の距離を守る。",
+  note:"キッカーは他の競技者が触れるまで再びボールに触れられない。二度触りは間接FK。",
+  law:"第8条"
 },
-
+{
+  title:"ドロップボール",
+  category:"再開方法",
+  decision:"競技規則で決められた再開方法がない停止、負傷対応、外部からの影響などでプレーを止めた場合に行う。",
+  restart:"ドロップボール。",
+  discipline:"通常なし。停止前の反則や不正行為があれば別途対応。",
+  note:"最後にボールに触れたチームの競技者1人にドロップするのが基本。PA内で停止した場合などはGKにドロップする場合がある。",
+  law:"第8条"
+},
 {
   title:"ボールイン・アウトオブプレー",
   category:"基本ルール",
@@ -256,54 +639,55 @@ const rules=[
   note:"PK。キッカーとGK以外の競技者は、PA外・ペナルティマーク後方・9.15m以上離れる。ボールが蹴られて明らかに動いたらインプレー。",
   law:"第14条"
 }
-  
-
-
- 
 ];
 
-let current="すべて";
+let current="すべて表示";
 let isShort=false;
 
-function esc(s){
-return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+  });
 }
 
-function categories(){
-return ["すべて"].concat([...new Set(rules.map(r=>r.category))]);
+function norm(v){
+  return String(v || "").toLowerCase();
 }
 
 function renderTabs(){
-const box=document.getElementById("tabs");
-box.innerHTML="";
-categories().forEach(c=>{
-const b=document.createElement("button");
-b.className="tab"+(c===current?" active":"");
-b.textContent=c;
-b.onclick=()=>{current=c;renderTabs();renderCards();};
-box.appendChild(b);
-});
+  const box=document.getElementById("tabs");
+  const cats=["すべて表示",...Array.from(new Set(rules.map(r=>r.category)))];
+  box.innerHTML="";
+  cats.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="tab"+(current===c?" active":"");
+    b.textContent=c;
+    b.onclick=()=>{
+      current=c;
+      renderTabs();
+      renderCards();
+    };
+    box.appendChild(b);
+  });
 }
 
 function matchRule(r,q){
-  q = (q || "").trim().toLowerCase();
+  q=(q || "").trim().toLowerCase();
   if(!q) return true;
 
-  const norm = v => String(v || "").toLowerCase();
-
-  const categoryExactExists = rules.some(x => norm(x.category) === q);
+  const categoryExactExists=rules.some(x=>norm(x.category)===q);
   if(categoryExactExists){
-    return norm(r.category) === q;
+    return norm(r.category)===q;
   }
 
-  const isShortAlphaNum = /^[a-z0-9]+$/i.test(q) && q.length <= 3;
-  const titleHitExists = rules.some(x => norm(x.title).includes(q));
+  const isShortAlphaNum=/^[a-z0-9]+$/i.test(q) && q.length<=3;
+  const titleHitExists=rules.some(x=>norm(x.title).includes(q));
 
   if(titleHitExists && !isShortAlphaNum){
     return norm(r.title).includes(q);
   }
 
-  const text = [
+  const text=[
     r.title,
     r.category,
     r.decision,
@@ -316,128 +700,79 @@ function matchRule(r,q){
   return text.includes(q);
 }
 
-
-  
 function renderCards(){
-const q=document.getElementById("q").value.trim();
-const list=rules.filter(r=>(current==="すべて"||r.category===current)&&(!q||matchRule(r,q)));
-const box=document.getElementById("cards");
-box.innerHTML="";
-if(!list.length){box.innerHTML='<div class="empty">該当するルールがありません。</div>';return;}
-list.forEach(r=>{
-const div=document.createElement("div");
-div.className="card";
-div.innerHTML=
-'<div class="top"><h3>'+esc(r.title)+'</h3><span class="badge">'+esc(r.category)+'</span></div>'+
-'<p class="summary">'+esc(r.decision)+'</p>'+
-'<div class="detail"><span class="label">判定</span>'+esc(r.decision)+'</div>'+
-'<div class="detail"><span class="label">再開方法</span>'+esc(r.restart)+'</div>'+
-'<div class="detail extra"><span class="label">懲戒</span>'+esc(r.discipline)+'</div>'+
-'<div class="detail extra"><span class="label">注意点</span>'+esc(r.note)+'</div>'+
-'<div class="detail"><span class="label">参照</span><b>'+esc(r.law)+'</b></div>'+
-'<div class="detail extra"><span class="label">大会要項による変更可能性</span>大会要項に独自規定がある場合は、大会要項を優先してください。</div>';
-box.appendChild(div);
-});
+  const q=document.getElementById("q").value.trim();
+  const list=rules.filter(r=>(current==="すべて表示" || !current || r.category===current) && matchRule(r,q));
+  const box=document.getElementById("cards");
+  box.innerHTML="";
+
+  if(!list.length){
+    box.innerHTML='<div class="empty">該当するカードがありません。</div>';
+    return;
+  }
+
+  list.forEach(r=>{
+    const div=document.createElement("div");
+    div.className="card";
+
+    if(isShort){
+      div.innerHTML=
+        '<div class="top"><h3>'+esc(r.title)+'</h3><span class="cat">'+esc(r.category)+'</span></div>'+
+        '<div class="summary">'+esc(r.decision)+'</div>'+
+        '<div class="detail"><span class="label">再開</span>'+esc(r.restart)+'</div>'+
+        '<div class="law">'+esc(r.law)+'</div>';
+    }else{
+      div.innerHTML=
+        '<div class="top"><h3>'+esc(r.title)+'</h3><span class="cat">'+esc(r.category)+'</span></div>'+
+        '<div class="detail"><span class="label">判定</span>'+esc(r.decision)+'</div>'+
+        '<div class="detail"><span class="label">再開方法</span>'+esc(r.restart)+'</div>'+
+        '<div class="detail"><span class="label">懲戒</span>'+esc(r.discipline)+'</div>'+
+        '<div class="detail"><span class="label">注意点</span>'+esc(r.note)+'</div>'+
+        '<div class="law">参照：'+esc(r.law)+'</div>';
+    }
+
+    box.appendChild(div);
+  });
 }
 
 function clearSearch(){
-document.getElementById("q").value="";
-renderCards();
-}
-
-function showAll(){
-current="すべて";
-document.getElementById("q").value="";
-renderTabs();
-renderCards();
+  document.getElementById("q").value="";
+  current="すべて表示";
+  renderTabs();
+  renderCards();
 }
 
 function toggleShort(){
-isShort=!isShort;
-document.body.classList.toggle("short",isShort);
-document.getElementById("shortBtn").textContent=isShort?"短文表示モード ON":"短文表示モード OFF";
+  isShort=!isShort;
+  document.getElementById("shortBtn").textContent=isShort ? "短文表示モード ON" : "短文表示モード OFF";
+  renderCards();
 }
-
-function getVal(id){return document.getElementById(id).value;}
 
 function makeGuide(){
-const text=
-"【大会専用クイックガイド】\n\n"+
-"大会名："+(getVal("tournamentName")||"未入力")+"\n"+
-"年代："+getVal("age")+"\n"+
-"形式："+getVal("format")+"\n"+
-"審判："+getVal("refs")+"\n"+
-"試合時間："+(getVal("time")||"未入力")+"\n"+
-"交代："+(getVal("subs")||"未入力")+"\n"+
-"飲水・暑熱対応："+(getVal("water")||"未入力")+"\n"+
-"延長・PK方式："+(getVal("pk")||"未入力")+"\n\n"+
-"大会メモ：\n"+(getVal("memo")||"なし")+"\n\n"+
-"優先順位：大会要項 ＞ 年代別ルール ＞ 基本競技規則\n"+
-"不明点は試合前に本部・審判団で確認してください。";
-document.getElementById("guide").textContent=text;
-}
+  const tournament=document.getElementById("tournament").value.trim();
+  const special=document.getElementById("special").value.trim();
+  const text=
+`【大会ガイド】
+大会名：${tournament || "未入力"}
 
-function saveTournament(){
-const ids=["tournamentName","age","format","refs","time","subs","water","pk","memo"];
-const data={};
-ids.forEach(id=>data[id]=getVal(id));
-localStorage.setItem("shinpanTournament",JSON.stringify(data));
-makeGuide();
-alert("保存しました。");
-}
+【特別ルール・注意点】
+${special || "未入力"}
 
-function loadTournament(){
-const s=localStorage.getItem("shinpanTournament");
-if(!s)return;
-try{
-const data=JSON.parse(s);
-Object.keys(data).forEach(id=>{
-if(document.getElementById(id))document.getElementById(id).value=data[id];
-});
-makeGuide();
-}catch(e){}
-}
-
-function resetTournament(){
-if(!confirm("大会要項をリセットしますか？"))return;
-["tournamentName","time","subs","water","pk","memo"].forEach(id=>document.getElementById(id).value="");
-document.getElementById("age").selectedIndex=0;
-document.getElementById("format").selectedIndex=0;
-document.getElementById("refs").selectedIndex=0;
-localStorage.removeItem("shinpanTournament");
-document.getElementById("guide").textContent="大会要項を入力して「大会ガイドを作成」を押してください。";
-}
-
-function renderChecks(){
-const saved=JSON.parse(localStorage.getItem("shinpanChecks")||"{}");
-const box=document.getElementById("checks");
-box.innerHTML="";
-checkItems.forEach((item,i)=>{
-const id="c"+i;
-const lab=document.createElement("label");
-lab.className="check";
-lab.innerHTML='<input type="checkbox" '+(saved[id]?"checked":"")+'> <span>'+esc(item)+'</span>';
-const cb=lab.querySelector("input");
-cb.onchange=()=>{
-const now=JSON.parse(localStorage.getItem("shinpanChecks")||"{}");
-now[id]=cb.checked;
-localStorage.setItem("shinpanChecks",JSON.stringify(now));
-};
-box.appendChild(lab);
-});
-}
-
-function resetChecks(){
-localStorage.removeItem("shinpanChecks");
-renderChecks();
+【確認事項】
+・試合時間
+・交代人数、再出場の可否
+・同点時の扱い
+・PK戦の有無
+・飲水タイム
+・警告、退場、累積の扱い
+・大会要項を最優先`;
+  document.getElementById("guide").textContent=text;
 }
 
 document.getElementById("q").addEventListener("input",renderCards);
 
 renderTabs();
 renderCards();
-renderChecks();
-loadTournament();
 </script>
 </body>
 </html>
