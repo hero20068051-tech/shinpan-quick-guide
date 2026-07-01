@@ -143,8 +143,12 @@ const rules=[
 {title:"GKへのバックパス",category:"GK",decision:"味方が足で意図的に蹴ったボールをGKが手や腕で扱った場合。",restart:"間接FK。",discipline:"通常なし。",note:"ヘディング、胸、膝など足以外で戻した場合は通常対象外。",law:"第12条"},
 {title:"二度触り",category:"再開方法",decision:"再開後、他の競技者が触れる前にキッカーが再びボールに触れた場合。",restart:"間接FK。",discipline:"通常なし。",note:"手や腕で扱った場合はハンド等の反則も確認する。",law:"第13〜17条"},
 {title:"フリーキックの距離",category:"再開方法",decision:"相手競技者は原則9.15m以上ボールから離れる。",restart:"本来のFK。",discipline:"再開を遅らせる、距離を守らない場合は警告対象。",note:"クイックリスタートを不当に妨害しない。",law:"第13条"},
-{title:"壁の人数制限",category:"再開方法",decision:"守備側3人以上の壁ができた場合、攻撃側は壁から1m以上離れる。",restart:"違反した場合は相手の間接FK。",discipline:"通常なし。",note:"攻撃側が1m以内に入った場合に適用する。",law:"第13条"}
- 
+{title:"壁の人数制限",category:"再開方法",decision:"守備側3人以上の壁ができた場合、攻撃側は壁から1m以上離れる。",restart:"違反した場合は相手の間接FK。",discipline:"通常なし。",note:"攻撃側が1m以内に入った場合に適用する。",law:"第13条"},
+ {title:"守備側PA内のFK",category:"再開方法",decision:"守備側のPA内FKは、ボールが蹴られて明らかに動いた時点でインプレー。",restart:"直接FKまたは間接FK。",discipline:"なし。",note:"ボールがPA外に出る必要はない。",law:"第13条"},
+{title:"PK戦",category:"試合運営",decision:"両チーム同数の競技者で行い、規定本数後に同点ならサドンデス。",restart:"ペナルティーマークからのキック。",discipline:"警告・退場はPK戦中も適用される。",note:"実施人数、本数、方式は大会要項を優先する。",law:"第10条"},
+{title:"主審の権限",category:"主審",decision:"競技規則を適用し、試合に関する最終判断を行う。",restart:"状況による。",discipline:"必要に応じて警告・退場等を行う。",note:"プレーに関する主審の判断は最終決定。",law:"第5条"},
+{title:"副審の役割",category:"副審",decision:"オフサイド、ボールアウト、反則の補助などを行う。",restart:"主審の判断による。",discipline:"なし。",note:"副審は主審を援助し、最終決定権は主審にある。",law:"第6条"},
+{title:"試合成立人数",category:"試合運営",decision:"11人制では一方のチームが7人未満になると試合続行不可。",restart:"試合終了または大会本部判断。",discipline:"状況による。",note:"小学生・8人制・大会独自規定では大会要項を確認する。",law:"第3条"} 
 ];
 
 let current="すべて";
