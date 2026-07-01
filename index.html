@@ -208,10 +208,13 @@
     <div id="tabs" class="tabs"></div>
   </section>
 
+
   <section>
-    <h2>ルールカード</h2>
-    <div id="cards" class="cards"></div>
-  </section>
+  <h2>ルールカード</h2>
+  <div id="count" class="count">表示中：0件</div>
+  <div id="cards" class="cards"></div>
+</section>
+
 
   <section>
     <h2>大会要項入力</h2>
@@ -740,7 +743,15 @@ function renderCards(){
   const q=document.getElementById("q").value.trim();
   const list=rules.filter(r=>(current==="すべて表示" || !current || r.category===current) && matchRule(r,q));
   const box=document.getElementById("cards");
+  const count=document.getElementById("count");
+
+  if(count){
+    const label=q ? `検索「${q}」` : current;
+    count.textContent=`${label}：${list.length}件 / 全${rules.length}件`;
+  }
+
   box.innerHTML="";
+
 
   if(!list.length){
     box.innerHTML='<div class="empty">該当するカードがありません。</div>';
