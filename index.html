@@ -291,15 +291,11 @@ function matchRule(r,q){
 
   const norm = v => String(v || "").toLowerCase();
 
-  // カテゴリ名で検索された場合はカテゴリ完全一致を優先
   const categoryExactExists = rules.some(x => norm(x.category) === q);
   if(categoryExactExists){
     return norm(r.category) === q;
   }
 
-  // タイトルに検索語が入るカードがある場合は、タイトル一致を優先
-  // 例：「得点」→「得点の成立」だけを出しやすくする
-  // ただし PK など短い英数字は本文検索も使えるようにする
   const isShortAlphaNum = /^[a-z0-9]+$/i.test(q) && q.length <= 3;
   const titleHitExists = rules.some(x => norm(x.title).includes(q));
 
@@ -307,7 +303,6 @@ function matchRule(r,q){
     return norm(r.title).includes(q);
   }
 
-  // タイトル一致がない場合は、本文も含めて検索
   const text = [
     r.title,
     r.category,
@@ -322,6 +317,7 @@ function matchRule(r,q){
 }
 
 
+  
 function renderCards(){
 const q=document.getElementById("q").value.trim();
 const list=rules.filter(r=>(current==="すべて"||r.category===current)&&(!q||matchRule(r,q)));
