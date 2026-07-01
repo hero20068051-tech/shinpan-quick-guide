@@ -883,5 +883,39 @@ function clearSearch(){
   renderCards();
 }
 
-function toggleShor
+function toggleShort(){
+  isShort=!isShort;
+  document.getElementById("shortBtn").textContent=isShort ? "短文表示モード ON" : "短文表示モード OFF";
+  renderCards();
+}
+
+function makeGuide(){
+  const tournament=document.getElementById("tournament").value.trim();
+  const special=document.getElementById("special").value.trim();
+  const text=
+`【大会ガイド】
+大会名：${tournament || "未入力"}
+
+【特別ルール・注意点】
+${special || "未入力"}
+
+【確認事項】
+・試合時間
+・交代人数、再出場の可否
+・同点時の扱い
+・PK戦の有無
+・飲水タイム
+・警告、退場、累積の扱い
+・大会要項を最優先`;
+  document.getElementById("guide").textContent=text;
+}
+
+document.getElementById("q").addEventListener("input",renderCards);
+
+renderTabs();
+renderCards();
+</script>
+</body>
+</html>
+
   
