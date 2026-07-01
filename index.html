@@ -121,9 +121,26 @@ const rules=[
 {title:"SPA",category:"懲戒",decision:"有望な攻撃を反則で止めた場合。",restart:"反則に応じたFK。",discipline:"警告。",note:"カウンター阻止などが典型例。",law:"第12条"},
 {title:"交代（10秒ルール）",category:"交代",decision:"交代選手は退出後に入場。",restart:"通常どおり。",discipline:"遅延行為は警告対象。",note:"退出選手は最も近い境界線から10秒以内に退場する。",law:"第3条"},
 {title:"GK8秒ルール",category:"GK",decision:"GKが8秒以上ボールを保持した場合。",restart:"相手チームのCK。",discipline:"通常は懲戒なし。",note:"審判は残り5秒を手でカウントする。",law:"第12条"},
-{title:"キックオフ",category:"再開方法",decision:"試合開始・得点後に実施。",restart:"キックオフ。",discipline:"なし。",note:"ボールが動けばインプレー。",law:"第8条"},
-{title:"ドロップボール",category:"再開方法",decision:"競技規則上、特別な理由で中断した場合。",restart:"ドロップボール。",discipline:"なし。",note:"原則として最後にボールを保持していた側に与える。",law:"第8条"},
+{
+  title:"ドロップボール",
+  category:"再開方法",
+  decision:"競技規則で決められた再開方法がない停止、負傷対応、外部からの影響などでプレーを止めた場合に行う。",
+  restart:"ドロップボール。",
+  discipline:"通常なし。停止前の反則や不正行為があれば別途対応。",
+  note:"最後にボールに触れたチームの競技者1人にドロップするのが基本。PA内で停止した場合などはGKにドロップする場合がある。",
+  law:"第8条"
+}
+
 {title:"雷・暑熱対応",category:"安全管理",decision:"大会要項や本部判断を優先。",restart:"再開時は中断時の方法による。",discipline:"なし。",note:"雷鳴時は即中断、飲水タイム等を適用。",law:"大会要項優先"},
+{
+  title:"キックオフ",
+  category:"再開方法",
+  decision:"試合開始、後半開始、延長前後半の開始、得点後に行う。",
+  restart:"キックオフ。ボールが蹴られて明らかに動いたらインプレー。",
+  discipline:"通常なし。相手競技者は規定の距離を守る。",
+  note:"キッカーは他の競技者が触れるまで再びボールに触れられない。二度触りは間接FK。",
+  law:"第8条"
+}
 
 {title:"警告（イエローカード）",category:"懲戒",decision:"反スポーツ的行為、異議、遅延行為など。",restart:"反則内容に応じる。",discipline:"警告。",note:"累積警告は大会要項を確認。",law:"第12条"},
 {title:"退場（レッドカード）",category:"懲戒",decision:"著しく不正なプレー、暴力行為、侮辱的発言など。",restart:"反則内容に応じる。",discipline:"退場。",note:"退場後の再出場は不可。",law:"第12条"},
