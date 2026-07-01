@@ -96,17 +96,15 @@
       padding:9px 12px;
     }
     .count{
-  display:inline-block;
-  background:#f0f7f5;
-  color:#007566;
-  font-size:14px;
-  font-weight:800;
-  padding:6px 10px;
-  border-radius:999px;
-  margin:-4px 0 12px;
-}
-
-
+      display:inline-block;
+      background:#f0f7f5;
+      color:#007566;
+      font-size:14px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      margin:-4px 0 12px;
+    }
     .tab.active{
       background:#008b7a;
       color:white;
@@ -213,13 +211,11 @@
     <div id="tabs" class="tabs"></div>
   </section>
 
-
   <section>
-  <h2>ルールカード</h2>
-  <div id="count" class="count">表示中：0件</div>
-  <div id="cards" class="cards"></div>
-</section>
-
+    <h2>ルールカード</h2>
+    <div id="count" class="count">表示中：0件</div>
+    <div id="cards" class="cards"></div>
+  </section>
 
   <section>
     <h2>大会要項入力</h2>
@@ -248,6 +244,7 @@
 </main>
 
 <script>
+// rules配列カード数：58枚
 const rules=[
 {
   title:"ハンド",
@@ -354,7 +351,7 @@ const rules=[
   decision:"ボール全体がタッチラインを越えた場合。",
   restart:"最後に触れたチームの相手チームのスローイン。",
   discipline:"通常なし。",
-  note:"両足を地面につけ、頭の後ろから投げる。",
+  note:"ボール全体がタッチラインを越えたとき、最後に触れた競技者の相手チームが行う。両足の一部をタッチライン上または外側の地面につけ、頭の後方から頭上を通して投げる。",
   law:"第15条"
 },
 {
@@ -624,7 +621,7 @@ const rules=[
   decision:"競技規則で決められた再開方法がない停止、負傷対応、外部からの影響などでプレーを止めた場合に行う。",
   restart:"ドロップボール。",
   discipline:"通常なし。停止前の反則や不正行為があれば別途対応。",
-  note:"最後にボールに触れたチームの競技者1人にドロップするのが基本。PA内で停止した場合などはGKにドロップする場合がある。",
+  note:"最後にボールに触れたチームの競技者1人にボールを落とす。ほかの競技者はボールがインプレーになるまで4m以上離れる。ペナルティエリア内で停止した場合などは、守備側ゴールキーパーに落とす。",
   law:"第8条"
 },
 {
@@ -680,10 +677,98 @@ const rules=[
   discipline:"通常なし。関係者の不正行為があれば別途対応。",
   note:"ボールや競技者への影響があったか、安全に問題があるかを確認する。",
   law:"第5・8条"
+},
+{
+  title:"試合時間",
+  category:"試合運営",
+  decision:"試合時間は競技規則または大会要項に基づいて決定する。",
+  restart:"各ピリオドの開始はキックオフで行う。",
+  discipline:"通常は懲戒なし。",
+  note:"試合時間や延長、ランニングタイムの有無は大会要項で確認する。アディショナルタイムを取る場合は、空費された時間を考慮して主審が判断する。",
+  law:"第7条"
+},
+{
+  title:"ハーフタイム",
+  category:"試合運営",
+  decision:"競技者にはハーフタイムの休憩が認められる。",
+  restart:"後半はキックオフで再開する。",
+  discipline:"通常は懲戒なし。",
+  note:"ハーフタイムの長さは大会要項で確認する。再開前に両チームの人数、用具、フィールドの安全を確認する。",
+  law:"第7条"
+},
+{
+  title:"コイントス",
+  category:"試合運営",
+  decision:"試合前にコイントスを行い、攻める方向やキックオフを決定する。",
+  restart:"試合開始はキックオフで行う。",
+  discipline:"通常は懲戒なし。",
+  note:"試合前に主審が実施する。勝ったチームは攻める方向またはキックオフのどちらかを選ぶ。",
+  law:"第8条"
+},
+{
+  title:"試合の中止・中断",
+  category:"試合運営",
+  decision:"安全に試合を続けられない場合、主審は試合を一時中断または中止できる。",
+  restart:"中断理由や停止時の状況に応じて再開方法を判断する。",
+  discipline:"状況に応じて警告・退場の対象となる場合がある。",
+  note:"雷、荒天、けが、フィールドや用具の危険など、安全に試合を続けられない場合は中断または中止を検討する。大会本部や責任者がいる場合は連携する。",
+  law:"第5条"
+},
+{
+  title:"ボールの交換",
+  category:"試合運営",
+  decision:"ボールが破損した、または安全に使用できない場合は交換する。",
+  restart:"プレー中に破損して停止した場合はドロップボールで再開する。停止中に交換した場合は本来の再開方法で再開する。",
+  discipline:"通常は懲戒なし。",
+  note:"ボールが破損した、空気が不足している、または安全に使用できない場合は交換する。交換後の再開方法は、プレーを止めた理由や位置に応じて判断する。",
+  law:"第2条"
+},
+{
+  title:"競技者の入退場",
+  category:"試合運営",
+  decision:"競技者がフィールドに入る、または復帰する場合は、主審の承認が必要となる場合がある。",
+  restart:"プレーを停止した理由に応じた方法で再開する。",
+  discipline:"主審の承認なく入場または復帰した場合は警告対象となる場合がある。",
+  note:"けが、用具の修正、出血対応などで一度フィールドを離れた競技者は、主審の承認を得てから復帰する。プレー中に勝手に入ることは認められない。",
+  law:"第3条"
+},
+{
+  title:"主審の笛",
+  category:"試合運営",
+  decision:"主審は必要に応じて笛を用いてプレーの停止や再開を明確にする。",
+  restart:"停止または再開の理由に応じた方法で行う。",
+  discipline:"通常は懲戒なし。",
+  note:"すべての再開に笛が必要なわけではない。得点後のキックオフ、ペナルティキック、交代後の再開、カード提示後の再開など、試合を明確に管理したい場面では笛を使う。",
+  law:"第5条"
+},
+{
+  title:"審判員のシグナル",
+  category:"試合運営",
+  decision:"審判員は判定や再開方法を明確に伝えるため、必要なシグナルを行う。",
+  restart:"判定内容に応じた方法で再開する。",
+  discipline:"通常は懲戒なし。",
+  note:"シグナルは選手、ベンチ、観客に判定を伝えるために行う。大きく、分かりやすく、迷いのない動作を心がける。",
+  law:"第5条"
+},
+{
+  title:"ユニフォーム色の確認",
+  category:"試合運営",
+  decision:"両チーム、ゴールキーパー、審判員は互いに区別できる色のユニフォームを着用する。",
+  restart:"試合開始前に確認し、必要に応じて対応してから開始する。",
+  discipline:"通常は懲戒なし。主審の指示に従わない場合は警告対象となる場合がある。",
+  note:"両チーム、ゴールキーパー、審判員の色が区別できるか試合前に確認する。紛らわしい場合は、ビブスや別色のシャツなどで対応する。",
+  law:"第4条"
+},
+{
+  title:"ゴールの移動・破損",
+  category:"試合運営",
+  decision:"ゴールが移動、破損、または安全に使用できない状態になった場合は、試合を停止する。",
+  restart:"安全確認後、停止時の状況に応じた方法で再開する。",
+  discipline:"故意にゴールを動かした、破損させた場合などは警告または退場の対象となる場合がある。",
+  note:"ゴールが動いた、傾いた、破損した場合は安全確認を優先する。正しい位置に戻せない場合や危険がある場合は、試合を再開しない。",
+  law:"第1条"
 }
 ];
-
-  
 
 let current="すべて表示";
 let isShort=false;
@@ -757,7 +842,6 @@ function renderCards(){
 
   box.innerHTML="";
 
-
   if(!list.length){
     box.innerHTML='<div class="empty">該当するカードがありません。</div>';
     return;
@@ -796,35 +880,4 @@ function clearSearch(){
 
 function toggleShort(){
   isShort=!isShort;
-  document.getElementById("shortBtn").textContent=isShort ? "短文表示モード ON" : "短文表示モード OFF";
-  renderCards();
-}
-
-function makeGuide(){
-  const tournament=document.getElementById("tournament").value.trim();
-  const special=document.getElementById("special").value.trim();
-  const text=
-`【大会ガイド】
-大会名：${tournament || "未入力"}
-
-【特別ルール・注意点】
-${special || "未入力"}
-
-【確認事項】
-・試合時間
-・交代人数、再出場の可否
-・同点時の扱い
-・PK戦の有無
-・飲水タイム
-・警告、退場、累積の扱い
-・大会要項を最優先`;
-  document.getElementById("guide").textContent=text;
-}
-
-document.getElementById("q").addEventListener("input",renderCards);
-
-renderTabs();
-renderCards();
-</script>
-</body>
-</html>
+  document.getElementById("shortBtn").tex
