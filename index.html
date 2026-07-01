@@ -286,50 +286,41 @@ box.appendChild(b);
 }
 
 function matchRule(r,q){
-q=q.trim().toLowerCase();
+  q = (q || "").trim().toLowerCase();
+  if(!q) return true;
 
-const category=r.category.toLowerCase();
-const title=r.title.toLowerCase();
+  const norm = v => String(v || "").toLowerCase();
 
-// カテゴリ名で検索した場合はカテゴリ完全一致
-if(
-q==="懲戒" ||
-q==="ファウル" ||
-q==="オフサイド" ||
-q==="再開方法" ||
-q==="交代" ||
-q==="gk" ||
-q==="安全管理" ||
-q==="運営" ||
-q==="主審" ||
-q==="副審" ||
-q==="試合運営"
-){
-return category===q;
+  // カテゴリ名で検索された場合はカテゴリ完全一致を優先
+  const categoryExactExists = rules.some(x => norm(x.category) === q);
+  if(categoryExactExists){
+    return norm(r.category) === q;
+  }
+
+  // タイトルに検索語が入るカードがある場合は、タイトル一致を優先
+  // 例：「得点」→「得点の成立」だけを出しやすくする
+  // ただし PK など短い英数字は本文検索も使えるようにする
+  const isShortAlphaNum = /^[a-z0-9]+$/i.test(q) && q.length <= 3;
+  const titleHitExists = rules.some(x => norm(x.title).includes(q));
+
+  if(titleHitExists && !isShortAlphaNum){
+    return norm(r.title).includes(q);
+  }
+
+  // タイトル一致がない場合は、本文も含めて検索
+  const text = [
+    r.title,
+    r.category,
+    r.decision,
+    r.restart,
+    r.discipline,
+    r.note,
+    r.law
+  ].map(norm).join(" ");
+
+  return text.includes(q);
 }
 
-// タイトルに一致するカードが1つでもある場合は、タイトル一致だけ表示
-const hasTitleMatch=rules.some(function(item){
-return item.title.toLowerCase().indexOf(q)!==-1;
-});
-
-if(hasTitleMatch){
-return title.indexOf(q)!==-1;
-}
-
-// タイトルに一致がない場合だけ、本文まで広く検索
-const t=[
-r.title,
-r.category,
-r.decision,
-r.restart,
-r.discipline,
-r.note,
-r.law
-].join(" ").toLowerCase();
-
-return t.indexOf(q)!==-1;
-}
 
 function renderCards(){
 const q=document.getElementById("q").value.trim();
