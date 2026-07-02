@@ -1130,6 +1130,21 @@ function renderTabs(){
 function matchRule(r,q){
   q=(q || "").trim().toLowerCase();
   if(!q) return true;
+  if(q==="pk" || q==="ｐｋ"){
+    const kw = Array.isArray(r.keywords) ? r.keywords.join(" ") : (r.keywords || "");
+    const mainText = [
+      r.title || "",
+      r.category || "",
+      kw
+    ].join(" ").toLowerCase();
+
+    return (
+      /(^|[^a-z0-9])pk($|[^a-z0-9])/.test(mainText) ||
+      mainText.includes("ｐｋ") ||
+      mainText.includes("pk戦") ||
+      mainText.includes("ペナルティーキック")
+    );
+  }
 
   const categoryExactExists=rules.some(x=>norm(x.category)===q);
   if(categoryExactExists){
