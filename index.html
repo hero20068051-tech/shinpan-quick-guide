@@ -187,6 +187,111 @@
       padding-left:20px;
       margin:8px 0 0;
     }
+  .tournament-box {
+  margin: 14px 0;
+  padding: 12px;
+  border: 1px solid #d8e0ea;
+  border-radius: 14px;
+  background: #f8fbff;
+}
+
+.tournament-box summary {
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  color: #123;
+}
+
+.tournament-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tournament-grid label,
+.wide-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #243447;
+}
+
+.tournament-grid input,
+.tournament-grid select,
+.wide-label textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px;
+  border: 1px solid #ccd6e0;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.wide-label {
+  margin-top: 10px;
+}
+
+.tournament-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tournament-actions button,
+.related-rule-buttons button {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #1f6feb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tournament-actions button:nth-child(4) {
+  background: #6b7280;
+}
+
+.tournament-summary {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e1e8f0;
+  line-height: 1.7;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.related-rule-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.related-rule-buttons button {
+  background: #0f766e;
+}
+
+@media (max-width: 700px) {
+  .tournament-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tournament-actions button,
+  .related-rule-buttons button {
+    width: auto;
+    font-size: 12px;
+  }
+}
+
   </style>
 </head>
 
@@ -218,18 +323,90 @@
   </section>
 
   <section>
-    <h2>大会要項入力</h2>
-    <p>大会ごとの違いを入力すると、専用クイックガイドを作成できます。</p>
+   <section class="tournament-box">
+  <details open>
+    <summary>大会要項かんたん入力 v1</summary>
 
-    <label>大会名</label>
-    <textarea id="tournament" placeholder="例：〇〇市少年サッカー大会"></textarea>
+    <div class="tournament-grid">
+      <label>
+        大会名
+        <input id="taName" type="text" placeholder="例：U12少女大会">
+      </label>
 
-    <label>特別ルール・注意点</label>
-    <textarea id="special" placeholder="例：8人制、交代自由、同点時PK戦、飲水タイムあり"></textarea>
+      <label>
+        対象
+        <input id="taTarget" type="text" placeholder="例：6年生以下女子">
+      </label>
 
-    <button class="guideBtn" onclick="makeGuide()">大会ガイド作成</button>
-    <div id="guide" class="guideBox">ここに大会ガイドが表示されます。</div>
-  </section>
+      <label>
+        競技形式
+        <select id="taFormat">
+          <option value="">選択してください</option>
+          <option>8人制</option>
+          <option>11人制</option>
+          <option>その他</option>
+        </select>
+      </label>
+
+      <label>
+        試合方式
+        <select id="taMethod">
+          <option value="">選択してください</option>
+          <option>予選リーグ＋順位決定戦</option>
+          <option>リーグ戦</option>
+          <option>トーナメント</option>
+          <option>フェスティバル・交流戦</option>
+          <option>その他</option>
+        </select>
+      </label>
+
+      <label>
+        試合時間
+        <input id="taTime" type="text" placeholder="例：15分-5分-15分">
+      </label>
+
+      <label>
+        交代
+        <input id="taSub" type="text" placeholder="例：自由交代・再出場可">
+      </label>
+
+      <label>
+        審判方式
+        <input id="taReferee" type="text" placeholder="例：2名制、1人制、4審制">
+      </label>
+
+      <label>
+        時間管理
+        <input id="taTimer" type="text" placeholder="例：審判割当左側が担当">
+      </label>
+
+      <label>
+        同点時
+        <input id="taDraw" type="text" placeholder="例：延長なし、3人制PK">
+      </label>
+
+      <label>
+        飲水・暑熱対応
+        <input id="taWater" type="text" placeholder="例：飲水タイム、クーリングブレイクあり">
+      </label>
+    </div>
+
+    <label class="wide-label">
+      その他注意事項
+      <textarea id="taNote" rows="4" placeholder="例：試合開始5分前集合、雷鳴時は中断、6人未満は不成立など"></textarea>
+    </label>
+
+    <div class="tournament-actions">
+      <button type="button" onclick="makeTournamentGuide()">大会ルールまとめ作成</button>
+      <button type="button" onclick="saveTournamentGuide()">保存</button>
+      <button type="button" onclick="loadTournamentGuide()">読込</button>
+      <button type="button" onclick="clearTournamentGuide()">入力クリア</button>
+    </div>
+
+    <div id="tournamentSummary" class="tournament-summary"></div>
+    <div id="relatedRuleButtons" class="related-rule-buttons"></div>
+  </details>
+</section>
 
   <section>
     <h2>試合前チェックリスト</h2>
@@ -1004,6 +1181,209 @@ document.getElementById("q").addEventListener("input",renderCards);
 
 renderTabs();
 renderCards();
+const tournamentFieldIds = [
+  "taName",
+  "taTarget",
+  "taFormat",
+  "taMethod",
+  "taTime",
+  "taSub",
+  "taReferee",
+  "taTimer",
+  "taDraw",
+  "taWater",
+  "taNote"
+];
+
+function getTournamentValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function setTournamentValue(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value || "";
+}
+
+function makeTournamentGuide() {
+  const name = getTournamentValue("taName");
+  const target = getTournamentValue("taTarget");
+  const format = getTournamentValue("taFormat");
+  const method = getTournamentValue("taMethod");
+  const time = getTournamentValue("taTime");
+  const sub = getTournamentValue("taSub");
+  const referee = getTournamentValue("taReferee");
+  const timer = getTournamentValue("taTimer");
+  const draw = getTournamentValue("taDraw");
+  const water = getTournamentValue("taWater");
+  const note = getTournamentValue("taNote");
+
+  let text = "";
+
+  text += "【大会ルールまとめ】\n\n";
+
+  if (name || target || format || method) {
+    text += "■ 基本\n";
+    if (name) text += "大会名：" + name + "\n";
+    if (target) text += "対象：" + target + "\n";
+    if (format) text += "競技形式：" + format + "\n";
+    if (method) text += "試合方式：" + method + "\n";
+    text += "\n";
+  }
+
+  if (time || draw) {
+    text += "■ 試合・勝敗\n";
+    if (time) text += "試合時間：" + time + "\n";
+    if (draw) text += "同点時：" + draw + "\n";
+    text += "\n";
+  }
+
+  if (sub) {
+    text += "■ 交代\n";
+    text += "交代：" + sub + "\n\n";
+  }
+
+  if (referee || timer) {
+    text += "■ 審判\n";
+    if (referee) text += "審判方式：" + referee + "\n";
+    if (timer) text += "時間管理：" + timer + "\n";
+    text += "\n";
+  }
+
+  if (water || note) {
+    text += "■ 注意事項\n";
+    if (water) text += "飲水・暑熱対応：" + water + "\n";
+    if (note) text += note + "\n";
+  }
+
+  if (text === "【大会ルールまとめ】\n\n") {
+    text += "まだ入力がありません。大会要項を入力してください。";
+  }
+
+  const output = document.getElementById("tournamentSummary");
+  if (output) output.textContent = text;
+
+  makeRelatedRuleButtons();
+}
+
+function saveTournamentGuide() {
+  const data = {};
+  tournamentFieldIds.forEach(id => {
+    data[id] = getTournamentValue(id);
+  });
+
+  localStorage.setItem("shinpanTournamentGuide", JSON.stringify(data));
+  alert("大会要項を保存しました。");
+}
+
+function loadTournamentGuide() {
+  const raw = localStorage.getItem("shinpanTournamentGuide");
+
+  if (!raw) {
+    alert("保存された大会要項がありません。");
+    return;
+  }
+
+  try {
+    const data = JSON.parse(raw);
+
+    tournamentFieldIds.forEach(id => {
+      setTournamentValue(id, data[id]);
+    });
+
+    makeTournamentGuide();
+  } catch (e) {
+    alert("保存データの読込に失敗しました。");
+  }
+}
+
+function clearTournamentGuide() {
+  if (!confirm("大会要項の入力をクリアしますか？")) return;
+
+  tournamentFieldIds.forEach(id => {
+    setTournamentValue(id, "");
+  });
+
+  const output = document.getElementById("tournamentSummary");
+  if (output) output.textContent = "";
+
+  const buttons = document.getElementById("relatedRuleButtons");
+  if (buttons) buttons.innerHTML = "";
+}
+
+function makeRelatedRuleButtons() {
+  const values = tournamentFieldIds.map(id => getTournamentValue(id)).join(" ");
+  const keywords = [];
+
+  function addKeyword(word) {
+    if (!keywords.includes(word)) keywords.push(word);
+  }
+
+  addKeyword("試合時間");
+  addKeyword("主審の笛");
+
+  if (values.includes("8人制")) addKeyword("8人制");
+  if (values.includes("15分") || values.includes("20分")) addKeyword("ハーフタイム");
+  if (values.includes("自由交代") || values.includes("交代")) addKeyword("競技者の入退場");
+  if (values.includes("PK") || values.includes("ＰＫ")) addKeyword("PK");
+  if (values.includes("審判")) addKeyword("審判シグナル");
+  if (values.includes("ユニフォーム")) addKeyword("ユニフォーム確認");
+  if (values.includes("飲水")) addKeyword("飲水");
+  if (values.includes("クーリング")) addKeyword("クーリング");
+  if (values.includes("雷") || values.includes("中断") || values.includes("中止")) addKeyword("試合中止");
+  if (values.includes("6人")) addKeyword("競技者数");
+  if (values.includes("ボール") || values.includes("4号")) addKeyword("ボール交換");
+  if (values.includes("キックオフ")) addKeyword("キックオフ");
+  if (values.includes("警告")) addKeyword("警告");
+  if (values.includes("退場")) addKeyword("退場");
+
+  const area = document.getElementById("relatedRuleButtons");
+  if (!area) return;
+
+  area.innerHTML = "";
+
+  const label = document.createElement("div");
+  label.style.width = "100%";
+  label.style.fontWeight = "700";
+  label.style.marginTop = "4px";
+  label.textContent = "関連カードを検索：";
+  area.appendChild(label);
+
+  keywords.forEach(word => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = word;
+    btn.onclick = function() {
+      searchTournamentRelatedRule(word);
+    };
+    area.appendChild(btn);
+  });
+}
+
+function searchTournamentRelatedRule(word) {
+  const input =
+    document.getElementById("q") ||
+    document.getElementById("search") ||
+    document.getElementById("searchInput") ||
+    document.querySelector('input[type="search"]') ||
+    document.querySelector('input[placeholder*="検索"]');
+
+  if (input) {
+    input.value = word;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  if (typeof renderCards === "function") {
+    renderCards();
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
 </script>
 </body>
 </html>
