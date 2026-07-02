@@ -244,7 +244,7 @@
 </main>
 
 <script>
-// rules配列カード数：58枚
+// rules配列カード数：68枚
 const rules=[
 {
   title:"ハンド",
@@ -257,7 +257,7 @@ const rules=[
 },
 {
   title:"オフサイド",
-  category:"再開方法",
+  category:"オフサイド",
   decision:"オフサイドポジションにいる競技者がプレーに関与した場合。",
   restart:"間接FK。",
   discipline:"通常なし。",
@@ -767,6 +767,96 @@ const rules=[
   discipline:"故意にゴールを動かした、破損させた場合などは警告または退場の対象となる場合がある。",
   note:"ゴールが動いた、傾いた、破損した場合は安全確認を優先する。正しい位置に戻せない場合や危険がある場合は、試合を再開しない。",
   law:"第1条"
+},
+{
+  title:"ジャンピング",
+  category:"ファウル",
+  decision:"相手に飛びかかる、またはジャンプして不正に接触した場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"不用意なら懲戒なし。無謀なら警告、過剰な力なら退場。",
+  note:"空中での競り合いでは、ボールへの正当なチャレンジか、相手の安全を脅かす接触かを判断する。",
+  law:"第12条"
+},
+{
+  title:"ストライキング",
+  category:"ファウル",
+  decision:"相手を打つ、または打とうとした場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"不用意なら懲戒なし。無謀なら警告、過剰な力や暴力的な行為なら退場。",
+  note:"手、腕、肘、頭などで相手を打つ、または打とうとする行為が対象。ボールへのチャレンジか、乱暴な行為かを区別する。",
+  law:"第12条"
+},
+{
+  title:"タックル",
+  category:"ファウル",
+  decision:"ボールにチャレンジする際、不用意、無謀、または過剰な力で相手に接触した場合。",
+  restart:"直接FK。守備側PA内ならPK。",
+  discipline:"不用意なら懲戒なし。無謀なら警告、過剰な力なら退場。",
+  note:"先にボールに触れていても、その後の接触が危険または無謀であれば反則となる場合がある。",
+  law:"第12条"
+},
+{
+  title:"進路妨害（身体的接触なし）",
+  category:"ファウル",
+  decision:"ボールがプレーできる距離にない状態で、接触せずに相手の進路を妨げた場合。",
+  restart:"間接FK。",
+  discipline:"通常は懲戒なし。有望な攻撃を妨げた場合などは警告を検討する。",
+  note:"接触があればホールディング、プッシング、チャージなど直接FK対象の反則になる場合がある。",
+  law:"第12条"
+},
+{
+  title:"スピッティング",
+  category:"懲戒",
+  decision:"相手競技者や他の人につばを吐いた、または吐こうとした場合。",
+  restart:"相手競技者に対して競技者が行った場合は直接FK。守備側PA内ならPK。状況に応じて再開を判断する。",
+  discipline:"退場（レッドカード）。",
+  note:"相手、味方、審判、チーム役員、観客など対象者を問わない。実際に当たったかどうかだけでなく、行為そのものを重く扱う。",
+  law:"第12条"
+},
+{
+  title:"オフサイド：プレーへの干渉",
+  category:"オフサイド",
+  decision:"オフサイドポジションにいた競技者が、味方競技者がプレーまたは触れたボールをプレーした、または触れた場合。",
+  restart:"相手チームの間接FK。",
+  discipline:"通常は懲戒なし。",
+  note:"オフサイドポジションにいるだけでは反則ではない。実際にボールをプレーした、または触れた時点で反則となる。",
+  law:"第11条"
+},
+{
+  title:"オフサイド：相手競技者への干渉",
+  category:"オフサイド",
+  decision:"オフサイドポジションにいた競技者が、相手競技者のプレーや視線、動きを妨げた場合。",
+  restart:"相手チームの間接FK。",
+  discipline:"通常は懲戒なし。",
+  note:"ボールに触れていなくても、相手の視線を遮る、ボールへチャレンジする、相手のプレーを明らかに妨げる場合はオフサイドとなる。",
+  law:"第11条"
+},
+{
+  title:"オフサイド：利益を得る",
+  category:"オフサイド",
+  decision:"オフサイドポジションにいた競技者が、ゴールポスト、クロスバー、審判員、相手競技者から跳ね返ったボールをプレーした場合。",
+  restart:"相手チームの間接FK。",
+  discipline:"通常は懲戒なし。",
+  note:"相手競技者の意図的なプレーではなく、セーブや跳ね返りによってボールを受けた場合は、オフサイドの利益を得たと判断する。",
+  law:"第11条"
+},
+{
+  title:"PA内外の反則位置",
+  category:"ファウル",
+  decision:"直接FK対象の反則が守備側競技者によって自陣PA内で行われた場合はPKとなる。",
+  restart:"PA外なら直接FK。守備側PA内ならPK。",
+  discipline:"反則内容により警告・退場を判断する。",
+  note:"反則が起きた位置を基準とする。ライン上はPA内として扱う。PA外で始まった接触がPA内まで続いた場合は、PKを判断する。",
+  law:"第12・14条"
+},
+{
+  title:"ノーファウルの判断",
+  category:"ファウル",
+  decision:"接触があっても、正当なチャレンジや通常の競り合いであれば反則ではない。",
+  restart:"プレー継続。",
+  discipline:"なし。",
+  note:"接触の有無だけでなく、タイミング、強さ、方向、ボールへのチャレンジ、相手への影響を総合的に判断する。安全面と試合コントロールも考慮する。",
+  law:"第5・12条"
 }
 ];
 
@@ -793,129 +883,4 @@ function renderTabs(){
     b.textContent=c;
     b.onclick=()=>{
       current=c;
-      renderTabs();
-      renderCards();
-    };
-    box.appendChild(b);
-  });
-}
-
-function matchRule(r,q){
-  q=(q || "").trim().toLowerCase();
-  if(!q) return true;
-
-  const categoryExactExists=rules.some(x=>norm(x.category)===q);
-  if(categoryExactExists){
-    return norm(r.category)===q;
-  }
-
-  const isShortAlphaNum=/^[a-z0-9]+$/i.test(q) && q.length<=3;
-  const titleHitExists=rules.some(x=>norm(x.title).includes(q));
-
-  if(titleHitExists && !isShortAlphaNum){
-    return norm(r.title).includes(q);
-  }
-
-  const text=[
-    r.title,
-    r.category,
-    r.decision,
-    r.restart,
-    r.discipline,
-    r.note,
-    r.law
-  ].map(norm).join(" ");
-
-  return text.includes(q);
-}
-
-function renderCards(){
-  const q=document.getElementById("q").value.trim();
-
-  const list=rules.filter(r=>{
-    const categoryOk = q ? true : (current==="すべて表示" || !current || r.category===current);
-    return categoryOk && matchRule(r,q);
-  });
-
-  const box=document.getElementById("cards");
-  const count=document.getElementById("count");
-
-  if(count){
-    const label=q ? `検索「${q}」` : current;
-    count.textContent=`${label}：${list.length}件 / 全${rules.length}件`;
-  }
-
-  box.innerHTML="";
-
-  if(!list.length){
-    box.innerHTML='<div class="empty">該当するカードがありません。</div>';
-    return;
-  }
-
-  list.forEach(r=>{
-    const div=document.createElement("div");
-    div.className="card";
-
-    if(isShort){
-      div.innerHTML=
-        '<div class="top"><h3>'+esc(r.title)+'</h3><span class="cat">'+esc(r.category)+'</span></div>'+
-        '<div class="summary">'+esc(r.decision)+'</div>'+
-        '<div class="detail"><span class="label">再開</span>'+esc(r.restart)+'</div>'+
-        '<div class="law">'+esc(r.law)+'</div>';
-    }else{
-      div.innerHTML=
-        '<div class="top"><h3>'+esc(r.title)+'</h3><span class="cat">'+esc(r.category)+'</span></div>'+
-        '<div class="detail"><span class="label">判定</span>'+esc(r.decision)+'</div>'+
-        '<div class="detail"><span class="label">再開方法</span>'+esc(r.restart)+'</div>'+
-        '<div class="detail"><span class="label">懲戒</span>'+esc(r.discipline)+'</div>'+
-        '<div class="detail"><span class="label">注意点</span>'+esc(r.note)+'</div>'+
-        '<div class="law">参照：'+esc(r.law)+'</div>';
-    }
-
-    box.appendChild(div);
-  });
-}
-
-function clearSearch(){
-  document.getElementById("q").value="";
-  current="すべて表示";
-  renderTabs();
-  renderCards();
-}
-
-function toggleShort(){
-  isShort=!isShort;
-  document.getElementById("shortBtn").textContent=isShort ? "短文表示モード ON" : "短文表示モード OFF";
-  renderCards();
-}
-
-function makeGuide(){
-  const tournament=document.getElementById("tournament").value.trim();
-  const special=document.getElementById("special").value.trim();
-  const text=
-`【大会ガイド】
-大会名：${tournament || "未入力"}
-
-【特別ルール・注意点】
-${special || "未入力"}
-
-【確認事項】
-・試合時間
-・交代人数、再出場の可否
-・同点時の扱い
-・PK戦の有無
-・飲水タイム
-・警告、退場、累積の扱い
-・大会要項を最優先`;
-  document.getElementById("guide").textContent=text;
-}
-
-document.getElementById("q").addEventListener("input",renderCards);
-
-renderTabs();
-renderCards();
-</script>
-</body>
-</html>
-
-  
+   
