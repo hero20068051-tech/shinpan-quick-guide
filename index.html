@@ -323,19 +323,29 @@
   </section>
 
   <section>
-   <section class="tournament-box">
+ <section class="tournament-box">
   <details open>
-    <summary>大会要項かんたん入力 v1</summary>
+    <summary>大会要項かんたん入力 v2</summary>
 
     <div class="tournament-grid">
       <label>
         大会名
-        <input id="taName" type="text" placeholder="例：U12少女大会">
+        <input id="taName" type="text" placeholder="例：U12大会">
       </label>
 
       <label>
         対象
-        <input id="taTarget" type="text" placeholder="例：6年生以下女子">
+        <select id="taTarget">
+          <option value="">選択してください</option>
+          <option>U12</option>
+          <option>U10</option>
+          <option>U9</option>
+          <option>U8</option>
+          <option>6年生以下</option>
+          <option>4年生以下</option>
+          <option>女子</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
@@ -344,7 +354,7 @@
           <option value="">選択してください</option>
           <option>8人制</option>
           <option>11人制</option>
-          <option>その他</option>
+          <option>その他注意事項に記入</option>
         </select>
       </label>
 
@@ -356,44 +366,92 @@
           <option>リーグ戦</option>
           <option>トーナメント</option>
           <option>フェスティバル・交流戦</option>
-          <option>その他</option>
+          <option>その他注意事項に記入</option>
         </select>
       </label>
 
       <label>
         試合時間
-        <input id="taTime" type="text" placeholder="例：15分-5分-15分">
+        <select id="taTime">
+          <option value="">選択してください</option>
+          <option>15分-5分-15分</option>
+          <option>20分-5分-20分</option>
+          <option>10分-5分-10分</option>
+          <option>当日の進行状況により調整</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
         交代
-        <input id="taSub" type="text" placeholder="例：自由交代・再出場可">
+        <select id="taSub">
+          <option value="">選択してください</option>
+          <option>自由交代・再出場可</option>
+          <option>ベンチ内自由交代</option>
+          <option>自由交代・交代カードなし</option>
+          <option>大会要項に従う</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
         審判方式
-        <input id="taReferee" type="text" placeholder="例：2名制、1人制、4審制">
+        <select id="taReferee">
+          <option value="">選択してください</option>
+          <option>1人制</option>
+          <option>2名制</option>
+          <option>3人制</option>
+          <option>4審制</option>
+          <option>当該チームで相談</option>
+          <option>審判割当表に従う</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
         時間管理
-        <input id="taTimer" type="text" placeholder="例：審判割当左側が担当">
+        <select id="taTimer">
+          <option value="">選択してください</option>
+          <option>審判割当左側が担当</option>
+          <option>主審が担当</option>
+          <option>本部が担当</option>
+          <option>当該チームで相談</option>
+          <option>記載なし</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
         同点時
-        <input id="taDraw" type="text" placeholder="例：延長なし、3人制PK">
+        <select id="taDraw">
+          <option value="">選択してください</option>
+          <option>引き分け</option>
+          <option>延長なし・3人制PK戦</option>
+          <option>3人制PK戦</option>
+          <option>3人制PK戦・4人目以降サドンデス</option>
+          <option>大会本部判断</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
 
       <label>
         飲水・暑熱対応
-        <input id="taWater" type="text" placeholder="例：飲水タイム、クーリングブレイクあり">
+        <select id="taWater">
+          <option value="">選択してください</option>
+          <option>なし</option>
+          <option>必要により飲水タイム</option>
+          <option>飲水タイムあり</option>
+          <option>クーリングブレイクあり</option>
+          <option>飲水タイムまたはクーリングブレイクあり</option>
+          <option>主催者・審判判断</option>
+          <option>その他注意事項に記入</option>
+        </select>
       </label>
     </div>
 
     <label class="wide-label">
       その他注意事項
-      <textarea id="taNote" rows="4" placeholder="例：試合開始5分前集合、雷鳴時は中断、6人未満は不成立など"></textarea>
+      <textarea id="taNote" rows="4" placeholder="例：試合開始5分前集合。雷鳴時は中断。6人未満は不成立。ユニフォーム類似時は主審判断。"></textarea>
     </label>
 
     <div class="tournament-actions">
@@ -406,6 +464,8 @@
     <div id="tournamentSummary" class="tournament-summary"></div>
     <div id="relatedRuleButtons" class="related-rule-buttons"></div>
   </details>
+</section>
+
 </section>
 
   <section>
