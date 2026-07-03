@@ -368,7 +368,8 @@
   <section>
  <section class="tournament-box">
   <details open>
-    <summary>大会要項かんたん入力 v2</summary>
+   <summary>大会要項かんたん入力 v3</summary>
+ 
 
     <div class="tournament-grid">
       <label>
@@ -490,6 +491,68 @@
           <option>その他注意事項に記入</option>
         </select>
       </label>
+            <label>
+        最少人数
+        <select id="taMinPlayers">
+          <option value="">選択してください</option>
+          <option>記載なし</option>
+          <option>6人未満は不成立</option>
+          <option>7人未満は不成立</option>
+          <option>大会本部判断</option>
+          <option>その他注意事項に記入</option>
+        </select>
+      </label>
+
+      <label>
+        試合球
+        <select id="taBall">
+          <option value="">選択してください</option>
+          <option>4号球・各チーム持ち寄り</option>
+          <option>4号球・大会本部用意</option>
+          <option>5号球</option>
+          <option>両チーム持ち寄り</option>
+          <option>その他注意事項に記入</option>
+        </select>
+      </label>
+
+      <label>
+        ユニフォーム
+        <select id="taUniform">
+          <option value="">選択してください</option>
+          <option>代表者間で調整</option>
+          <option>主審が判断</option>
+          <option>正副2組持参</option>
+          <option>ビブス可</option>
+          <option>ビブス不可</option>
+          <option>その他注意事項に記入</option>
+        </select>
+      </label>
+
+      <label>
+        雷対応
+        <select id="taThunder">
+          <option value="">選択してください</option>
+          <option>記載なし</option>
+          <option>大会本部判断</option>
+          <option>雷鳴時は中断</option>
+          <option>中断15分以上で中止判断</option>
+          <option>その他注意事項に記入</option>
+        </select>
+      </label>
+
+      <label>
+        警告・退場
+        <select id="taDiscipline">
+          <option value="">選択してください</option>
+          <option>通常どおり</option>
+          <option>警告2回で次試合出場不可</option>
+          <option>退場は次試合出場不可</option>
+          <option>退場後補充可</option>
+          <option>大会規律委員会で決定</option>
+          <option>その他注意事項に記入</option>
+        </select>
+      </label>
+
     </div>
 
     <label class="wide-label">
@@ -1389,8 +1452,14 @@ const tournamentFieldIds = [
   "taTimer",
   "taDraw",
   "taWater",
+  "taMinPlayers",
+  "taBall",
+  "taUniform",
+  "taThunder",
+  "taDiscipline",
   "taNote"
 ];
+
 
 function getTournamentValue(id) {
   const el = document.getElementById(id);
@@ -1413,6 +1482,14 @@ function makeTournamentGuide() {
   const timer = getTournamentValue("taTimer");
   const draw = getTournamentValue("taDraw");
   const water = getTournamentValue("taWater");
+  const water = getTournamentValue("taWater");
+const minPlayers = getTournamentValue("taMinPlayers");
+const ball = getTournamentValue("taBall");
+const uniform = getTournamentValue("taUniform");
+const thunder = getTournamentValue("taThunder");
+const discipline = getTournamentValue("taDiscipline");
+const note = getTournamentValue("taNote");
+
   const note = getTournamentValue("taNote");
 
   let text = "";
@@ -1447,11 +1524,22 @@ function makeTournamentGuide() {
     text += "\n";
   }
 
-  if (water || note) {
-    text += "■ 注意事項\n";
-    if (water) text += "飲水・暑熱対応：" + water + "\n";
-    if (note) text += note + "\n";
-  }
+  if (minPlayers || ball || uniform) {
+  text += "■ 人数・用具\n";
+  if (minPlayers) text += "最少人数：" + minPlayers + "\n";
+  if (ball) text += "試合球：" + ball + "\n";
+  if (uniform) text += "ユニフォーム：" + uniform + "\n";
+  text += "\n";
+}
+
+if (water || thunder || discipline || note) {
+  text += "■ 注意事項\n";
+  if (water) text += "飲水・暑熱対応：" + water + "\n";
+  if (thunder) text += "雷対応：" + thunder + "\n";
+  if (discipline) text += "警告・退場：" + discipline + "\n";
+  if (note) text += note + "\n";
+}
+
 
   if (text === "【大会ルールまとめ】\n\n") {
     text += "まだ入力がありません。大会要項を入力してください。";
