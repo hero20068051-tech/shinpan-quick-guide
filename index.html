@@ -291,6 +291,49 @@
     font-size: 12px;
   }
 }
+/* 開発用チェックここから */
+.dev-box {
+  margin: 14px 0;
+  padding: 12px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.dev-box summary {
+  font-weight: 700;
+  cursor: pointer;
+  color: #475569;
+}
+
+.dev-note {
+  margin: 8px 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.dev-test-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  background: #64748b;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dev-result {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+/* 開発用チェックここまで */
 
   </style>
 </head>
@@ -479,6 +522,23 @@
     </ul>
   </section>
 </main>
+<!-- 開発用チェックここから -->
+<section class="dev-box">
+  <details>
+    <summary>開発用チェック</summary>
+
+    <p class="dev-note">
+      検索機能の確認用です。最終版では削除予定。
+    </p>
+
+    <button type="button" class="dev-test-btn" onclick="runDevSearchTest()">
+      検索テスト一括実行
+    </button>
+
+    <div id="devSearchTestResult" class="dev-result"></div>
+  </details>
+</section>
+<!-- 開発用チェックここまで -->
 
 <script>
 // rules配列カード数：68枚
@@ -1458,6 +1518,46 @@ function searchTournamentRelatedRule(word) {
     behavior: "smooth"
   });
 }
+// 開発用チェックここから
+const devSearchTestTerms = [
+  "PK",
+  "試合時間",
+  "8人制",
+  "ハーフタイム",
+  "競技者の入退場",
+  "審判シグナル",
+  "飲水",
+  "試合中止",
+  "オフサイド",
+  "退場"
+];
+
+function runDevSearchTest() {
+  const resultBox = document.getElementById("devSearchTestResult");
+  if (!resultBox) return;
+
+  let text = "【検索テスト結果】\n\n";
+
+  devSearchTestTerms.forEach(term => {
+    const count = rules.filter(r => matchRule(r, term)).length;
+
+    let mark = "OK";
+    if (count === 0) {
+      mark = "⚠️ 0件";
+    }
+
+    if (term === "PK" && count !== 1) {
+      mark = "⚠️ 要確認";
+    }
+
+    text += term + "：" + count + "件　" + mark + "\n";
+  });
+
+  text += "\n※ 0件は要確認。PKは1件が理想です。";
+
+  resultBox.textContent = text;
+}
+// 開発用チェックここまで
 
 </script>
 </body>
