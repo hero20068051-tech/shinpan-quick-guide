@@ -366,13 +366,12 @@
   </section>
 
   <section>
- <section class="tournament-box">
+<section class="tournament-box">
   <details open>
-  <summary>大会要項かんたん入力 v3.1</summary>
-
- 
+    <summary>大会要項かんたん入力 v3.2</summary>
 
     <div class="tournament-grid">
+
       <label>
         大会名
         <input id="taName" type="text" placeholder="例：U12大会">
@@ -382,14 +381,13 @@
         対象
         <select id="taTarget">
           <option value="">選択してください</option>
-          <option>U12</option>
-          <option>U10</option>
-          <option>U9</option>
-          <option>U8</option>
-          <option>6年生以下</option>
-          <option>4年生以下</option>
-          <option>女子</option>
-          <option>その他注意事項に記入</option>
+          <option value="小学生">小学生</option>
+          <option value="U12">U12</option>
+          <option value="U10">U10</option>
+          <option value="U9">U9</option>
+          <option value="中学生">中学生</option>
+          <option value="一般">一般</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -397,9 +395,10 @@
         競技形式
         <select id="taFormat">
           <option value="">選択してください</option>
-          <option>8人制</option>
-          <option>11人制</option>
-          <option>その他注意事項に記入</option>
+          <option value="8人制">8人制</option>
+          <option value="11人制">11人制</option>
+          <option value="フットサル">フットサル</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -407,11 +406,11 @@
         試合方式
         <select id="taMethod">
           <option value="">選択してください</option>
-          <option>予選リーグ＋順位決定戦</option>
-          <option>リーグ戦</option>
-          <option>トーナメント</option>
-          <option>フェスティバル・交流戦</option>
-          <option>その他注意事項に記入</option>
+          <option value="リーグ戦">リーグ戦</option>
+          <option value="トーナメント">トーナメント</option>
+          <option value="リーグ戦＋順位戦">リーグ戦＋順位戦</option>
+          <option value="交流戦">交流戦</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -419,11 +418,12 @@
         試合時間
         <select id="taTime">
           <option value="">選択してください</option>
-          <option>15分-5分-15分</option>
-          <option>20分-5分-20分</option>
-          <option>10分-5分-10分</option>
-          <option>当日の進行状況により調整</option>
-          <option>その他注意事項に記入</option>
+          <option value="15分-5分-15分">15分-5分-15分</option>
+          <option value="20分-5分-20分">20分-5分-20分</option>
+          <option value="10分ハーフ">10分ハーフ</option>
+          <option value="15分ハーフ">15分ハーフ</option>
+          <option value="20分ハーフ">20分ハーフ</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -431,11 +431,10 @@
         交代
         <select id="taSub">
           <option value="">選択してください</option>
-          <option>自由交代・再出場可</option>
-          <option>ベンチ内自由交代</option>
-          <option>自由交代・交代カードなし</option>
-          <option>大会要項に従う</option>
-          <option>その他注意事項に記入</option>
+          <option value="自由交代（再出場OK）">自由交代（再出場OK）</option>
+          <option value="交代人数に制限あり">交代人数に制限あり</option>
+          <option value="再出場なし">再出場なし</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -443,13 +442,12 @@
         審判方式
         <select id="taReferee">
           <option value="">選択してください</option>
-          <option>1人制</option>
-          <option>2名制</option>
-          <option>3人制</option>
-          <option>4審制</option>
-          <option>当該チームで相談</option>
-          <option>審判割当表に従う</option>
-          <option>その他注意事項に記入</option>
+          <option value="1人制">1人制</option>
+          <option value="2人制">2人制</option>
+          <option value="3人制">3人制</option>
+          <option value="4審制">4審制</option>
+          <option value="当該チームで相談">当該チームで相談</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -457,12 +455,10 @@
         時間管理
         <select id="taTimer">
           <option value="">選択してください</option>
-          <option>審判割当左側が担当</option>
-          <option>主審が担当</option>
-          <option>本部が担当</option>
-          <option>当該チームで相談</option>
-          <option>記載なし</option>
-          <option>その他注意事項に記入</option>
+          <option value="主審が時間管理">主審が時間管理</option>
+          <option value="左側チームが時間管理">左側チームが時間管理</option>
+          <option value="本部が時間管理">本部が時間管理</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -470,12 +466,11 @@
         同点時
         <select id="taDraw">
           <option value="">選択してください</option>
-          <option>引き分け</option>
-          <option>延長なし・3人制PK戦</option>
-          <option>3人制PK戦</option>
-          <option>3人制PK戦・4人目以降サドンデス</option>
-          <option>大会本部判断</option>
-          <option>その他注意事項に記入</option>
+          <option value="3人ずつPK戦">3人ずつPK戦</option>
+          <option value="5人ずつPK戦">5人ずつPK戦</option>
+          <option value="PK戦なし">PK戦なし</option>
+          <option value="引き分けのまま">引き分けのまま</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -483,24 +478,20 @@
         飲水・暑熱対応
         <select id="taWater">
           <option value="">選択してください</option>
-          <option>なし</option>
-          <option>必要により飲水タイム</option>
-          <option>飲水タイムあり</option>
-          <option>クーリングブレイクあり</option>
-          <option>飲水タイムまたはクーリングブレイクあり</option>
-          <option>主催者・審判判断</option>
-          <option>その他注意事項に記入</option>
+          <option value="飲水タイムあり">飲水タイムあり</option>
+          <option value="クーリングブレイクあり">クーリングブレイクあり</option>
+          <option value="暑いときは本部が判断">暑いときは本部が判断</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
-            <label>
+
+      <label>
         最少人数
         <select id="taMinPlayers">
           <option value="">選択してください</option>
-          <option>記載なし</option>
-          <option>6人未満は不成立</option>
-          <option>7人未満は不成立</option>
-          <option>大会本部判断</option>
-          <option>その他注意事項に記入</option>
+          <option value="6人未満は試合不可">6人未満は試合不可</option>
+          <option value="7人未満は試合不可">7人未満は試合不可</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -508,11 +499,10 @@
         試合球
         <select id="taBall">
           <option value="">選択してください</option>
-          <option>4号球・各チーム持ち寄り</option>
-          <option>4号球・大会本部用意</option>
-          <option>5号球</option>
-          <option>両チーム持ち寄り</option>
-          <option>その他注意事項に記入</option>
+          <option value="4号球（各チーム持ち寄り）">4号球（各チーム持ち寄り）</option>
+          <option value="5号球">5号球</option>
+          <option value="本部が用意">本部が用意</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -520,12 +510,10 @@
         ユニフォーム
         <select id="taUniform">
           <option value="">選択してください</option>
-          <option>代表者間で調整</option>
-          <option>主審が判断</option>
-          <option>正副2組持参</option>
-          <option>ビブス可</option>
-          <option>ビブス不可</option>
-          <option>その他注意事項に記入</option>
+          <option value="区別しにくいときは主審が判断">区別しにくいときは主審が判断</option>
+          <option value="ビブス対応OK">ビブス対応OK</option>
+          <option value="正副ユニフォームを準備">正副ユニフォームを準備</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -533,11 +521,9 @@
         雷対応
         <select id="taThunder">
           <option value="">選択してください</option>
-          <option>記載なし</option>
-          <option>大会本部判断</option>
-          <option>雷鳴時は中断</option>
-          <option>中断15分以上で中止判断</option>
-          <option>その他注意事項に記入</option>
+          <option value="大会本部が判断">大会本部が判断</option>
+          <option value="雷が鳴ったら中断">雷が鳴ったら中断</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
@@ -545,33 +531,35 @@
         警告・退場
         <select id="taDiscipline">
           <option value="">選択してください</option>
-          <option>通常どおり</option>
-          <option>警告2回で次試合出場不可</option>
-          <option>退場は次試合出場不可</option>
-          <option>退場後補充可</option>
-          <option>大会規律委員会で決定</option>
-          <option>その他注意事項に記入</option>
+          <option value="ルールどおり対応">ルールどおり対応</option>
+          <option value="大会要項どおり">大会要項どおり</option>
+          <option value="退場後の補充なし">退場後の補充なし</option>
+          <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
 
-    </div>
+      <label class="full">
+        その他注意事項
+        <textarea id="taNote" rows="5" placeholder="例：試合開始5分前集合。雷が鳴ったら中断。6人未満は試合不可。ユニフォームが区別しにくいときは主審が判断。"></textarea>
+      </label>
 
-    <label class="wide-label">
-      その他注意事項
-      <textarea id="taNote" rows="4" placeholder="例：試合開始5分前集合。雷鳴時は中断。6人未満は不成立。ユニフォーム類似時は主審判断。"></textarea>
-    </label>
+    </div>
 
     <div class="tournament-actions">
       <button type="button" onclick="makeTournamentGuide()">大会ルールまとめ作成</button>
       <button type="button" onclick="saveTournamentGuide()">保存</button>
       <button type="button" onclick="loadTournamentGuide()">読込</button>
-      <button type="button" onclick="clearTournamentGuide()">入力クリア</button>
+      <button type="button" class="secondary" onclick="clearTournamentInput()">入力クリア</button>
     </div>
 
-    <div id="tournamentSummary" class="tournament-summary"></div>
-    <div id="relatedRuleButtons" class="related-rule-buttons"></div>
+    <div id="tournamentSummary" class="tournament-result"></div>
+    <div id="relatedRuleButtons" class="related-buttons"></div>
+
   </details>
 </section>
+ 
+      
+    
 
 </section>
 
@@ -1531,7 +1519,7 @@ const note = getTournamentValue("taNote");
 }
 
 if (water || thunder || discipline || note) {
-  text += "■ 注意事項\n";
+  text += "■ 安全・確認\n";
   if (water) text += "飲水・暑熱対応：" + water + "\n";
   if (thunder) text += "雷対応：" + thunder + "\n";
   if (discipline) text += "警告・退場：" + discipline + "\n";
