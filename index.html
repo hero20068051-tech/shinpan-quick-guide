@@ -1598,17 +1598,16 @@ function makeRelatedRuleButtons() {
   addKeyword("試合時間");
   addKeyword("主審の笛");
 
-  if (values.includes("8人制")) addKeyword("8人制");
   if (values.includes("15分") || values.includes("20分")) addKeyword("ハーフタイム");
   if (values.includes("自由交代") || values.includes("交代")) addKeyword("競技者の入退場");
   if (values.includes("PK") || values.includes("ＰＫ")) addKeyword("PK戦");
-  if (values.includes("審判")) addKeyword("審判シグナル");
-  if (values.includes("ユニフォーム")) addKeyword("ユニフォーム確認");
+  if (values.includes("審判")) addKeyword("審判員のシグナル");
+  if (values.includes("ユニフォーム")) addKeyword("ユニフォーム色の確認");
   if (values.includes("飲水")) addKeyword("飲水");
-  if (values.includes("クーリング")) addKeyword("クーリング");
+  if (values.includes("クーリング")) addKeyword("飲水");
   if (values.includes("雷") || values.includes("中断") || values.includes("中止")) addKeyword("試合中止");
-  if (values.includes("6人")) addKeyword("競技者数");
-  if (values.includes("ボール") || values.includes("4号")) addKeyword("ボール交換");
+  if (values.includes("6人")) addKeyword("試合成立人数");
+  if (values.includes("ボール") || values.includes("4号")) addKeyword("ボールの交換");
   if (values.includes("キックオフ")) addKeyword("キックオフ");
   if (values.includes("警告")) addKeyword("警告");
   if (values.includes("退場")) addKeyword("退場");
