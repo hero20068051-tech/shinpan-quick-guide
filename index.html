@@ -6,6 +6,7 @@
   <title>Shinpan Quick Guide</title>
   <style>
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -339,6 +340,43 @@
   line-height: 1.7;
 }
 
+/* 使い方（入口案内）ここから */
+.usage-list{
+  padding-left:20px;
+  margin:8px 0 0;
+}
+.usage-list li{
+  margin:4px 0;
+}
+.usage-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+.usageBtn{
+  display:inline-block;
+  border-radius:999px;
+  padding:12px 16px;
+  font-weight:700;
+  text-decoration:none;
+  text-align:center;
+}
+.usageBtn.primary{
+  background:#008b7a;
+  color:#fff;
+}
+.usageBtn.secondary{
+  background:#e9f8f5;
+  color:#007566;
+}
+@media (max-width:700px){
+  .usageBtn{
+    flex:1 1 100%;
+  }
+}
+/* 使い方（入口案内）ここまで */
+
   </style>
 </head>
 
@@ -354,6 +392,19 @@
 
 <main>
   <section>
+    <h2>使い方</h2>
+    <ol class="usage-list">
+      <li>分からないルールは「ルールを調べる」から検索します。</li>
+      <li>大会ごとの違いは「大会要項かんたん入力」に記録して確認できます。</li>
+      <li>主に試合前後の確認や、審判ルールを調べるときに使います。</li>
+    </ol>
+    <div class="usage-actions">
+      <a class="usageBtn primary" href="#ruleSearchSection">ルールを調べる</a>
+      <a class="usageBtn secondary" href="#tournamentSection">大会要項を入力・確認する</a>
+    </div>
+  </section>
+
+  <section id="ruleSearchSection">
     <h2>ルール検索</h2>
     <div class="searchRow">
       <input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO、得点">
@@ -370,7 +421,7 @@
   </section>
 
   <section>
-<section class="tournament-box">
+<section id="tournamentSection" class="tournament-box">
   <details open>
     <summary>大会要項かんたん入力 v3.3</summary>
 
