@@ -292,52 +292,27 @@
     font-size: 12px;
   }
 }
-/* 開発用チェックここから */
-.dev-box {
-  margin: 14px 0;
-  padding: 12px;
-  border: 1px dashed #cbd5e1;
-  border-radius: 14px;
-  background: #f8fafc;
-}
-
-.dev-box summary {
-  font-weight: 700;
-  cursor: pointer;
-  color: #475569;
-}
-
-.dev-note {
-  margin: 8px 0;
-  font-size: 13px;
-  color: #64748b;
-}
-
-.dev-test-btn {
-  border: none;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 13px;
-  font-weight: 700;
-  background: #64748b;
-  color: #fff;
-  cursor: pointer;
-}
-
-.dev-result {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  font-size: 14px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-/* 開発用チェックここまで */
 .tournament-result {
   white-space: pre-wrap;
   line-height: 1.7;
+}
+
+.saved-notice {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #eef6ff;
+  color: #123;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.saved-notice button {
+  margin-left: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  background: #1f6feb;
+  color: #fff;
 }
 
 /* 使い方（入口案内）ここから */
@@ -410,7 +385,7 @@
       <input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO、得点">
       <button class="clear" onclick="clearSearch()">クリア</button>
     </div>
-    <button id="shortBtn" class="toggle" onclick="toggleShort()">短文表示モード OFF</button>
+    <button id="shortBtn" class="toggle" onclick="toggleShort()">要点だけ表示</button>
     <div id="tabs" class="tabs"></div>
   </section>
 
@@ -423,7 +398,12 @@
   <section>
 <section id="tournamentSection" class="tournament-box">
   <details open>
-    <summary>大会要項かんたん入力 v3.3</summary>
+    <summary>大会要項かんたん入力</summary>
+
+    <div id="savedTournamentNotice" class="saved-notice" hidden>
+      保存済みの大会要項があります
+      <button type="button" onclick="loadTournamentGuide()">読込</button>
+    </div>
 
     <div class="tournament-grid">
 
@@ -629,23 +609,6 @@
     </ul>
   </section>
 </main>
-<!-- 開発用チェックここから -->
-<section class="dev-box">
-  <details>
-    <summary>開発用チェック</summary>
-
-    <p class="dev-note">
-      検索機能の確認用です。最終版では削除予定。
-    </p>
-
-    <button type="button" class="dev-test-btn" onclick="runDevSearchTest()">
-      検索テスト一括実行
-    </button>
-
-    <div id="devSearchTestResult" class="dev-result"></div>
-  </details>
-</section>
-<!-- 開発用チェックここまで -->
 
 <script>
 // rules配列カード数：69枚
@@ -1339,6 +1302,12 @@ function normalizeSearchQuery(q) {
     "はんど": "ハンド",
     "ふぁうる": "ファウル",
     "ふぁーる": "ファウル",
+    "ファール": "ファウル",
+
+    "キーパー": "gk",
+    "ゴールキーパー": "gk",
+    "ペナルティーキック": "pk",
+    "ロスタイム": "アディショナルタイム",
 
     "すろーいん": "スローイン",
     "ごーるきっく": "ゴールキック",
@@ -1466,7 +1435,7 @@ function clearSearch(){
 
 function toggleShort(){
   isShort=!isShort;
-  document.getElementById("shortBtn").textContent=isShort ? "短文表示モード ON" : "短文表示モード OFF";
+  document.getElementById("shortBtn").textContent=isShort ? "くわしく表示" : "要点だけ表示";
   renderCards();
 }
 
@@ -1609,7 +1578,22 @@ function saveTournamentGuide() {
   });
 
   localStorage.setItem("shinpanTournamentGuide", JSON.stringify(data));
+  updateSavedTournamentNotice();
   alert("大会要項を保存しました。");
+}
+
+function updateSavedTournamentNotice() {
+  const notice = document.getElementById("savedTournamentNotice");
+  if (!notice) return;
+
+  let hasSaved = false;
+  try {
+    hasSaved = !!localStorage.getItem("shinpanTournamentGuide");
+  } catch (e) {
+    hasSaved = false;
+  }
+
+  notice.hidden = !hasSaved;
 }
 
 function loadTournamentGuide() {
@@ -1713,53 +1697,14 @@ function searchTournamentRelatedRule(word) {
     renderCards();
   }
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  const cardSection = document.getElementById("cards").closest("section");
+  cardSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
   });
 }
-// 開発用チェックここから
-const devSearchTestTerms = [
-  "PK",
-  "試合時間",
-  "基本ルール",
-  "ハーフタイム",
-  "競技者の入退場",
-  "主審",
-  "飲水",
-  "中断",
-  "オフサイド",
-  "退場"
-];
 
-
-function runDevSearchTest() {
-  const resultBox = document.getElementById("devSearchTestResult");
-  if (!resultBox) return;
-
-  let text = "【検索テスト結果】\n\n";
-
-  devSearchTestTerms.forEach(term => {
-    const count = rules.filter(r => matchRule(r, term)).length;
-
-    let mark = "OK";
-    if (count === 0) {
-      mark = "⚠️ 0件";
-    }
-
-    if (term === "PK" && count !== 1) {
-      mark = "⚠️ 要確認";
-    }
-
-    text += term + "：" + count + "件　" + mark + "\n";
-  });
-
-  text += "\n※ 0件は要確認。PKは1件が理想です。";
-
-  resultBox.textContent = text;
-}
-// 開発用チェックここまで
-
+updateSavedTournamentNotice();
 </script>
 </body>
 </html>
