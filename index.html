@@ -431,6 +431,16 @@
     flex:1 1 100%;
   }
 }
+.home-actions .usage-actions{
+  margin-top:0;
+}
+.home-saved{
+  margin:12px 0 0;
+  font-size:14px;
+  font-weight:700;
+  color:#007566;
+  overflow-wrap:anywhere;
+}
 /* 使い方（入口案内）ここまで */
 
   </style>
@@ -458,6 +468,14 @@
 </header>
 
 <div class="view-body">
+  <section class="home-actions" aria-label="主な機能">
+    <div class="usage-actions">
+      <a class="usageBtn primary" href="#rules">ルールを調べる</a>
+      <a class="usageBtn secondary" href="#tournament">大会要項を入力・確認する</a>
+    </div>
+    <p id="homeSavedStatus" class="home-saved" hidden></p>
+  </section>
+
   <section>
     <h2>使い方</h2>
     <ol class="usage-list">
@@ -465,10 +483,6 @@
       <li>大会ごとの違いは「大会要項かんたん入力」に記録して確認できます。</li>
       <li>主に試合前後の確認や、審判ルールを調べるときに使います。</li>
     </ol>
-    <div class="usage-actions">
-      <a class="usageBtn primary" href="#rules">ルールを調べる</a>
-      <a class="usageBtn secondary" href="#tournament">大会要項を入力・確認する</a>
-    </div>
   </section>
 
   <section>
@@ -1686,16 +1700,30 @@ function saveTournamentGuide() {
 
 function updateSavedTournamentNotice() {
   const notice = document.getElementById("savedTournamentNotice");
-  if (!notice) return;
+  const homeStatus = document.getElementById("homeSavedStatus");
 
-  let hasSaved = false;
+  let raw = null;
   try {
-    hasSaved = !!localStorage.getItem("shinpanTournamentGuide");
+    raw = localStorage.getItem("shinpanTournamentGuide");
   } catch (e) {
-    hasSaved = false;
+    raw = null;
   }
+  const hasSaved = !!raw;
 
-  notice.hidden = !hasSaved;
+  if (notice) notice.hidden = !hasSaved;
+
+  if (homeStatus) {
+    let name = "";
+    if (raw) {
+      try {
+        name = String(JSON.parse(raw).taName || "").trim();
+      } catch (e) {
+        name = "";
+      }
+    }
+    homeStatus.textContent = name ? "保存済み：" + name : "保存済みの大会要項があります";
+    homeStatus.hidden = !hasSaved;
+  }
 }
 
 function loadTournamentGuide() {
@@ -1840,6 +1868,7 @@ function showView(name) {
   });
 
   currentView = name;
+  if (name === "home") updateSavedTournamentNotice();
 
   const callback = afterViewShown;
   afterViewShown = null;
