@@ -506,6 +506,11 @@
     top:57px;
   }
 }
+@media (max-height:540px){
+  .rules-toolbar{
+    position:static;
+  }
+}
 
   </style>
 </head>
@@ -1466,10 +1471,18 @@ function keepActiveTabVisible(box){
   }
 }
 
+// ルール画面で、上部に固定表示されている部分（ツールバー・上部ナビ）の下端
+function rulesTopInset(){
+  const toolbar=document.getElementById("ruleSearchSection").getBoundingClientRect();
+  const nav=document.querySelector(".app-nav").getBoundingClientRect();
+  const navAtTop=nav.top<window.innerHeight/2;
+  return Math.max(0, toolbar.bottom, navAtTop ? nav.bottom : 0);
+}
+
 // 一覧の途中で検索・カテゴリを変えたら、結果の先頭が見える位置へ移動する
 function revealCardListStart(){
   if(currentView!=="rules") return;
-  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  const toolbarBottom=rulesTopInset();
   const cardSection=document.getElementById("cards").closest("section");
   const top=cardSection.getBoundingClientRect().top;
   const offset=toolbarBottom+8;
@@ -1481,7 +1494,7 @@ function revealCardListStart(){
 // 表示切替の前後で、読んでいたカードの位置を保つ
 function getReadingAnchor(){
   if(currentView!=="rules") return null;
-  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  const toolbarBottom=rulesTopInset();
   const cardSection=document.getElementById("cards").closest("section");
   if(cardSection.getBoundingClientRect().top>=toolbarBottom) return null;
   const cards=document.querySelectorAll("#cards .card");
@@ -1497,7 +1510,7 @@ function restoreReadingAnchor(title){
   if(!title) return;
   const card=[...document.querySelectorAll("#cards .card")].find(c=>c.querySelector("h3").textContent===title);
   if(!card) return;
-  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  const toolbarBottom=rulesTopInset();
   window.scrollTo(0, window.scrollY+card.getBoundingClientRect().top-toolbarBottom-8);
 }
 function normalizeSearchQuery(q) {
