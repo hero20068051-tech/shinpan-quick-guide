@@ -443,6 +443,70 @@
 }
 /* 使い方（入口案内）ここまで */
 
+/* ルール画面：上部固定ツールバー */
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+#view-rules .view-body{
+  margin-top:0;
+}
+.rules-toolbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  margin:0 0 12px;
+  padding:12px 14px;
+  border-radius:0 0 16px 16px;
+  box-shadow:0 4px 14px rgba(20,30,50,.08);
+}
+.rules-filter-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+}
+.rules-filter-row .tabs{
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  margin-top:0;
+}
+.rules-filter-row .toggle{
+  flex:0 0 auto;
+  margin-top:0;
+  padding:9px 12px;
+  font-size:13px;
+}
+@media (max-width:767px){
+  .rules-toolbar{
+    margin:0 -14px 12px;
+    border-radius:0;
+  }
+  .rules-filter-row .tabs{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:2px;
+  }
+  .rules-filter-row .tab{
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+}
+@media (min-width:768px){
+  .rules-toolbar{
+    top:57px;
+  }
+}
+
   </style>
 </head>
 
@@ -500,14 +564,16 @@
 
 <div id="view-rules" class="view" hidden>
 <div class="view-body">
-  <section id="ruleSearchSection">
-    <h2>ルール検索</h2>
+  <section id="ruleSearchSection" class="rules-toolbar">
+    <h2 class="sr-only">ルール検索</h2>
     <div class="searchRow">
       <input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO、得点">
       <button class="clear" onclick="clearSearch()">クリア</button>
     </div>
-    <button id="shortBtn" class="toggle" onclick="toggleShort()">要点だけ表示</button>
-    <div id="tabs" class="tabs"></div>
+    <div class="rules-filter-row">
+      <div id="tabs" class="tabs"></div>
+      <button id="shortBtn" class="toggle" onclick="toggleShort()">要点だけ表示</button>
+    </div>
   </section>
 
   <section>
@@ -1369,6 +1435,7 @@ function norm(v){
 function renderTabs(){
   const box=document.getElementById("tabs");
   const cats=["すべて表示",...Array.from(new Set(rules.map(r=>r.category)))];
+  const keepScrollLeft=box.scrollLeft;
   box.innerHTML="";
   cats.forEach(c=>{
     const b=document.createElement("button");
@@ -1378,9 +1445,60 @@ function renderTabs(){
       current=c;
       renderTabs();
       renderCards();
+      revealCardListStart();
     };
     box.appendChild(b);
   });
+  box.scrollLeft=keepScrollLeft;
+  keepActiveTabVisible(box);
+}
+
+// 横スクロールのカテゴリ列で、選択中のカテゴリが見える位置に保つ
+function keepActiveTabVisible(box){
+  const active=box.querySelector(".tab.active");
+  if(!active || box.scrollWidth<=box.clientWidth) return;
+  const left=active.offsetLeft;
+  const right=left+active.offsetWidth;
+  if(left<box.scrollLeft){
+    box.scrollLeft=left-8;
+  }else if(right>box.scrollLeft+box.clientWidth){
+    box.scrollLeft=right-box.clientWidth+8;
+  }
+}
+
+// 一覧の途中で検索・カテゴリを変えたら、結果の先頭が見える位置へ移動する
+function revealCardListStart(){
+  if(currentView!=="rules") return;
+  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  const cardSection=document.getElementById("cards").closest("section");
+  const top=cardSection.getBoundingClientRect().top;
+  const offset=toolbarBottom+8;
+  if(top<offset){
+    window.scrollTo(0, window.scrollY+top-offset);
+  }
+}
+
+// 表示切替の前後で、読んでいたカードの位置を保つ
+function getReadingAnchor(){
+  if(currentView!=="rules") return null;
+  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  const cardSection=document.getElementById("cards").closest("section");
+  if(cardSection.getBoundingClientRect().top>=toolbarBottom) return null;
+  const cards=document.querySelectorAll("#cards .card");
+  for(const card of cards){
+    if(card.getBoundingClientRect().bottom>toolbarBottom+1){
+      return card.querySelector("h3").textContent;
+    }
+  }
+  return null;
+}
+
+function restoreReadingAnchor(title){
+  if(!title) return;
+  const card=[...document.querySelectorAll("#cards .card")].find(c=>c.querySelector("h3").textContent===title);
+  if(!card) return;
+  const toolbarBottom=document.getElementById("ruleSearchSection").getBoundingClientRect().bottom;
+  window.scrollTo(0, window.scrollY+card.getBoundingClientRect().top-toolbarBottom-8);
 }
 function normalizeSearchQuery(q) {
   let s = String(q || "").trim();
@@ -1547,12 +1665,15 @@ function clearSearch(){
   current="すべて表示";
   renderTabs();
   renderCards();
+  revealCardListStart();
 }
 
 function toggleShort(){
+  const anchor=getReadingAnchor();
   isShort=!isShort;
   document.getElementById("shortBtn").textContent=isShort ? "くわしく表示" : "要点だけ表示";
   renderCards();
+  restoreReadingAnchor(anchor);
 }
 
 function makeGuide(){
@@ -1576,7 +1697,10 @@ ${special || "未入力"}
   document.getElementById("guide").textContent=text;
 }
 
-document.getElementById("q").addEventListener("input",renderCards);
+document.getElementById("q").addEventListener("input",()=>{
+  renderCards();
+  revealCardListStart();
+});
 
 renderTabs();
 renderCards();
@@ -1827,9 +1951,8 @@ function searchTournamentRelatedRule(word) {
     renderCards();
   }
 
-  const cardSection = document.getElementById("cards").closest("section");
   goToView("rules", () => {
-    cardSection.scrollIntoView({ block: "start" });
+    window.scrollTo(0, 0);
   });
 }
 
@@ -1841,6 +1964,7 @@ const LEGACY_VIEW_HASH = {
 };
 let currentView = null;
 let afterViewShown = null;
+const viewScrollPositions = {};
 
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
@@ -1854,6 +1978,11 @@ function viewFromHash() {
 }
 
 function showView(name) {
+  const previousView = currentView;
+  if (previousView && previousView !== name) {
+    viewScrollPositions[previousView] = window.scrollY;
+  }
+
   APP_VIEWS.forEach(view => {
     const el = document.getElementById("view-" + view);
     if (el) el.hidden = view !== name;
@@ -1874,8 +2003,8 @@ function showView(name) {
   afterViewShown = null;
   if (callback) {
     callback();
-  } else {
-    window.scrollTo(0, 0);
+  } else if (previousView !== name) {
+    window.scrollTo(0, viewScrollPositions[name] || 0);
   }
 }
 
