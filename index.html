@@ -6,7 +6,6 @@
   <title>Shinpan Quick Guide</title>
   <style>
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -36,10 +35,29 @@
       border-radius:12px;
       font-size:15px;
     }
-    main{
+    .view-body{
       max-width:900px;
       margin:18px auto 40px;
       padding:0 14px;
+    }
+    .app-nav{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      padding:8px;
+      background:#fff;
+      border-bottom:1px solid #e5e9f2;
+    }
+    .app-nav a{
+      padding:8px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#223;
+      font-weight:700;
+    }
+    .app-nav a[aria-current="page"]{
+      background:#008b7a;
+      color:#fff;
     }
     section{
       background:white;
@@ -356,6 +374,14 @@
 </head>
 
 <body>
+<nav class="app-nav" aria-label="画面の切り替え">
+  <a href="#home" data-view="home">ホーム</a>
+  <a href="#rules" data-view="rules">ルール</a>
+  <a href="#tournament" data-view="tournament">大会要項</a>
+</nav>
+
+<main>
+<div id="view-home" class="view">
 <header>
   <h1>Shinpan Quick Guide</h1>
   <p>審判・コーチ・保護者審判のためのサッカールール確認アプリ</p>
@@ -365,7 +391,7 @@
   </div>
 </header>
 
-<main>
+<div class="view-body">
   <section>
     <h2>使い方</h2>
     <ol class="usage-list">
@@ -374,11 +400,26 @@
       <li>主に試合前後の確認や、審判ルールを調べるときに使います。</li>
     </ol>
     <div class="usage-actions">
-      <a class="usageBtn primary" href="#ruleSearchSection">ルールを調べる</a>
-      <a class="usageBtn secondary" href="#tournamentSection">大会要項を入力・確認する</a>
+      <a class="usageBtn primary" href="#rules">ルールを調べる</a>
+      <a class="usageBtn secondary" href="#tournament">大会要項を入力・確認する</a>
     </div>
   </section>
 
+  <section>
+    <h2>試合前チェックリスト</h2>
+    <ul>
+      <li>大会要項を確認したか</li>
+      <li>試合時間・延長・PK戦の有無を確認したか</li>
+      <li>交代人数・再出場の可否を確認したか</li>
+      <li>ユニフォーム・すね当て・アクセサリーを確認したか</li>
+      <li>主審・副審で判定基準を共有したか</li>
+    </ul>
+  </section>
+</div>
+</div>
+
+<div id="view-rules" class="view" hidden>
+<div class="view-body">
   <section id="ruleSearchSection">
     <h2>ルール検索</h2>
     <div class="searchRow">
@@ -394,7 +435,11 @@
     <div id="count" class="count">表示中：0件</div>
     <div id="cards" class="cards"></div>
   </section>
+</div>
+</div>
 
+<div id="view-tournament" class="view" hidden>
+<div class="view-body">
   <section>
 <section id="tournamentSection" class="tournament-box">
   <details open>
@@ -597,17 +642,8 @@
     
 
 </section>
-
-  <section>
-    <h2>試合前チェックリスト</h2>
-    <ul>
-      <li>大会要項を確認したか</li>
-      <li>試合時間・延長・PK戦の有無を確認したか</li>
-      <li>交代人数・再出場の可否を確認したか</li>
-      <li>ユニフォーム・すね当て・アクセサリーを確認したか</li>
-      <li>主審・副審で判定基準を共有したか</li>
-    </ul>
-  </section>
+</div>
+</div>
 </main>
 
 <script>
@@ -1698,11 +1734,72 @@ function searchTournamentRelatedRule(word) {
   }
 
   const cardSection = document.getElementById("cards").closest("section");
-  cardSection.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+  goToView("rules", () => {
+    cardSection.scrollIntoView({ block: "start" });
   });
 }
+
+// 画面切り替え（ホーム／ルール／大会要項）
+const APP_VIEWS = ["home", "rules", "tournament"];
+const LEGACY_VIEW_HASH = {
+  ruleSearchSection: "rules",
+  tournamentSection: "tournament"
+};
+let currentView = null;
+let afterViewShown = null;
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+function viewFromHash() {
+  const key = location.hash.replace(/^#/, "");
+  if (APP_VIEWS.includes(key)) return key;
+  if (LEGACY_VIEW_HASH[key]) return LEGACY_VIEW_HASH[key];
+  return "home";
+}
+
+function showView(name) {
+  APP_VIEWS.forEach(view => {
+    const el = document.getElementById("view-" + view);
+    if (el) el.hidden = view !== name;
+  });
+
+  document.querySelectorAll(".app-nav a").forEach(link => {
+    if (link.dataset.view === name) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+
+  currentView = name;
+
+  const callback = afterViewShown;
+  afterViewShown = null;
+  if (callback) {
+    callback();
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+function goToView(name, callback) {
+  afterViewShown = callback || null;
+  if (location.hash === "#" + name) {
+    showView(name);
+  } else {
+    location.hash = name;
+  }
+}
+
+window.addEventListener("hashchange", () => showView(viewFromHash()));
+
+const initialHashKey = location.hash.replace(/^#/, "");
+if (LEGACY_VIEW_HASH[initialHashKey]) {
+  history.replaceState(null, "", "#" + LEGACY_VIEW_HASH[initialHashKey]);
+}
+showView(viewFromHash());
 
 updateSavedTournamentNotice();
 </script>
