@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Shinpan Quick Guide</title>
   <style>
     *{box-sizing:border-box}
@@ -16,7 +16,7 @@
     header{
       background:linear-gradient(135deg,#008b7a,#16b89c);
       color:white;
-      padding:28px 20px 32px;
+      padding:28px max(20px, env(safe-area-inset-right)) 32px max(20px, env(safe-area-inset-left));
       border-bottom-left-radius:28px;
       border-bottom-right-radius:28px;
     }
@@ -38,26 +38,89 @@
     .view-body{
       max-width:900px;
       margin:18px auto 40px;
-      padding:0 14px;
+      padding:0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
     }
+    /* 画面切り替えナビ（スマホ：下部固定／PC：上部） */
     .app-nav{
-      display:flex;
-      justify-content:center;
-      gap:8px;
-      padding:8px;
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:100;
       background:#fff;
-      border-bottom:1px solid #e5e9f2;
+      border-top:1px solid #dde2ee;
+      box-shadow:0 -2px 10px rgba(20,30,50,.06);
+      padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    .app-nav-inner{
+      display:flex;
+      max-width:900px;
+      margin:0 auto;
+    }
+    .app-nav-brand{
+      display:none;
     }
     .app-nav a{
-      padding:8px 14px;
-      border-radius:999px;
+      flex:1 1 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:58px;
+      padding:6px 4px;
       text-decoration:none;
-      color:#223;
+      color:#445;
+      font-size:15px;
       font-weight:700;
+      border-top:3px solid transparent;
     }
     .app-nav a[aria-current="page"]{
-      background:#008b7a;
-      color:#fff;
+      color:#007566;
+      border-top-color:#008b7a;
+      background:#f0f7f5;
+    }
+    .app-nav a:focus-visible{
+      outline:3px solid #1f6feb;
+      outline-offset:-3px;
+    }
+    @media (max-width:767px){
+      body{
+        padding-bottom:calc(62px + env(safe-area-inset-bottom));
+      }
+      body.is-typing .app-nav{
+        display:none;
+      }
+    }
+    @media (min-width:768px){
+      .app-nav{
+        position:sticky;
+        top:0;
+        bottom:auto;
+        border-top:0;
+        border-bottom:1px solid #dde2ee;
+        box-shadow:0 2px 10px rgba(20,30,50,.05);
+        padding:0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+      }
+      .app-nav-inner{
+        align-items:center;
+        gap:4px;
+      }
+      .app-nav-brand{
+        display:block;
+        margin-right:auto;
+        font-weight:800;
+        color:#007566;
+      }
+      .app-nav a{
+        flex:0 0 auto;
+        min-height:56px;
+        padding:0 18px;
+        border-top:0;
+        border-bottom:3px solid transparent;
+      }
+      .app-nav a[aria-current="page"]{
+        border-bottom-color:#008b7a;
+        background:transparent;
+      }
     }
     section{
       background:white;
@@ -375,9 +438,12 @@
 
 <body>
 <nav class="app-nav" aria-label="画面の切り替え">
-  <a href="#home" data-view="home">ホーム</a>
-  <a href="#rules" data-view="rules">ルール</a>
-  <a href="#tournament" data-view="tournament">大会要項</a>
+  <div class="app-nav-inner">
+    <span class="app-nav-brand">Shinpan Quick Guide</span>
+    <a href="#home" data-view="home">ホーム</a>
+    <a href="#rules" data-view="rules">ルール</a>
+    <a href="#tournament" data-view="tournament">大会要項</a>
+  </div>
 </nav>
 
 <main>
@@ -1794,6 +1860,25 @@ function goToView(name, callback) {
 }
 
 window.addEventListener("hashchange", () => showView(viewFromHash()));
+
+// 文字入力中（スマホのキーボード表示中）は下部ナビを隠す
+function isTextField(el) {
+  if (!el) return false;
+  if (el.tagName === "TEXTAREA") return true;
+  return el.tagName === "INPUT" && !["checkbox", "radio", "button", "submit"].includes(el.type);
+}
+
+function updateTypingState() {
+  const vv = window.visualViewport;
+  const keyboardOpen = vv ? window.innerHeight - vv.height > 120 : true;
+  document.body.classList.toggle("is-typing", isTextField(document.activeElement) && keyboardOpen);
+}
+
+document.addEventListener("focusin", updateTypingState);
+document.addEventListener("focusout", () => setTimeout(updateTypingState, 0));
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", updateTypingState);
+}
 
 const initialHashKey = location.hash.replace(/^#/, "");
 if (LEGACY_VIEW_HASH[initialHashKey]) {
