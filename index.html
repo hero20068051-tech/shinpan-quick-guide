@@ -1433,8 +1433,13 @@ function esc(v){
   });
 }
 
+// 検索対象にも検索語と同じ正規化（NFKC：全角コロン「：」→「:」など）をかける
 function norm(v){
-  return String(v || "").toLowerCase();
+  let s=String(v || "");
+  if(s.normalize){
+    s=s.normalize("NFKC");
+  }
+  return s.toLowerCase();
 }
 
 function renderTabs(){
