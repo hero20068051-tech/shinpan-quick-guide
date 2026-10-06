@@ -443,6 +443,22 @@
 }
 /* 使い方（入口案内）ここまで */
 
+/* ルール画面：競技規則の基準（メタ情報） */
+.rules-basis{
+  margin:12px 0 10px;
+  font-size:13px;
+  line-height:1.6;
+  color:#445;
+}
+.rules-basis strong{
+  color:#122;
+}
+.rules-basis-note{
+  display:block;
+  font-size:12px;
+  color:#667;
+}
+
 /* ルール画面：上部固定ツールバー */
 .sr-only{
   position:absolute;
@@ -569,6 +585,11 @@
 
 <div id="view-rules" class="view" hidden>
 <div class="view-body">
+  <p class="rules-basis">
+    基準：<strong>JFA サッカー競技規則 2026/27</strong>（11人制）
+    <span class="rules-basis-note">大会によっては旧年度の競技規則や、8人制など年代別の規定が適用される場合があります。大会要項を優先してください。</span>
+  </p>
+
   <section id="ruleSearchSection" class="rules-toolbar">
     <h2 class="sr-only">ルール検索</h2>
     <div class="searchRow">
