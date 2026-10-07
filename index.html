@@ -528,7 +528,8 @@
   }
 }
 
-/* 起動画面（Fanatical Football）：CSSアニメーションだけで自動的に消える */
+/* 起動画面（Fanatical Football）：CSSアニメーションだけで自動的に消える
+   黒背景の上で文字が0.4秒でフェードイン → 1.2秒表示 → 0.4秒で全体がフェードアウト（合計約2秒） */
 .launch-screen{
   position:fixed;
   top:0;
@@ -540,7 +541,7 @@
   align-items:center;
   justify-content:center;
   background:#000;
-  animation:launch-fade-out 300ms ease-out 450ms forwards;
+  animation:launch-fade-out 400ms ease-out 1600ms forwards;
 }
 .launch-screen-title{
   color:#b5232d;
@@ -548,6 +549,12 @@
   font-weight:800;
   letter-spacing:.04em;
   white-space:nowrap;
+  animation:launch-title-in 400ms ease-out both;
+}
+@keyframes launch-title-in{
+  from{
+    opacity:0;
+  }
 }
 @keyframes launch-fade-out{
   to{
@@ -557,7 +564,10 @@
 }
 @media (prefers-reduced-motion: reduce){
   .launch-screen{
-    animation:launch-fade-out 1ms linear 600ms forwards;
+    animation:launch-fade-out 1ms linear 2000ms forwards;
+  }
+  .launch-screen-title{
+    animation:none;
   }
 }
 
@@ -584,8 +594,10 @@ header .app-credit{
   const removeLaunch=function(){
     if(el.parentNode) el.parentNode.removeChild(el);
   };
-  el.addEventListener("animationend", removeLaunch);
-  setTimeout(removeLaunch, 1500);
+  el.addEventListener("animationend", function(e){
+    if(e.target===el) removeLaunch();
+  });
+  setTimeout(removeLaunch, 3000);
 })();
 </script>
 
