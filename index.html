@@ -528,10 +528,67 @@
   }
 }
 
+/* 起動画面（Fanatical Football）：CSSアニメーションだけで自動的に消える */
+.launch-screen{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+  animation:launch-fade-out 300ms ease-out 450ms forwards;
+}
+.launch-screen-title{
+  color:#b5232d;
+  font-size:clamp(24px, 7vw, 44px);
+  font-weight:800;
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+@keyframes launch-fade-out{
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .launch-screen{
+    animation:launch-fade-out 1ms linear 600ms forwards;
+  }
+}
+
+/* ホームのアプリ名の下に小さく表示する制作者名 */
+header .app-credit{
+  margin:-4px 0 12px;
+  font-size:12px;
+  opacity:.85;
+  letter-spacing:.02em;
+}
+
   </style>
 </head>
 
 <body>
+<div id="launchScreen" class="launch-screen" aria-hidden="true">
+  <span class="launch-screen-title">Fanatical Football</span>
+</div>
+<script>
+// 起動画面の後片付け（消える処理はCSS側。本体スクリプトとは独立させている）
+(function(){
+  const el=document.getElementById("launchScreen");
+  if(!el) return;
+  const removeLaunch=function(){
+    if(el.parentNode) el.parentNode.removeChild(el);
+  };
+  el.addEventListener("animationend", removeLaunch);
+  setTimeout(removeLaunch, 1500);
+})();
+</script>
+
 <nav class="app-nav" aria-label="画面の切り替え">
   <div class="app-nav-inner">
     <span class="app-nav-brand">Shinpan Quick Guide</span>
@@ -545,6 +602,7 @@
 <div id="view-home" class="view">
 <header>
   <h1>Shinpan Quick Guide</h1>
+  <p class="app-credit">by Fanatical Football</p>
   <p>審判・コーチ・保護者審判のためのサッカールール確認アプリ</p>
   <div class="notice">
     ルールの優先順位：<b>大会要項 ＞ 年代別ルール ＞ 基本競技規則</b><br>
