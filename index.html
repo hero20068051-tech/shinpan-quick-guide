@@ -663,7 +663,7 @@ header .app-credit{
   <section id="ruleSearchSection" class="rules-toolbar">
     <h2 class="sr-only">ルール検索</h2>
     <div class="searchRow">
-      <input id="q" placeholder="例：ハンド、オフサイド、PK、DOGSO、得点">
+      <input id="q" placeholder="例：壁の距離、間接FK">
       <button class="clear" onclick="clearSearch()">クリア</button>
     </div>
     <div class="rules-filter-row">
@@ -1661,6 +1661,9 @@ function normalizeSearchQuery(q) {
     "ぴーけい": "pk",
     "ぴーけーせん": "pk戦",
     "pkせん": "pk戦",
+
+    "壁の距離": "フリーキックの距離",
+    "間接fk": "間接フリーキック",
 
     "どろっぷ": "ドロップ",
     "どろっぷぼーる": "ドロップボール",
