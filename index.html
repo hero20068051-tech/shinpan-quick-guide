@@ -195,6 +195,13 @@
       display:grid;
       gap:12px;
     }
+    /* ルール一覧：外側の白い面を外し、カードを画面に直接並べる（二重の箱にしない） */
+    #view-rules .view-body > section:not(.rules-toolbar){
+      background:transparent;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
+    }
     .card{
       border:1px solid #e5e9f2;
       border-radius:16px;
@@ -269,12 +276,14 @@
       padding-left:20px;
       margin:8px 0 0;
     }
+  /* 大会要項：内側の箱は枠・背景・影を持たせず、外側の白い面1枚の上にフォームを置く */
   .tournament-box {
-  margin: 14px 0;
-  padding: 12px;
-  border: 1px solid #d8e0ea;
-  border-radius: 14px;
-  background: #f8fbff;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .tournament-box summary {
@@ -368,13 +377,13 @@
 /* 359px以下：16pxのまま select の選択内容が切れないよう、大会要項画面の横の余白だけ詰める */
 @media (max-width: 359px) {
   #view-tournament section {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   #view-tournament .tournament-box {
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .tournament-grid input,
