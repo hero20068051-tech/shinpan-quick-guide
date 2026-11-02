@@ -579,6 +579,35 @@ header .app-credit{
   letter-spacing:.02em;
 }
 
+/* スマホの左右スワイプで画面を切り替えたときの軽いスライド（はみ出しで横スクロールを出さない） */
+main{
+  overflow-x:clip;
+}
+.view.swipe-from-right{
+  animation:view-slide-from-right 200ms ease-out;
+}
+.view.swipe-from-left{
+  animation:view-slide-from-left 200ms ease-out;
+}
+@keyframes view-slide-from-right{
+  from{
+    opacity:.4;
+    transform:translateX(32px);
+  }
+}
+@keyframes view-slide-from-left{
+  from{
+    opacity:.4;
+    transform:translateX(-32px);
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .view.swipe-from-right,
+  .view.swipe-from-left{
+    animation:none;
+  }
+}
+
   </style>
 </head>
 
@@ -2130,6 +2159,70 @@ function goToView(name, callback) {
 }
 
 window.addEventListener("hashchange", () => showView(viewFromHash()));
+
+// スマホの左右スワイプで画面を切り替える（下部タブと同じく hash を変えるだけ）
+const SWIPE_MIN_DISTANCE = 70; // 横方向の最小移動量（px）
+const SWIPE_MAX_TIME = 600;    // これより遅い動きはスワイプとみなさない（ms）
+const SWIPE_EDGE_GUARD = 24;   // 画面の左右端はOSの戻る操作と重なるため除外（px）
+const swipeMedia = window.matchMedia ? window.matchMedia("(max-width:767px)") : null;
+let swipeStart = null;
+
+function isSwipeBlockedTarget(el) {
+  for (let node = el; node && node !== document.body; node = node.parentElement) {
+    if (node.matches && node.matches("input, textarea, select, option, button, summary, [contenteditable]")) return true;
+    if (node.scrollWidth > node.clientWidth + 1) {
+      const overflowX = getComputedStyle(node).overflowX;
+      if (overflowX === "auto" || overflowX === "scroll") return true;
+    }
+  }
+  return false;
+}
+
+document.addEventListener("touchstart", e => {
+  swipeStart = null;
+  if (e.touches.length !== 1) return;
+  if (swipeMedia && !swipeMedia.matches) return;
+  if (isTextField(document.activeElement)) return;
+  const t = e.touches[0];
+  if (t.clientX < SWIPE_EDGE_GUARD || t.clientX > window.innerWidth - SWIPE_EDGE_GUARD) return;
+  if (isSwipeBlockedTarget(e.target)) return;
+  swipeStart = { x: t.clientX, y: t.clientY, time: Date.now() };
+}, { passive: true });
+
+document.addEventListener("touchmove", e => {
+  if (swipeStart && e.touches.length !== 1) swipeStart = null;
+}, { passive: true });
+
+document.addEventListener("touchcancel", () => {
+  swipeStart = null;
+}, { passive: true });
+
+document.addEventListener("touchend", e => {
+  const start = swipeStart;
+  swipeStart = null;
+  if (!start || e.touches.length !== 0) return;
+  const t = e.changedTouches[0];
+  const dx = t.clientX - start.x;
+  const dy = t.clientY - start.y;
+  if (Date.now() - start.time > SWIPE_MAX_TIME) return;
+  if (Math.abs(dx) < SWIPE_MIN_DISTANCE) return;
+  if (Math.abs(dx) < Math.abs(dy) * 2) return; // 横の移動が縦の2倍以上のときだけ
+  if (window.getSelection && String(window.getSelection())) return;
+
+  const next = APP_VIEWS[APP_VIEWS.indexOf(currentView) + (dx < 0 ? 1 : -1)];
+  if (!next) return;
+
+  APP_VIEWS.forEach(view => {
+    const el = document.getElementById("view-" + view);
+    if (el) el.classList.remove("swipe-from-right", "swipe-from-left");
+  });
+  const nextEl = document.getElementById("view-" + next);
+  if (nextEl) {
+    nextEl.classList.add(dx < 0 ? "swipe-from-right" : "swipe-from-left");
+    setTimeout(() => nextEl.classList.remove("swipe-from-right", "swipe-from-left"), 400);
+  }
+  goToView(next);
+}, { passive: true });
 
 // 文字入力中（スマホのキーボード表示中）は下部ナビを隠す
 function isTextField(el) {
