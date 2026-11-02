@@ -301,15 +301,22 @@
   color: #243447;
 }
 
+/* 入力部品：検索欄（#q）と同じ枠線・角丸・文字サイズにそろえる */
 .tournament-grid input,
 .tournament-grid select,
+.tournament-grid textarea,
 .wide-label textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 9px;
-  border: 1px solid #ccd6e0;
-  border-radius: 10px;
-  font-size: 14px;
+  min-height: 48px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #dde2ee;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #122;
   background: #fff;
 }
 
@@ -317,14 +324,71 @@
   margin-top: 10px;
 }
 
+/* 操作ボタン：ホームの主ボタン／副ボタンと同じ色・形にそろえる（スマホは2列のグリッド） */
 .tournament-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
 }
 
-.tournament-actions button,
+.tournament-actions button {
+  min-height: 48px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #e9f8f5;
+  color: #007566;
+  cursor: pointer;
+}
+
+/* 主ボタン：大会ルールまとめ作成 */
+.tournament-actions button:first-child {
+  grid-column: 1 / -1;
+  background: #008b7a;
+  color: #fff;
+}
+
+/* 控えめな補助ボタン：入力クリア（検索欄の「クリア」と同じ色） */
+.tournament-actions button.secondary {
+  grid-column: 1 / -1;
+  background: #eef1f8;
+  color: #223;
+}
+
+@media (min-width: 768px) {
+  .tournament-actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+/* 359px以下：16pxのまま select の選択内容が切れないよう、大会要項画面の横の余白だけ詰める */
+@media (max-width: 359px) {
+  #view-tournament section {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  #view-tournament .tournament-box {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .tournament-grid input,
+  .tournament-grid select,
+  .tournament-grid textarea {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .tournament-grid select {
+    padding-right: 6px;
+  }
+}
+
 .related-rule-buttons button {
   border: none;
   border-radius: 999px;
@@ -334,10 +398,6 @@
   background: #1f6feb;
   color: #fff;
   cursor: pointer;
-}
-
-.tournament-actions button:nth-child(4) {
-  background: #6b7280;
 }
 
 .tournament-summary {
@@ -367,7 +427,6 @@
     grid-template-columns: 1fr;
   }
 
-  .tournament-actions button,
   .related-rule-buttons button {
     width: auto;
     font-size: 12px;
@@ -390,10 +449,11 @@
 
 .saved-notice button {
   margin-left: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  background: #1f6feb;
-  color: #fff;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 15px;
+  background: #e9f8f5;
+  color: #007566;
 }
 
 /* 使い方（入口案内）ここから */
