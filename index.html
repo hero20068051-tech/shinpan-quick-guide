@@ -2167,9 +2167,12 @@ const SWIPE_EDGE_GUARD = 24;   // 画面の左右端はOSの戻る操作と重�
 const swipeMedia = window.matchMedia ? window.matchMedia("(max-width:767px)") : null;
 let swipeStart = null;
 
+// フォーム要素から始めても、明確な横スワイプなら切り替える（タップ・縦操作は通常のフォーム操作のまま）。
+// ただし編集中の要素（フォーカス中の入力欄・select）や contenteditable から始めた操作は除外する。
 function isSwipeBlockedTarget(el) {
   for (let node = el; node && node !== document.body; node = node.parentElement) {
-    if (node.matches && node.matches("input, textarea, select, option, button, summary, [contenteditable]")) return true;
+    if (node === document.activeElement && (isTextField(node) || node.tagName === "SELECT")) return true;
+    if (node.matches && node.matches("[contenteditable]")) return true;
     if (node.scrollWidth > node.clientWidth + 1) {
       const overflowX = getComputedStyle(node).overflowX;
       if (overflowX === "auto" || overflowX === "scroll") return true;
@@ -2182,7 +2185,7 @@ document.addEventListener("touchstart", e => {
   swipeStart = null;
   if (e.touches.length !== 1) return;
   if (swipeMedia && !swipeMedia.matches) return;
-  if (isTextField(document.activeElement)) return;
+  if (document.body.classList.contains("is-typing")) return; // キーボード表示中（文字入力中）は切り替えない
   const t = e.touches[0];
   if (t.clientX < SWIPE_EDGE_GUARD || t.clientX > window.innerWidth - SWIPE_EDGE_GUARD) return;
   if (isSwipeBlockedTarget(e.target)) return;
