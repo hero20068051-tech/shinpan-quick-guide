@@ -884,6 +884,7 @@ summary:active{
           <option value="10分ハーフ">10分ハーフ</option>
           <option value="15分ハーフ">15分ハーフ</option>
           <option value="20分ハーフ">20分ハーフ</option>
+          <option value="30分ハーフ">30分ハーフ</option>
           <option value="大会要項を確認">大会要項を確認</option>
         </select>
       </label>
@@ -2147,7 +2148,7 @@ function makeRelatedRuleButtons() {
   addKeyword("試合時間");
   addKeyword("主審の笛");
 
-  if (values.includes("15分") || values.includes("20分")) addKeyword("ハーフタイム");
+  if (["10分ハーフ", "15分ハーフ", "20分ハーフ", "30分ハーフ", "15分-5分-15分", "20分-5分-20分"].includes(getTournamentValue("taTime"))) addKeyword("ハーフタイム");
   if (values.includes("自由交代") || values.includes("交代")) addKeyword("競技者の入退場");
   if (values.includes("PK") || values.includes("ＰＫ")) addKeyword("PK戦");
   if (values.includes("審判")) addKeyword("審判員のシグナル");
