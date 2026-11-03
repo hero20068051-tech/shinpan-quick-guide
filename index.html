@@ -217,7 +217,8 @@
     }
     .card h3{
       margin:0;
-      font-size:19px;
+      font-size:20px;
+      font-weight:800;
     }
     .cat{
       display:inline-block;
@@ -236,6 +237,8 @@
     .detail{
       margin:7px 0;
       font-size:15px;
+      color:#111;
+      font-weight:500;
     }
     .label{
       font-weight:800;
@@ -674,6 +677,44 @@ main{
   .view.swipe-from-right,
   .view.swipe-from-left{
     animation:none;
+  }
+}
+
+/* 押したときの反応：標準のタップハイライトの代わりに、押している間だけ控えめに変化させる
+   （キーボード操作のフォーカス表示には触れない） */
+button,
+.usageBtn,
+.app-nav a,
+summary{
+  -webkit-tap-highlight-color:transparent;
+}
+button,
+.usageBtn{
+  transition:transform 120ms ease, filter 120ms ease;
+}
+button:active,
+.usageBtn:active{
+  transform:scale(.98);
+  filter:brightness(.94);
+}
+.app-nav a{
+  transition:background-color 120ms ease;
+}
+.app-nav a:active{
+  background:#e3efec;
+}
+summary:active{
+  opacity:.7;
+}
+@media (prefers-reduced-motion: reduce){
+  button,
+  .usageBtn,
+  .app-nav a{
+    transition:none;
+  }
+  button:active,
+  .usageBtn:active{
+    transform:none;
   }
 }
 
