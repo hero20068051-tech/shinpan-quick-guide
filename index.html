@@ -160,10 +160,16 @@
       background:#eef1f8;
       color:#223;
     }
+    /* 要点だけ表示：カテゴリ（塗りつぶし）と区別するため枠線つき。ON（要点表示中）は淡いティールで塗る */
     .toggle{
-      background:#f6a800;
-      color:#111;
+      background:#fff;
+      color:#007566;
+      box-shadow:inset 0 0 0 1.5px #008b7a;
       margin-top:12px;
+    }
+    .toggle.is-on{
+      background:#e9f8f5;
+      box-shadow:inset 0 0 0 2px #007566;
     }
     .tabs{
       display:flex;
@@ -1924,6 +1930,7 @@ function toggleShort(){
   const anchor=getReadingAnchor();
   isShort=!isShort;
   document.getElementById("shortBtn").textContent=isShort ? "くわしく表示" : "要点だけ表示";
+  document.getElementById("shortBtn").classList.toggle("is-on", isShort);
   renderCards();
   restoreReadingAnchor(anchor);
 }
