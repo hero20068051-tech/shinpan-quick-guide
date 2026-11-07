@@ -2078,6 +2078,11 @@ function saveTournamentGuide() {
 
   localStorage.setItem("shinpanTournamentGuide", JSON.stringify(data));
   updateSavedTournamentNotice();
+
+  // まとめを表示中なら、保存した内容でまとめと関連カードを作り直す（未表示なら新しく表示しない）
+  const summary = document.getElementById("tournamentSummary");
+  if (summary && summary.textContent.trim()) makeTournamentGuide();
+
   alert("大会要項を保存しました。");
 }
 
