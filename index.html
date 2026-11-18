@@ -1022,7 +1022,7 @@ summary:active{
     </div>
 
     <div class="tournament-actions">
-      <button type="button" onclick="makeTournamentGuide()">大会ルールまとめ作成</button>
+      <button type="button" onclick="makeTournamentGuide(true)">大会ルールまとめ作成</button>
       <button type="button" onclick="saveTournamentGuide()">保存</button>
       <button type="button" onclick="loadTournamentGuide()">読込</button>
       <button type="button" class="secondary" onclick="clearTournamentGuide()">入力クリア</button>
@@ -2004,7 +2004,7 @@ function setTournamentValue(id, value) {
   if (el) el.value = value || "";
 }
 
-function makeTournamentGuide() {
+function makeTournamentGuide(reveal) {
   const name = getTournamentValue("taName");
   const target = getTournamentValue("taTarget");
   const format = getTournamentValue("taFormat");
@@ -2079,6 +2079,33 @@ if (water || thunder || discipline || note) {
   if (output) output.textContent = text;
 
   makeRelatedRuleButtons();
+
+  // 「大会ルールまとめ作成」ボタンから呼ばれたときだけ、作成したまとめが見える位置へ移動する
+  //（保存時の作り直しでは移動しない）
+  if (reveal) revealTournamentSummary();
+}
+
+// まとめと関連カードが固定ナビに隠れず見えるよう、必要な分だけスクロールする
+function revealTournamentSummary() {
+  const summary = document.getElementById("tournamentSummary");
+  if (!summary || !summary.textContent.trim()) return;
+  const buttons = document.getElementById("relatedRuleButtons");
+  const lastEl = buttons && buttons.children.length ? buttons : summary;
+
+  const nav = document.querySelector(".app-nav").getBoundingClientRect();
+  const navAtTop = nav.top < window.innerHeight / 2;
+  const visibleTop = navAtTop ? nav.bottom : 0;
+  const visibleBottom = navAtTop || nav.height === 0 ? window.innerHeight : nav.top;
+  const margin = 16;
+
+  const top = summary.getBoundingClientRect().top;
+  const bottom = lastEl.getBoundingClientRect().bottom;
+  // まとめの末尾まで見える分だけ下げる。ただし、まとめの先頭が上の端より上へ行かないようにする
+  const need = Math.min(bottom - (visibleBottom - margin), top - (visibleTop + margin));
+  if (need <= 0) return;
+
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollBy({ top: need, behavior: reduce ? "auto" : "smooth" });
 }
 
 function saveTournamentGuide() {
