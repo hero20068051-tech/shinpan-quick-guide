@@ -425,8 +425,13 @@
   background: #ffffff;
   border: 1px solid #e1e8f0;
   line-height: 1.7;
-  font-size: 14px;
+  font-size: 15px;
   white-space: pre-wrap;
+}
+
+/* まとめを作る前（空のとき）は枠を出さない */
+.tournament-summary:empty {
+  display: none;
 }
 
 .related-rule-buttons {
@@ -1028,7 +1033,7 @@ summary:active{
       <button type="button" class="secondary" onclick="clearTournamentGuide()">入力クリア</button>
     </div>
 
-    <div id="tournamentSummary" class="tournament-result"></div>
+    <div id="tournamentSummary" class="tournament-summary"></div>
     <div id="relatedRuleButtons" class="related-buttons"></div>
 
   </details>
