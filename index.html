@@ -537,6 +537,13 @@
   color:#667;
 }
 
+/* 要点表示中だけ出す共通案内（件数の下に1回だけ。控えめに） */
+.short-note{
+  margin:-6px 0 12px;
+  font-size:12px;
+  color:#556;
+}
+
 /* ルール画面：上部固定ツールバー */
 .sr-only{
   position:absolute;
@@ -820,6 +827,7 @@ summary:active{
   <section>
     <h2>ルールカード</h2>
     <div id="count" class="count">表示中：0件</div>
+    <p id="shortNote" class="short-note" hidden>警告・退場や例外などは「くわしく表示」で確認できます。</p>
     <div id="cards" class="cards"></div>
   </section>
 </div>
@@ -1903,6 +1911,8 @@ function renderCards(){
         '<div class="top"><h3>'+esc(r.title)+'</h3><span class="cat">'+esc(r.category)+'</span></div>'+
         '<div class="summary">'+esc(r.decision)+'</div>'+
         '<div class="detail"><span class="label">再開</span>'+esc(r.restart)+'</div>'+
+        // 懲戒カテゴリは警告・退場が中心情報なので、要点表示にも懲戒欄を出す
+        (r.category==="懲戒" ? '<div class="detail"><span class="label">懲戒</span>'+esc(r.discipline)+'</div>' : '')+
         '<div class="law">'+esc(r.law)+'</div>';
     }else{
       div.innerHTML=
@@ -1931,6 +1941,7 @@ function toggleShort(){
   isShort=!isShort;
   document.getElementById("shortBtn").textContent=isShort ? "くわしく表示" : "要点だけ表示";
   document.getElementById("shortBtn").classList.toggle("is-on", isShort);
+  document.getElementById("shortNote").hidden=!isShort;
   renderCards();
   restoreReadingAnchor(anchor);
 }
