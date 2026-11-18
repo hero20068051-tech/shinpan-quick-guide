@@ -2159,6 +2159,12 @@ function loadTournamentGuide() {
   try {
     const data = JSON.parse(raw);
 
+    // 入力があり、しかも保存データと違うときだけ、置き換えてよいか確認する
+    //（入力が空のときや、保存データと同じときは確認しない）
+    const hasInput = tournamentFieldIds.some(id => getTournamentValue(id) !== "");
+    const differs = tournamentFieldIds.some(id => getTournamentValue(id) !== String(data[id] ?? "").trim());
+    if (hasInput && differs && !confirm("保存した大会要項を読み込むと、今入力している内容は保存した内容に置き換わります。読み込みますか？")) return;
+
     tournamentFieldIds.forEach(id => {
       setTournamentValue(id, data[id]);
     });
