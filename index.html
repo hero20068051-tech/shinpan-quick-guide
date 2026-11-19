@@ -729,17 +729,33 @@ summary:active{
   }
 }
 
-/* 大会ルールまとめの印刷用（画面では表示しない） */
-.tournament-print-btn {
-  display: block;
-  width: 100%;
-  min-height: 48px;
+/* 大会ルールまとめの印刷・共有ボタン（スマホは2列で横に並べ、PCは文字に合った幅で並べる） */
+.tournament-output-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   margin-top: 12px;
+}
+.tournament-print-btn,
+.tournament-share-btn {
+  min-height: 48px;
   padding: 12px 16px;
   font-size: 16px;
   background: #e9f8f5;
   color: #007566;
 }
+@media (min-width: 768px) {
+  .tournament-output-actions {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tournament-print-btn,
+  .tournament-share-btn {
+    padding: 12px 24px;
+  }
+}
+
+/* 大会ルールまとめの印刷用（画面では表示しない） */
 .tournament-print {
   display: none;
 }
@@ -1088,7 +1104,10 @@ summary:active{
     </div>
 
     <div id="tournamentSummary" class="tournament-summary"></div>
-    <button type="button" class="tournament-print-btn" onclick="printTournamentGuide()">大会ルールまとめを印刷</button>
+    <div class="tournament-output-actions">
+      <button type="button" class="tournament-print-btn" onclick="printTournamentGuide()">まとめを印刷</button>
+      <button type="button" class="tournament-share-btn" onclick="shareTournamentGuide()">まとめを共有</button>
+    </div>
     <div id="relatedRuleButtons" class="related-buttons"></div>
 
 </section>
@@ -2177,19 +2196,14 @@ function revealTournamentSummary() {
 }
 
 // 印刷：押した時点の入力から最新のまとめを作り直し、その内容だけを印刷する
-function printTournamentGuide() {
-  const hasInput = tournamentFieldIds.some(id => getTournamentValue(id) !== "");
-  if (!hasInput) {
-    alert("大会要項を入力してから印刷してください。");
-    return;
-  }
-
+// 印刷・共有用：現在の入力からまとめを作り直し、大会名と本文に分けて返す
+function buildTournamentOutput() {
   // 既存のまとめ生成をそのまま使う（画面のまとめと関連カードも最新になる）
   makeTournamentGuide();
   const summary = document.getElementById("tournamentSummary").textContent;
   const name = getTournamentValue("taName");
 
-  // 大会名は印刷用見出しの直下に出すので、本文の「■ 基本」にある大会名の行だけ印刷用に1行除く
+  // 大会名は見出しの直下に出すので、本文の「■ 基本」にある大会名の行だけ1行除く
   //（画面のまとめはそのまま）
   const lines = summary.replace(/^【大会ルールまとめ】\n+/, "").split("\n");
   if (name) {
@@ -2202,7 +2216,17 @@ function printTournamentGuide() {
       }
     }
   }
-  const body = lines.join("\n").trimEnd();
+  return { name, body: lines.join("\n").trimEnd() };
+}
+
+function printTournamentGuide() {
+  const hasInput = tournamentFieldIds.some(id => getTournamentValue(id) !== "");
+  if (!hasInput) {
+    alert("大会要項を入力してから印刷してください。");
+    return;
+  }
+
+  const { name, body } = buildTournamentOutput();
 
   const nameEl = document.getElementById("printTournamentName");
   nameEl.textContent = name ? "大会名：" + name : "";
@@ -2210,6 +2234,44 @@ function printTournamentGuide() {
   document.getElementById("printTournamentBody").textContent = body;
 
   window.print();
+}
+
+// 大会ルールまとめを、端末の共有メニュー（LINE・メールなど）で送る。使えない環境ではクリップボードへコピーする
+async function shareTournamentGuide() {
+  const hasInput = tournamentFieldIds.some(id => getTournamentValue(id) !== "");
+  if (!hasInput) {
+    alert("大会要項を入力してから共有してください。");
+    return;
+  }
+
+  const { name, body } = buildTournamentOutput();
+  // 各まとまりの間を空行1つで区切る。大会名がない・本文が空のときは、そのまとまりを飛ばして空行を重ねない
+  const text = [
+    "大会ルールまとめ",
+    name ? "大会名：" + name : "",
+    body,
+    "このまとめは入力した大会要項に基づく確認用です。\n適用ルールは大会要項を確認し、指定された年代別ルール・競技規則に従ってください。",
+    "Fanatical Football｜Shinpan Quick Guide"
+  ].filter(part => part !== "").join("\n\n");
+
+  // 共有メニューはボタン操作の直後に開く必要があるので、この前で待ち処理をしない
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "大会ルールまとめ", text: text });
+      return;
+    } catch (e) {
+      // 利用者が共有をやめた場合は何もしない
+      if (e && e.name === "AbortError") return;
+      // それ以外で共有できなかった場合は、コピーに切り替える
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("大会ルールまとめをコピーしました。LINEなどに貼り付けてください。");
+  } catch (e) {
+    alert("この端末では共有・コピーができませんでした。画面の大会ルールまとめを長押ししてコピーしてください。");
+  }
 }
 
 function saveTournamentGuide() {
