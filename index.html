@@ -729,6 +729,47 @@ summary:active{
   }
 }
 
+/* 使い方画面：説明文・利用例・最後の注意書き */
+.howto-lead,
+.howto-text {
+  margin: 0 0 8px;
+  line-height: 1.7;
+}
+.howto-lead {
+  margin: 0;
+}
+.howto-example {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f0f7f5;
+  color: #1f3b36;
+  font-size: 14px;
+  line-height: 1.6;
+}
+/* 利用例の先頭に付ける小さな「例」ラベル（本文側には「例：」を書かない） */
+.howto-example-label {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #008b7a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.howto-list li {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+.howto-note {
+  margin: 12px 4px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #445;
+}
+
 /* 大会ルールまとめの印刷・共有ボタン（スマホは2列で横に並べ、PCは文字に合った幅で並べる） */
 .tournament-output-actions {
   display: grid;
@@ -835,6 +876,7 @@ summary:active{
     <a href="#home" data-view="home">ホーム</a>
     <a href="#rules" data-view="rules">ルール</a>
     <a href="#tournament" data-view="tournament">大会要項</a>
+    <a href="#howto" data-view="howto">使い方</a>
   </div>
 </nav>
 
@@ -1116,6 +1158,48 @@ summary:active{
     
 
 </section>
+</div>
+</div>
+
+<div id="view-howto" class="view" hidden>
+<div class="view-body">
+  <section>
+    <h2>使い方</h2>
+    <p class="howto-lead">Shinpan Quick Guideは、サッカーのルール確認や大会要項の整理に使えるアプリです。</p>
+  </section>
+
+  <section>
+    <h2>ルールを調べる</h2>
+    <p class="howto-text">「オフサイド」「壁の距離」「間接FK」など、知りたい言葉を検索します。</p>
+    <p class="howto-text">キーワードでルールカードを探します。AIに質問する機能ではありません。</p>
+    <p class="howto-example"><span class="howto-example-label">例</span>フリーキックの壁は何m離れる？ →「壁の距離」で検索</p>
+  </section>
+
+  <section>
+    <h2>大会要項をまとめる</h2>
+    <p class="howto-text">試合時間、交代、同点時の扱いなど、大会要項に書かれている内容を入力します。</p>
+    <p class="howto-text">「大会ルールまとめ作成」を押すと、入力した内容を確認しやすい形にまとめます。</p>
+    <p class="howto-example"><span class="howto-example-label">例</span>20分ハーフ・自由交代・同点ならPK戦、などを試合前に整理する</p>
+  </section>
+
+  <section>
+    <h2>印刷・共有する</h2>
+    <p class="howto-text">作成した大会ルールまとめは、印刷したり、スマホの共有機能からLINEなどへ送ったりできます。</p>
+    <p class="howto-text">印刷・共有するときは、その時点で入力されている最新の内容からまとめを作り直します。</p>
+    <p class="howto-example"><span class="howto-example-label">例</span>試合前に審判員同士で大会ルールを共有する</p>
+  </section>
+
+  <section>
+    <h2>こんな時に使えます</h2>
+    <ul class="howto-list">
+      <li>試合前にルールを確認したい</li>
+      <li>大会特有のルールを整理したい</li>
+      <li>審判員同士で大会要項を共有したい</li>
+      <li>試合後に気になったルールを確認したい</li>
+    </ul>
+  </section>
+
+  <p class="howto-note">大会ごとのルールは大会要項を確認し、指定された年代別ルール・競技規則に従ってください。</p>
 </div>
 </div>
 </main>
@@ -2430,8 +2514,8 @@ function searchTournamentRelatedRule(word) {
   });
 }
 
-// 画面切り替え（ホーム／ルール／大会要項）
-const APP_VIEWS = ["home", "rules", "tournament"];
+// 画面切り替え（ホーム／ルール／大会要項／使い方）
+const APP_VIEWS = ["home", "rules", "tournament", "howto"];
 const LEGACY_VIEW_HASH = {
   ruleSearchSection: "rules",
   tournamentSection: "tournament"
